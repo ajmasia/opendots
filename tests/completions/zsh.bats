@@ -70,7 +70,7 @@ teardown() {
   mkdir -p "$config_dir"
   printf 'dir=%s\n' "${DOTS_DIR}" >"${config_dir}/config"
   run zsh -c "
-    unset DOTS_DIR
+    unset DOTS_DIR XDG_CONFIG_HOME
     HOME='${HOME}'
     source '${BATS_TEST_DIRNAME}/../../completions/_dots'
     _dots_resolve_dir

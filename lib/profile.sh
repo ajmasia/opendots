@@ -26,8 +26,8 @@ profile::load() {
     local profiles_dir
     profiles_dir="$(profile::dir)"
     local available
-    available="$(find "$profiles_dir" -maxdepth 1 -name '*.txt' -printf '%f\n' 2>/dev/null \
-      | sed 's/\.txt$//' | sort | tr '\n' ' ' | sed 's/ $//')"
+    available="$(find "$profiles_dir" -maxdepth 1 -name '*.txt' 2>/dev/null \
+      | sed 's|.*/||; s/\.txt$//' | sort | tr '\n' ' ' | sed 's/ $//')"
     if [[ -n "$available" ]]; then
       # shellcheck disable=SC2059
       printf "${MSG_PROFILE_AVAILABLE:-Available profiles: %s}\n" "$available" >&2
