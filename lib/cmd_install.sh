@@ -6,12 +6,14 @@ cmd_install::run() {
 
   if [[ ${#pkgs[@]} -eq 0 ]]; then
     if [[ -n "${DOTS_PROFILE:-}" ]]; then
-      ui::info "Profile installation coming in Phase 5."
-      return 0
+      local _profile_pkgs
+      _profile_pkgs="$(profile::load "${DOTS_PROFILE}")"
+      mapfile -t pkgs <<<"$_profile_pkgs"
+    else
+      printf '%s\n' "${MSG_HELP_INSTALL}" >&2
+      printf '%s\n' "${MSG_USAGE_HINT}" >&2
+      exit 2
     fi
-    printf '%s\n' "${MSG_HELP_INSTALL}" >&2
-    printf '%s\n' "${MSG_USAGE_HINT}" >&2
-    exit 2
   fi
 
   local dots_dir

@@ -18,9 +18,15 @@ cmd_remove::run() {
   local -a pkgs=("$@")
 
   if [[ ${#pkgs[@]} -eq 0 ]]; then
-    printf '%s\n' "${MSG_HELP_REMOVE}" >&2
-    printf '%s\n' "${MSG_USAGE_HINT}" >&2
-    exit 2
+    if [[ -n "${DOTS_PROFILE:-}" ]]; then
+      local _profile_pkgs
+      _profile_pkgs="$(profile::load "${DOTS_PROFILE}")"
+      mapfile -t pkgs <<<"$_profile_pkgs"
+    else
+      printf '%s\n' "${MSG_HELP_REMOVE}" >&2
+      printf '%s\n' "${MSG_USAGE_HINT}" >&2
+      exit 2
+    fi
   fi
 
   local dots_dir
