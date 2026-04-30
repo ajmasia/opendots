@@ -16,6 +16,14 @@ setup_home() {
   HOME="$(mktemp -d)"
 }
 
+# Create a package <pkg> with a single file <relpath> containing <content>.
+# Usage: make_package <pkg> <relpath> [content]
+make_package() {
+  local pkg="$1" relpath="$2" content="${3:-# placeholder}"
+  mkdir -p "${DOTS_DIR}/${pkg}/$(dirname "$relpath")"
+  printf '%s\n' "$content" >"${DOTS_DIR}/${pkg}/${relpath}"
+}
+
 # Asserts that a symlink at $1 resolves to $2.
 assert_symlink() {
   local link="$1" target="$2"
