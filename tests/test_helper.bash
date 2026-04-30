@@ -1,5 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+# Path to the bundled example dotfiles repo (fixture and reference).
+# shellcheck disable=SC2034
+EXAMPLES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../examples/dotfiles" && pwd)"
+
 # Creates a temporary DOTS_DIR with optional package skeletons.
 # Usage: setup_dots_dir [pkg...]
 setup_dots_dir() {

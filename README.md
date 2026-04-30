@@ -52,6 +52,25 @@ make test       # bats tests/
 make check      # lint + fmt-check + test
 ```
 
+## Example dotfiles repo
+
+The [`examples/dotfiles/`](examples/dotfiles/) directory shows a minimal dotfiles repo layout with two packages (`git`, `tmux`) and a `home` profile. Use it as a reference or copy it as a starting point:
+
+```
+examples/dotfiles/
+├── git/
+│   └── .gitconfig
+├── tmux/
+│   └── .tmux.conf
+└── profiles/
+    └── home.txt      # lists: git, tmux
+```
+
+```bash
+dots --dir examples/dotfiles list
+dots --dir examples/dotfiles --profile home install
+```
+
 ## License
 
 GPL-3.0-or-later — see [LICENSE](LICENSE).

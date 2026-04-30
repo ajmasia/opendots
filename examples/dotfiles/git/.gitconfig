@@ -1,0 +1,9 @@
+[core]
+	autocrlf = input
+	editor = vim
+
+[alias]
+	st = status
+	co = checkout
+	br = branch
+	lg = log --oneline --graph --decorate
