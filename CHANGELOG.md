@@ -6,6 +6,24 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.4.0] — 2026-04-30
+
+### Added
+- `lib/os.sh`: `os::is_macos`, `os::is_linux`, `os::distro_id` helpers.
+- `lib/repo.sh`: `repo::resolve_dir` (precedence: `--dir` > `$DOTS_DIR` > `~/.dotfiles`), `repo::list_packages`, `repo::package_status` (✓ / · / ! markers).
+- `lib/cmd_install.sh`: real stow-based install with pre-flight conflict detection (exit 3); `--dry-run` runs `stow -n` and shows planned operations via `[info]`.
+- `lib/cmd_remove.sh`: idempotent `stow -D`; silent no-op when package is not linked.
+- `lib/cmd_adopt.sh`: `stow --adopt` with file preview and interactive confirmation; `--yes` skips prompt.
+- `lib/cmd_list.sh`: per-package status table with ✓ / · / ! markers.
+- `lib/cmd_status.sh`: linked packages and conflicts summary.
+- `lib/cmd_doctor.sh`: checks bash ≥ 4, stow ≥ 2.3.1, and broken symlinks under `$HOME` pointing into `$DOTS_DIR`.
+- `locales/en.sh`, `locales/es.sh`: Phase 4 MSG_* strings for all new commands.
+- `tests/cmd/`: bats integration tests for install, remove, adopt, list, status, and doctor.
+- `tests/test_helper.bash`: `make_package` fixture helper.
+
+### Fixed
+- `lib/args.sh`: `DOTS_DIR`, `DOTS_LANG`, `DOTS_PROFILE` now preserve existing env var values instead of being clobbered on source.
+
 ## [0.3.0] — 2026-04-30
 
 ### Added
