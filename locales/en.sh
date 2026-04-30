@@ -70,6 +70,13 @@ MSG_STATUS_LINKED="Linked packages (%s):"
 MSG_STATUS_CONFLICTS="Conflicts (%s):"
 MSG_STATUS_NONE="No linked packages."
 
+# profile.sh
+MSG_PROFILE_NOT_FOUND="Profile not found: %s"
+MSG_PROFILE_AVAILABLE="Available profiles: %s"
+MSG_PROFILE_NONE="No profiles defined."
+MSG_STATUS_PROFILE="Active profile: %s"
+MSG_STATUS_NO_PROFILE="(no active profile)"
+
 # cmd_doctor.sh
 MSG_DOCTOR_OK="Everything looks good."
 MSG_DOCTOR_ISSUES="%s issue(s) found."

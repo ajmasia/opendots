@@ -27,6 +27,8 @@ source "${DOTS_LIB}/os.sh"
 # shellcheck source=/dev/null
 source "${DOTS_LIB}/repo.sh"
 # shellcheck source=/dev/null
+source "${DOTS_LIB}/profile.sh"
+# shellcheck source=/dev/null
 source "${DOTS_LIB}/cmd_help.sh"
 # shellcheck source=/dev/null
 source "${DOTS_LIB}/cmd_install.sh"
