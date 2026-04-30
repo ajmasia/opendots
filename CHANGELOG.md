@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.6] — 2026-04-30
+
+### Changed
+- `opendots list` now uses `ui::ok`, `ui::warn`, and `ui::info` instead of bare symbols (`✓`, `!`, `·`), consistent with the rest of the CLI output.
+
 ## [0.7.5] — 2026-04-30
 
 ### Fixed

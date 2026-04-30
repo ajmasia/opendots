@@ -20,8 +20,8 @@ teardown() {
   stow -d "$DOTS_DIR" -t "$HOME" vim
   run "$DOTS_BIN" list
   [ "$status" -eq 0 ]
-  [[ "$output" == *"✓ vim"* ]]
-  [[ "$output" == *"· git"* ]] || [[ "$output" == *". git"* ]]
+  [[ "$output" == *"[ok]"*"vim"* ]]
+  [[ "$output" == *"[info]"*"git"* ]]
 }
 
 @test "list marks package as conflict when target is a real file" {
@@ -29,5 +29,5 @@ teardown() {
   printf 'existing\n' >"${HOME}/.vimrc"
   run "$DOTS_BIN" list
   [ "$status" -eq 0 ]
-  [[ "$output" == *"! vim"* ]]
+  [[ "$output" == *"[warn]"*"vim"* ]]
 }

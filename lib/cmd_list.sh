@@ -17,6 +17,10 @@ cmd_list::run() {
   local pkg marker
   for pkg in "${pkgs[@]}"; do
     marker="$(repo::package_status "$dots_dir" "$pkg")"
-    printf '%s %s\n' "$marker" "$pkg"
+    case "$marker" in
+      ✓) ui::ok "$pkg" ;;
+      !) ui::warn "$pkg" ;;
+      *) ui::info "$pkg" ;;
+    esac
   done
 }
