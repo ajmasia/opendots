@@ -23,6 +23,10 @@ source "${DOTS_LIB}/i18n.sh"
 # shellcheck source=/dev/null
 source "${DOTS_LIB}/args.sh"
 # shellcheck source=/dev/null
+source "${DOTS_LIB}/os.sh"
+# shellcheck source=/dev/null
+source "${DOTS_LIB}/repo.sh"
+# shellcheck source=/dev/null
 source "${DOTS_LIB}/cmd_help.sh"
 # shellcheck source=/dev/null
 source "${DOTS_LIB}/cmd_install.sh"
