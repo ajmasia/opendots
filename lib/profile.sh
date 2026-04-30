@@ -40,9 +40,9 @@ profile::load() {
   profiles_dir="$(profile::dir)"
   local line
   while IFS= read -r line; do
-    line="${line%%#*}"       # strip inline comments
-    line="${line#"${line%%[! ]*}"}"  # ltrim
-    line="${line%"${line##*[! ]}"}"  # rtrim
+    line="${line%%#*}"              # strip inline comments
+    line="${line#"${line%%[! ]*}"}" # ltrim
+    line="${line%"${line##*[! ]}"}" # rtrim
     [[ -z "$line" ]] && continue
     printf '%s\n' "$line"
   done <"${profiles_dir}/${name}.txt"
