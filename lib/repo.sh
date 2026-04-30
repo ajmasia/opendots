@@ -2,10 +2,25 @@
 # shellcheck shell=bash
 
 # Resolve the dotfiles directory with precedence:
-#   --dir flag (DOTS_DIR set by args parser) > DOTS_DIR env var > ~/.dotfiles
-# Prints the resolved path and exits 0; aborts with exit 1 if not found.
+#   --dir flag (DOTS_DIR set by args parser) > DOTS_DIR env var >
+#   dir= in ~/.config/dots/config > ~/.dotfiles
+# Prints the resolved path; aborts with exit 1 if not found.
 repo::resolve_dir() {
-  local dir="${DOTS_DIR:-${HOME}/.dotfiles}"
+  local dir="${DOTS_DIR:-}"
+  if [[ -z "$dir" ]]; then
+    local config_file="${XDG_CONFIG_HOME:-${HOME}/.config}/dots/config"
+    if [[ -f "$config_file" ]]; then
+      local line
+      line="$(grep -m1 '^dir=' "$config_file" 2>/dev/null || true)"
+      if [[ -n "$line" ]]; then
+        local candidate="${line#dir=}"
+        if [[ -d "$candidate" ]]; then
+          dir="$candidate"
+        fi
+      fi
+    fi
+  fi
+  dir="${dir:-${HOME}/.dotfiles}"
   if [[ ! -d "$dir" ]]; then
     # shellcheck disable=SC2059
     printf "${MSG_REPO_NOT_FOUND:-Dotfiles directory not found: %s}\n" "$dir" >&2
