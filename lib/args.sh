@@ -2,13 +2,15 @@
 # shellcheck shell=bash
 
 # Globals populated by args::parse_global — exported so consumers see them.
+# Env-var forms of DOTS_DIR / DOTS_PROFILE / DOTS_LANG are preserved when not
+# overridden by flags, so users can set them in their shell profile.
 export DOTS_SHOW_HELP=0
 export DOTS_SHOW_VERSION=0
-export DOTS_DRY_RUN=0
-export DOTS_YES=0
-export DOTS_PROFILE=""
-export DOTS_DIR=""
-export DOTS_LANG=""
+export DOTS_DRY_RUN="${DOTS_DRY_RUN:-0}"
+export DOTS_YES="${DOTS_YES:-0}"
+export DOTS_PROFILE="${DOTS_PROFILE:-}"
+export DOTS_DIR="${DOTS_DIR:-}"
+export DOTS_LANG="${DOTS_LANG:-}"
 export DOTS_SUBCMD=""
 # shellcheck disable=SC2034  # read by bin/dots after args::parse_global returns
 DOTS_SUBCMD_ARGS=()
