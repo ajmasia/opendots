@@ -6,7 +6,7 @@ setup() {
   source "${BATS_TEST_DIRNAME}/../../tests/test_helper.bash"
   setup_home
   setup_dots_dir
-  DOTS_BIN="${BATS_TEST_DIRNAME}/../../bin/dots"
+  DOTS_BIN="${BATS_TEST_DIRNAME}/../../bin/opendots"
   export THEME_COLORS_ENABLED=0
 }
 

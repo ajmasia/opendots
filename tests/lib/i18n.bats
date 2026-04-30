@@ -28,8 +28,8 @@ setup() {
 @test "i18n::configured_lang returns es when lang=es is in config" {
   local tmpdir
   tmpdir="$(mktemp -d)"
-  mkdir -p "${tmpdir}/.config/dots"
-  printf 'lang=es\n' >"${tmpdir}/.config/dots/config"
+  mkdir -p "${tmpdir}/.config/opendots"
+  printf 'lang=es\n' >"${tmpdir}/.config/opendots/config"
   local result
   result="$(HOME="$tmpdir" i18n::configured_lang)"
   rm -rf "$tmpdir"

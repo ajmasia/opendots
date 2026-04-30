@@ -1,15 +1,15 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 # Mensajes de error
-MSG_BASH_TOO_OLD="dots requiere bash >= 4 (encontrado: %s). Por favor, actualiza."
+MSG_BASH_TOO_OLD="opendots requiere bash >= 4 (encontrado: %s). Por favor, actualiza."
 MSG_UNKNOWN_FLAG="Flag desconocido: %s"
 MSG_UNKNOWN_SUBCMD="Subcomando desconocido: '%s'"
 MSG_SUGGEST_SUBCMD="  ¿Quisiste decir: %s?"
-MSG_USAGE_HINT="Ejecuta 'dots --help' para ver la ayuda."
+MSG_USAGE_HINT="Ejecuta 'opendots --help' para ver la ayuda."
 MSG_NOT_IMPLEMENTED="%s: aún no implementado."
 
 # Ayuda — etiquetas estructurales
-MSG_HELP_USAGE="Uso: dots [opciones] <subcomando> [args]"
+MSG_HELP_USAGE="Uso: opendots [opciones] <subcomando> [args]"
 MSG_HELP_SUBCMDS_HEADER="Subcomandos:"
 MSG_HELP_OPTS_HEADER="Opciones globales:"
 MSG_VERSION_LINE="v%s (GPL-3.0-or-later)"
@@ -21,6 +21,8 @@ MSG_SUBCMD_ADOPT="Adopta un archivo existente en un paquete"
 MSG_SUBCMD_LIST="Lista los paquetes disponibles"
 MSG_SUBCMD_STATUS="Muestra el estado de stow"
 MSG_SUBCMD_DOCTOR="Verifica la salud del sistema"
+MSG_SUBCMD_UPDATE="Actualiza OpenDots a la última versión"
+MSG_SUBCMD_UNINSTALL="Elimina OpenDots de este sistema"
 MSG_SUBCMD_HELP="Muestra este mensaje de ayuda"
 
 # Descripciones de opciones
@@ -34,12 +36,14 @@ MSG_OPT_YES="Confirma automáticamente las preguntas"
 MSG_OPT_LANG="Cambia el idioma (en, es)"
 
 # Líneas de uso por subcomando
-MSG_HELP_INSTALL="Uso: dots install <paquete...>"
-MSG_HELP_REMOVE="Uso: dots remove <paquete...>"
-MSG_HELP_ADOPT="Uso: dots adopt <paquete>"
-MSG_HELP_LIST="Uso: dots list"
-MSG_HELP_STATUS="Uso: dots status"
-MSG_HELP_DOCTOR="Uso: dots doctor"
+MSG_HELP_INSTALL="Uso: opendots install <paquete...>"
+MSG_HELP_REMOVE="Uso: opendots remove <paquete...>"
+MSG_HELP_ADOPT="Uso: opendots adopt <paquete>"
+MSG_HELP_LIST="Uso: opendots list"
+MSG_HELP_STATUS="Uso: opendots status"
+MSG_HELP_DOCTOR="Uso: opendots doctor"
+MSG_HELP_UPDATE="Uso: opendots update"
+MSG_HELP_UNINSTALL="Uso: opendots uninstall"
 
 # repo.sh
 MSG_REPO_NOT_FOUND="Directorio de dotfiles no encontrado: %s"
@@ -48,7 +52,7 @@ MSG_REPO_HINT="Créalo, define DOTS_DIR, o usa --dir <ruta>."
 # cmd_install.sh
 MSG_PKG_NOT_FOUND="Paquete no encontrado: %s"
 MSG_INSTALL_CONFLICT="Conflicto: el archivo destino ya existe (no es un enlace):"
-MSG_INSTALL_ADOPT_HINT="Ejecuta 'dots adopt <paquete>' para adoptar los archivos existentes."
+MSG_INSTALL_ADOPT_HINT="Ejecuta 'opendots adopt <paquete>' para adoptar los archivos existentes."
 MSG_INSTALL_OK="Instalado: %s"
 
 # cmd_remove.sh
@@ -84,3 +88,15 @@ MSG_DOCTOR_STOW_MISSING="stow no está instalado."
 MSG_DOCTOR_BASH_OLD="bash < 4.0 detectado (encontrado: %s)"
 MSG_DOCTOR_STOW_OLD="stow < 2.3.1 detectado (encontrado: %s)"
 MSG_DOCTOR_BROKEN_LINK="Enlace roto: %s"
+
+# cmd_update.sh
+MSG_UPDATE_PULLING="Descargando últimos cambios..."
+MSG_UPDATE_COMP="Actualizando completado de shell..."
+MSG_UPDATE_OK="OpenDots actualizado correctamente."
+MSG_UPDATE_NOT_GIT="No es un repositorio git, no se puede actualizar: %s"
+
+# cmd_uninstall.sh
+MSG_UNINSTALL_CONFIG="¿Eliminar directorio de configuración %s? [s/N] "
+MSG_UNINSTALL_CONFIG_KEPT="Conservado: %s"
+MSG_UNINSTALL_CLONE="¿Eliminar directorio del clon %s? [s/N] "
+MSG_UNINSTALL_OK="OpenDots desinstalado."

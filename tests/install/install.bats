@@ -122,12 +122,12 @@ _with_missing() {
 @test "link_binary creates symlink in ~/.local/bin" {
   local clone="${BATS_TEST_TMPDIR}/clone"
   mkdir -p "${clone}/bin"
-  touch "${clone}/bin/dots"
+  touch "${clone}/bin/opendots"
 
   run install::link_binary "$clone"
   [ "$status" -eq 0 ]
-  [[ -L "${HOME}/.local/bin/dots" ]]
-  [[ "$(readlink "${HOME}/.local/bin/dots")" == "${clone}/bin/dots" ]]
+  [[ -L "${HOME}/.local/bin/opendots" ]]
+  [[ "$(readlink "${HOME}/.local/bin/opendots")" == "${clone}/bin/opendots" ]]
 }
 
 # ---------- completions -------------------------------------------------------
@@ -136,6 +136,6 @@ _with_missing() {
   local clone="${BATS_TEST_DIRNAME}/../../"
   run install::completions "$clone"
   [ "$status" -eq 0 ]
-  [[ -f "${HOME}/.local/share/bash-completion/completions/dots" ]]
-  [[ -f "${HOME}/.local/share/zsh/site-functions/_dots" ]]
+  [[ -f "${HOME}/.local/share/bash-completion/completions/opendots" ]]
+  [[ -f "${HOME}/.local/share/zsh/site-functions/_opendots" ]]
 }

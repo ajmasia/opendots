@@ -178,8 +178,8 @@ install::link_binary() {
   local clone_dir="$1"
   local bin_dir="$HOME/.local/bin"
   mkdir -p "$bin_dir"
-  local target="${clone_dir}/bin/dots"
-  local link="${bin_dir}/dots"
+  local target="${clone_dir}/bin/opendots"
+  local link="${bin_dir}/opendots"
   [[ -L "$link" ]] && rm "$link"
   ln -s "$target" "$link"
   printf 'Linked %s -> %s\n' "$link" "$target"
@@ -190,28 +190,29 @@ install::completions() {
 
   local bash_dir="$HOME/.local/share/bash-completion/completions"
   mkdir -p "$bash_dir"
-  cp "${clone_dir}/completions/dots.bash" "${bash_dir}/dots"
-  printf 'Installed bash completion: %s\n' "${bash_dir}/dots"
+  cp "${clone_dir}/completions/opendots.bash" "${bash_dir}/opendots"
+  printf 'Installed bash completion: %s\n' "${bash_dir}/opendots"
 
   local zsh_dir="$HOME/.local/share/zsh/site-functions"
   mkdir -p "$zsh_dir"
-  cp "${clone_dir}/completions/_dots" "${zsh_dir}/_dots"
-  printf 'Installed zsh completion: %s\n' "${zsh_dir}/_dots"
+  cp "${clone_dir}/completions/_opendots" "${zsh_dir}/_opendots"
+  printf 'Installed zsh completion: %s\n' "${zsh_dir}/_opendots"
 }
 
 install::post_install() {
   local bin_dir="$HOME/.local/bin"
-  printf '\ndots installed successfully!\n\n'
+  printf '\nOpenDots installed successfully!\n\n'
   printf 'Next steps:\n'
   printf '  1. Ensure %s is in your PATH:\n' "$bin_dir"
   # shellcheck disable=SC2016
   printf '       export PATH="%s:$PATH"\n\n' "$bin_dir"
   printf '  2. Bash completion — add to ~/.bashrc:\n'
-  printf '       source ~/.local/share/bash-completion/completions/dots\n\n'
+  printf '       source ~/.local/share/bash-completion/completions/opendots\n\n'
   printf '  3. Zsh completion — add to ~/.zshrc before compinit:\n'
   # shellcheck disable=SC2016
   printf '       fpath=(~/.local/share/zsh/site-functions $fpath)\n\n'
-  printf 'The clone must remain at its current path. Updates: git pull.\n'
+  printf 'Update: opendots update\n'
+  printf 'Uninstall: opendots uninstall\n'
 }
 
 # --------------------------------------------------------------------------- #

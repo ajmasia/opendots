@@ -8,7 +8,7 @@
 repo::resolve_dir() {
   local dir="${DOTS_DIR:-}"
   if [[ -z "$dir" ]]; then
-    local config_file="${XDG_CONFIG_HOME:-${HOME}/.config}/dots/config"
+    local config_file="${XDG_CONFIG_HOME:-${HOME}/.config}/opendots/config"
     if [[ -f "$config_file" ]]; then
       local line
       line="$(grep -m1 '^dir=' "$config_file" 2>/dev/null || true)"

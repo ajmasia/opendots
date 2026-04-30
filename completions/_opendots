@@ -1,12 +1,12 @@
-#compdef dots
+#compdef opendots
 # SPDX-License-Identifier: GPL-3.0-or-later
-# Zsh tab completion for the dots command. Place this file in a directory on
-# $fpath, e.g. /usr/local/share/zsh/site-functions/_dots.
+# Zsh tab completion for the opendots command. Place this file in a directory on
+# $fpath, e.g. /usr/local/share/zsh/site-functions/_opendots.
 
-_dots_resolve_dir() {
+_opendots_resolve_dir() {
   local dir="${DOTS_DIR:-}"
   if [[ -z "$dir" ]]; then
-    local config_file="${XDG_CONFIG_HOME:-${HOME}/.config}/dots/config"
+    local config_file="${XDG_CONFIG_HOME:-${HOME}/.config}/opendots/config"
     if [[ -f "$config_file" ]]; then
       local line
       line="$(grep -m1 '^dir=' "$config_file" 2>/dev/null || true)"
@@ -19,7 +19,7 @@ _dots_resolve_dir() {
   print "${dir:-${HOME}/.dotfiles}"
 }
 
-_dots_list_packages() {
+_opendots_list_packages() {
   local dir="$1"
   [[ -d "$dir" ]] || return
   local entry name
@@ -30,7 +30,7 @@ _dots_list_packages() {
   done < <(find "$dir" -mindepth 1 -maxdepth 1 -type d -print0 2>/dev/null | sort -z)
 }
 
-_dots_list_profiles() {
+_opendots_list_profiles() {
   local dir="$1/profiles"
   [[ -d "$dir" ]] || return
   local f name
@@ -40,7 +40,7 @@ _dots_list_profiles() {
   done < <(find "$dir" -maxdepth 1 -name '*.txt' -print0 2>/dev/null | sort -z)
 }
 
-_dots() {
+_opendots() {
   local state line context
   typeset -A opt_args
 
@@ -52,6 +52,8 @@ _dots() {
     'list:list available packages'
     'status:show link status of packages'
     'doctor:check runtime dependencies'
+    'update:update OpenDots to the latest version'
+    'uninstall:remove OpenDots from this system'
     'help:show help'
   )
 
@@ -78,18 +80,18 @@ _dots() {
       ;;
     profile_names)
       local dots_dir
-      dots_dir="$(_dots_resolve_dir)"
+      dots_dir="$(_opendots_resolve_dir)"
       local -a profs
-      profs=("${(@f)$(_dots_list_profiles "$dots_dir")}")
+      profs=("${(@f)$(_opendots_list_profiles "$dots_dir")}")
       compadd -a profs
       ;;
     args)
       case "$words[2]" in
         install | remove | adopt)
           local dots_dir
-          dots_dir="$(_dots_resolve_dir)"
+          dots_dir="$(_opendots_resolve_dir)"
           local -a pkgs
-          pkgs=("${(@f)$(_dots_list_packages "$dots_dir")}")
+          pkgs=("${(@f)$(_opendots_list_packages "$dots_dir")}")
           compadd -a pkgs
           ;;
       esac
@@ -97,4 +99,4 @@ _dots() {
   esac
 }
 
-(( ${+CURRENT} )) && _dots "$@"
+(( ${+CURRENT} )) && _opendots "$@"

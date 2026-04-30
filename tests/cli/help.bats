@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 setup() {
-  DOTS_BIN="${BATS_TEST_DIRNAME}/../../bin/dots"
+  DOTS_BIN="${BATS_TEST_DIRNAME}/../../bin/opendots"
   export THEME_COLORS_ENABLED=0
 }
 
@@ -15,7 +15,7 @@ setup() {
 @test "dots --version exits 0 and stdout contains version" {
   run "$DOTS_BIN" --version
   [ "$status" -eq 0 ]
-  [[ "$output" == *"0.7.2"* ]]
+  [[ "$output" == *"0.7.3"* ]]
 }
 
 @test "bare dots exits 0 and shows banner" {

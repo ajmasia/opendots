@@ -25,9 +25,9 @@ i18n::load() {
   fi
 }
 
-# Return the lang code from ~/.config/dots/config, or "en" if absent.
+# Return the lang code from ~/.config/opendots/config, or "en" if absent.
 i18n::configured_lang() {
-  local config_file="${XDG_CONFIG_HOME:-${HOME}/.config}/dots/config"
+  local config_file="${XDG_CONFIG_HOME:-${HOME}/.config}/opendots/config"
   local lang="en"
   if [[ -f "$config_file" ]]; then
     local line

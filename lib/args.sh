@@ -15,7 +15,7 @@ export DOTS_SUBCMD=""
 # shellcheck disable=SC2034  # read by bin/dots after args::parse_global returns
 DOTS_SUBCMD_ARGS=()
 
-_ARGS_KNOWN_SUBCMDS=(install remove adopt list status doctor help)
+_ARGS_KNOWN_SUBCMDS=(install remove adopt list status doctor update uninstall help)
 
 # Parse global flags from "$@".
 # Sets the DOTS_* globals above; stops at the first non-flag argument (subcommand).
@@ -89,14 +89,14 @@ args::parse_global() {
 _args_flag_needs_value() {
   # shellcheck disable=SC2059
   printf "${MSG_UNKNOWN_FLAG:-Unknown flag: %s}\n" "$1 requires a value" >&2
-  printf '%s\n' "${MSG_USAGE_HINT:-Run 'dots --help' for usage.}" >&2
+  printf '%s\n' "${MSG_USAGE_HINT:-Run 'opendots --help' for usage.}" >&2
   exit 2
 }
 
 _args_unknown_flag() {
   # shellcheck disable=SC2059
   printf "${MSG_UNKNOWN_FLAG:-Unknown flag: %s}\n" "$1" >&2
-  printf '%s\n' "${MSG_USAGE_HINT:-Run 'dots --help' for usage.}" >&2
+  printf '%s\n' "${MSG_USAGE_HINT:-Run 'opendots --help' for usage.}" >&2
   exit 2
 }
 
@@ -133,6 +133,8 @@ args::dispatch() {
     list) cmd_list::run "${subcmd_args[@]+"${subcmd_args[@]}"}" ;;
     status) cmd_status::run "${subcmd_args[@]+"${subcmd_args[@]}"}" ;;
     doctor) cmd_doctor::run "${subcmd_args[@]+"${subcmd_args[@]}"}" ;;
+    update) cmd_update::run ;;
+    uninstall) cmd_uninstall::run ;;
     help)
       if [[ ${#subcmd_args[@]} -gt 0 ]]; then
         cmd_help::run_subcmd "${subcmd_args[0]}"
@@ -149,7 +151,7 @@ args::dispatch() {
         # shellcheck disable=SC2059
         printf "${MSG_SUGGEST_SUBCMD:-  Did you mean: %s}\n" "$suggestion" >&2
       fi
-      printf '%s\n' "${MSG_USAGE_HINT:-Run 'dots --help' for usage.}" >&2
+      printf '%s\n' "${MSG_USAGE_HINT:-Run 'opendots --help' for usage.}" >&2
       exit 2
       ;;
   esac

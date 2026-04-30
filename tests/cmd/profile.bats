@@ -7,7 +7,7 @@ setup() {
   setup_home
   setup_dots_dir
   mkdir -p "${DOTS_DIR}/profiles"
-  DOTS_BIN="${BATS_TEST_DIRNAME}/../../bin/dots"
+  DOTS_BIN="${BATS_TEST_DIRNAME}/../../bin/opendots"
   export THEME_COLORS_ENABLED=0
 }
 

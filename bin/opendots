@@ -4,7 +4,7 @@ set -euo pipefail
 
 # Require bash >= 4 before sourcing anything that uses bash 4 features.
 if ((BASH_VERSINFO[0] < 4)); then
-  printf 'dots requires bash >= 4 (found: %s). Please upgrade.\n' "${BASH_VERSION}" >&2
+  printf 'opendots requires bash >= 4 (found: %s). Please upgrade.\n' "${BASH_VERSION}" >&2
   exit 4
 fi
 
@@ -42,6 +42,10 @@ source "${DOTS_LIB}/cmd_list.sh"
 source "${DOTS_LIB}/cmd_status.sh"
 # shellcheck source=/dev/null
 source "${DOTS_LIB}/cmd_doctor.sh"
+# shellcheck source=/dev/null
+source "${DOTS_LIB}/cmd_update.sh"
+# shellcheck source=/dev/null
+source "${DOTS_LIB}/cmd_uninstall.sh"
 
 # Pre-load English so error messages during flag parsing have MSG_* values.
 i18n::load "en"

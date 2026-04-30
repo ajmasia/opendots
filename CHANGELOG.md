@@ -6,6 +6,18 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.3] — 2026-04-30
+
+### Changed
+- Binary renamed from `dots` to `opendots` — avoids collisions with `dot`, `dotty`, `dotlockfile`, etc. on Debian/Ubuntu systems.
+- Config directory moved from `~/.config/dots/` to `~/.config/opendots/` to match the new binary name.
+- Completion files renamed: `completions/dots.bash` → `completions/opendots.bash`, `completions/_dots` → `completions/_opendots`; all internal function names updated (`_dots_*` → `_opendots_*`).
+- `install.sh`: binary link is now `~/.local/bin/opendots`; completion paths updated accordingly.
+
+### Added
+- `opendots update`: runs `git pull --ff-only` in the clone directory and reinstalls shell completions.
+- `opendots uninstall`: removes binary symlink, shell completions, and (with confirmation) the config directory and the clone itself.
+
 ## [0.7.2] — 2026-04-30
 
 ### Fixed

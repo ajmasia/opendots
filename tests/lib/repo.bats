@@ -20,15 +20,15 @@ teardown() {
 
 @test "repo::resolve_dir honours dir= in config file when DOTS_DIR is unset" {
   _extra_dir="$(mktemp -d)"
-  mkdir -p "${HOME}/.config/dots"
-  printf 'dir=%s\n' "$_extra_dir" >"${HOME}/.config/dots/config"
+  mkdir -p "${HOME}/.config/opendots"
+  printf 'dir=%s\n' "$_extra_dir" >"${HOME}/.config/opendots/config"
   result="$(repo::resolve_dir)"
   [[ "$result" == "$_extra_dir" ]]
 }
 
 @test "repo::resolve_dir ignores dir= in config file when path does not exist" {
-  mkdir -p "${HOME}/.config/dots"
-  printf 'dir=/nonexistent/path/xyz\n' >"${HOME}/.config/dots/config"
+  mkdir -p "${HOME}/.config/opendots"
+  printf 'dir=/nonexistent/path/xyz\n' >"${HOME}/.config/opendots/config"
   mkdir -p "${HOME}/.dotfiles"
   result="$(repo::resolve_dir)"
   [[ "$result" == "${HOME}/.dotfiles" ]]
@@ -38,8 +38,8 @@ teardown() {
   _extra_dir="$(mktemp -d)"
   local config_dir
   config_dir="$(mktemp -d)"
-  mkdir -p "${HOME}/.config/dots"
-  printf 'dir=%s\n' "$config_dir" >"${HOME}/.config/dots/config"
+  mkdir -p "${HOME}/.config/opendots"
+  printf 'dir=%s\n' "$config_dir" >"${HOME}/.config/opendots/config"
   DOTS_DIR="$_extra_dir" result="$(repo::resolve_dir)"
   [[ "$result" == "$_extra_dir" ]]
   rm -rf "$config_dir"

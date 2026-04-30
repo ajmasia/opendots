@@ -13,13 +13,14 @@ A Bash framework on top of [GNU Stow](https://www.gnu.org/software/stow/) for ma
 ## Usage
 
 ```
-dots install <pkg...>         Link packages from your dotfiles repo
-dots remove <pkg...>          Remove linked packages
-dots adopt <pkg>              Absorb existing files into a package
-dots list                     List available packages and link state
-dots status                   Show current state and active profile
-dots doctor                   Check for broken links and conflicts
-dots watch start|stop|status  Manage the uncommitted-changes watcher
+opendots install <pkg...>         Link packages from your dotfiles repo
+opendots remove <pkg...>          Remove linked packages
+opendots adopt <pkg>              Absorb existing files into a package
+opendots list                     List available packages and link state
+opendots status                   Show current state and active profile
+opendots doctor                   Check for broken links and conflicts
+opendots update                   Pull latest changes and refresh completions
+opendots uninstall                Remove OpenDots from this system
 ```
 
 Global flags: `--profile <name>`, `--dir <path>`, `--dry-run`, `--no-color`, `--yes`, `--version`, `--help`.
@@ -32,7 +33,7 @@ Global flags: `--profile <name>`, `--dir <path>`, `--dry-run`, `--no-color`, `--
 curl -fsSL https://raw.githubusercontent.com/ajmasia/opendots/main/install.sh | bash
 ```
 
-The script clones OpenDots to `~/.local/share/opendots`, symlinks `dots` into `~/.local/bin`, and installs shell completions.
+The script clones OpenDots to `~/.local/share/opendots`, symlinks `opendots` into `~/.local/bin`, and installs shell completions.
 
 ### Manual install
 
@@ -41,7 +42,7 @@ git clone https://github.com/ajmasia/opendots ~/.local/share/opendots
 bash ~/.local/share/opendots/install.sh
 ```
 
-> The clone path must remain stable — `~/.local/bin/dots` is a symlink into it. Updates are a `git pull` inside the clone.
+> The clone path must remain stable — `~/.local/bin/opendots` is a symlink into it.
 
 ## Development
 
@@ -76,8 +77,8 @@ examples/dotfiles/
 ```
 
 ```bash
-dots --dir examples/dotfiles list
-dots --dir examples/dotfiles --profile home install
+opendots --dir examples/dotfiles list
+opendots --dir examples/dotfiles --profile home install
 ```
 
 ## License

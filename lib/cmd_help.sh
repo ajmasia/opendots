@@ -14,6 +14,8 @@ cmd_help::run() {
   printf '  %-10s %s\n' "list" "${MSG_SUBCMD_LIST}"
   printf '  %-10s %s\n' "status" "${MSG_SUBCMD_STATUS}"
   printf '  %-10s %s\n' "doctor" "${MSG_SUBCMD_DOCTOR}"
+  printf '  %-10s %s\n' "update" "${MSG_SUBCMD_UPDATE}"
+  printf '  %-10s %s\n' "uninstall" "${MSG_SUBCMD_UNINSTALL}"
   printf '  %-10s %s\n' "help" "${MSG_SUBCMD_HELP}"
   printf '\n'
   printf '%s\n' "${MSG_HELP_OPTS_HEADER}"
@@ -44,6 +46,8 @@ cmd_help::run_subcmd() {
     list) printf '%s\n' "${MSG_HELP_LIST}" ;;
     status) printf '%s\n' "${MSG_HELP_STATUS}" ;;
     doctor) printf '%s\n' "${MSG_HELP_DOCTOR}" ;;
+    update) printf '%s\n' "${MSG_HELP_UPDATE}" ;;
+    uninstall) printf '%s\n' "${MSG_HELP_UNINSTALL}" ;;
     help) cmd_help::run ;;
     *)
       # shellcheck disable=SC2059
