@@ -97,4 +97,4 @@ _dots() {
   esac
 }
 
-_dots "$@"
+(( ${+CURRENT} )) && _dots "$@"
