@@ -2,9 +2,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 set -euo pipefail
 
-# Overridable for testing
+# Override path for testing
 _OS_RELEASE="${_OS_RELEASE:-/etc/os-release}"
-_INSTALL_BASH_MAJOR="${_INSTALL_BASH_MAJOR:-${BASH_VERSINFO[0]}}"
 
 # --------------------------------------------------------------------------- #
 # Detection                                                                    #
@@ -52,7 +51,8 @@ install::compose_cmd() {
 # --------------------------------------------------------------------------- #
 
 install::check_bash() {
-  if ((_INSTALL_BASH_MAJOR < 4)); then
+  local bash_major="${_INSTALL_BASH_MAJOR:-${BASH_VERSINFO[0]}}"
+  if ((bash_major < 4)); then
     printf 'Error: dots requires bash >= 4 (found: %s).\n' "$BASH_VERSION" >&2
     printf 'On macOS: brew install bash\n' >&2
     exit 4
@@ -91,6 +91,13 @@ install::check_stow() {
   fi
 }
 
+# Populate nameref array with names of missing runtime dependencies.
+install::missing_deps() {
+  local -n _ref="$1"
+  command -v stow &>/dev/null || _ref+=(stow)
+  command -v figlet &>/dev/null || _ref+=(figlet)
+}
+
 # --------------------------------------------------------------------------- #
 # Dependency installation                                                      #
 # --------------------------------------------------------------------------- #
@@ -101,8 +108,7 @@ install::deps() {
   pkg_mgr="$(install::pkg_manager)"
 
   local -a missing=()
-  command -v stow &>/dev/null || missing+=(stow)
-  command -v figlet &>/dev/null || missing+=(figlet)
+  install::missing_deps missing
 
   if ((${#missing[@]} == 0)); then
     return 0
@@ -206,4 +212,6 @@ install::main() {
   install::post_install
 }
 
-[[ "${BASH_SOURCE[0]}" == "${0}" ]] && install::main "$@"
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  install::main "$@"
+fi
