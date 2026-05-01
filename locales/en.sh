@@ -119,3 +119,18 @@ MSG_UNINSTALL_CONFIG="Remove config directory %s? [y/N] "
 MSG_UNINSTALL_CONFIG_KEPT="Kept: %s"
 MSG_UNINSTALL_CLONE="Remove clone directory %s? [y/N] "
 MSG_UNINSTALL_OK="Dotlify uninstalled."
+
+# cmd_init.sh
+MSG_INIT_DIR_EXISTS="Path already exists: %s. Enter an alternative path: "
+MSG_INIT_CREATING="Initializing dotfiles repo at %s..."
+MSG_INIT_SCAFFOLD="Scaffolding starter files..."
+MSG_INIT_REMOTE_HINT="Link your repo to a remote when ready:"
+MSG_INIT_DONE="Dotfiles repo ready at %s"
+MSG_INIT_NEXT_STEPS="Next steps:"
+MSG_INIT_NEXT_REVIEW="  1. Review and personalize the files in %s"
+MSG_INIT_NEXT_LINK="  2. Run: dfy apply <package>"
+MSG_INIT_NEXT_ADOPT="  3. Or adopt existing files: dfy adopt <file>"
+MSG_INIT_CONFIG_OVERWRITE="Config already has dir=%s. Overwrite? [y/N] "
+
+# install.sh
+MSG_INSTALL_HINT_INIT="Run 'dfy init' to create your dotfiles repository."
