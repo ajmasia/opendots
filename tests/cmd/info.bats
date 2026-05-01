@@ -8,6 +8,7 @@ setup() {
   setup_dots_dir
   DOTS_BIN="${BATS_TEST_DIRNAME}/../../bin/dfy"
   export THEME_COLORS_ENABLED=0
+  unset EDITOR
 }
 
 teardown() {
@@ -39,4 +40,20 @@ teardown() {
   run "$DOTS_BIN" info
   [ "$status" -eq 0 ]
   [[ "$output" == *"dfy info"* ]]
+}
+
+@test "info opens README in EDITOR when set" {
+  make_package nvim .config/nvim/init.vim
+  printf '# nvim\n\nNeovim config\n' >"${DFY_DIR}/nvim/README.md"
+  EDITOR=cat run "$DOTS_BIN" info nvim
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"# nvim"* ]]
+}
+
+@test "info falls back to cat when EDITOR is unset" {
+  make_package nvim .config/nvim/init.vim
+  printf '# nvim\n\nNeovim config\n' >"${DFY_DIR}/nvim/README.md"
+  EDITOR="" run "$DOTS_BIN" info nvim
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"# nvim"* ]]
 }

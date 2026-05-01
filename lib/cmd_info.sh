@@ -25,5 +25,10 @@ cmd_info::run() {
     return 0
   fi
 
-  cat "$readme"
+  if [[ -n "${EDITOR:-}" ]]; then
+    # shellcheck disable=SC2086
+    $EDITOR "$readme"
+  else
+    cat "$readme"
+  fi
 }
