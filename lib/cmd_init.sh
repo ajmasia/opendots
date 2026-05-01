@@ -46,9 +46,9 @@ Managed with [Dotlify](https://github.com/ajmasia/dotlify).
 
 | Package | File | Description |
 |---------|------|-------------|
-| `bash-aliases` | `~/.bash_aliases` | Bash aliases (navigation, safety, updates) |
-| `zsh-aliases` | `~/.zsh_aliases` | Zsh aliases (navigation, safety, updates) |
-| `vim` | `~/.vimrc` | Vim basic settings |
+| [`bash-aliases`](bash-aliases/README.md) | `~/.bash_aliases` | Bash aliases (navigation, safety, updates) |
+| [`zsh-aliases`](zsh-aliases/README.md) | `~/.zsh_aliases` | Zsh aliases (navigation, safety, updates) |
+| [`vim`](vim/README.md) | `~/.vimrc` | Vim basic settings |
 
 Review and uncomment the lines you want, then apply a package to link it into `$HOME`:
 
@@ -112,6 +112,7 @@ EOF
   _create_readme_template "bash-aliases" \
     "Bash aliases for navigation, safety, and system updates." \
     >"${dir}/bash-aliases/README.md"
+  printf '%s\n' '^README\.md$' >"${dir}/bash-aliases/.stow-local-ignore"
 
   mkdir -p "${dir}/zsh-aliases"
   cat >"${dir}/zsh-aliases/.zsh_aliases" <<'EOF'
@@ -135,6 +136,7 @@ EOF
   _create_readme_template "zsh-aliases" \
     "Zsh aliases for navigation, safety, and system updates." \
     >"${dir}/zsh-aliases/README.md"
+  printf '%s\n' '^README\.md$' >"${dir}/zsh-aliases/.stow-local-ignore"
 
   mkdir -p "${dir}/vim"
   cat >"${dir}/vim/.vimrc" <<'EOF'
@@ -151,6 +153,7 @@ EOF
   _create_readme_template "vim" \
     "Basic Vim settings: syntax, line numbers, indentation, and search." \
     >"${dir}/vim/README.md"
+  printf '%s\n' '^README\.md$' >"${dir}/vim/.stow-local-ignore"
 
   cat >"${dir}/.gitignore" <<'EOF'
 *.swp
