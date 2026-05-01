@@ -67,6 +67,19 @@ MSG_ADOPT_OK="Adopted: %s"
 # cmd_list.sh
 MSG_LIST_EMPTY="No packages found in %s"
 
+# cmd_info.sh
+MSG_INFO_NO_README="No README found for %s"
+MSG_SUBCMD_INFO="Show a package's README"
+MSG_HELP_INFO="Usage: dfy info <package>"
+
+# cmd_create.sh
+MSG_CREATE_EXISTS="Package already exists: %s"
+MSG_CREATE_ASK_DESC="Description (optional, Enter to skip): "
+MSG_CREATE_DONE="Package scaffolded: %s"
+MSG_CREATE_HINT="Add your config files under %s"
+MSG_SUBCMD_CREATE="Scaffold a new package"
+MSG_HELP_CREATE="Usage: dfy create <package>"
+
 # cmd_status.sh
 MSG_STATUS_DOTFILES="Dotfiles: %s"
 MSG_STATUS_LINKED="Linked packages (%s):"
