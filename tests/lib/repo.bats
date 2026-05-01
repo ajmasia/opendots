@@ -58,3 +58,56 @@ teardown() {
   result="$(repo::resolve_dir)"
   [[ "$result" == "${HOME}/.dotfiles" ]]
 }
+
+# ---------------------------------------------------------------------------
+# repo::pkg_description
+# ---------------------------------------------------------------------------
+
+@test "repo::pkg_description returns empty when no README" {
+  local dots_dir
+  dots_dir="$(mktemp -d)"
+  mkdir -p "${dots_dir}/vim"
+  result="$(repo::pkg_description "$dots_dir" "vim")"
+  [[ -z "$result" ]]
+  rm -rf "$dots_dir"
+}
+
+@test "repo::pkg_description returns prose line after heading" {
+  local dots_dir
+  dots_dir="$(mktemp -d)"
+  mkdir -p "${dots_dir}/nvim"
+  printf '# nvim\n\nNeovim configuration\n\n## Files\n' >"${dots_dir}/nvim/README.md"
+  result="$(repo::pkg_description "$dots_dir" "nvim")"
+  [[ "$result" == "Neovim configuration" ]]
+  rm -rf "$dots_dir"
+}
+
+@test "repo::pkg_description falls back to heading text when no prose follows" {
+  local dots_dir
+  dots_dir="$(mktemp -d)"
+  mkdir -p "${dots_dir}/git"
+  printf '# git\n\n## Files\n' >"${dots_dir}/git/README.md"
+  result="$(repo::pkg_description "$dots_dir" "git")"
+  [[ "$result" == "git" ]]
+  rm -rf "$dots_dir"
+}
+
+@test "repo::pkg_description returns (no description) for empty README" {
+  local dots_dir
+  dots_dir="$(mktemp -d)"
+  mkdir -p "${dots_dir}/zsh"
+  printf '' >"${dots_dir}/zsh/README.md"
+  result="$(repo::pkg_description "$dots_dir" "zsh")"
+  [[ "$result" == "(no description)" ]]
+  rm -rf "$dots_dir"
+}
+
+@test "repo::pkg_description uses first non-empty line when no heading" {
+  local dots_dir
+  dots_dir="$(mktemp -d)"
+  mkdir -p "${dots_dir}/tmux"
+  printf 'Terminal multiplexer settings\n' >"${dots_dir}/tmux/README.md"
+  result="$(repo::pkg_description "$dots_dir" "tmux")"
+  [[ "$result" == "Terminal multiplexer settings" ]]
+  rm -rf "$dots_dir"
+}

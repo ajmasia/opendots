@@ -43,6 +43,49 @@ repo::list_packages() {
   done < <(find "$dir" -mindepth 1 -maxdepth 1 -type d -print0 2>/dev/null | sort -z)
 }
 
+# Extract a one-line description from <dots_dir>/<pkg>/README.md.
+# Returns the first meaningful prose line: skips the leading # Title heading,
+# then returns the first non-empty, non-heading line.
+# Falls back to the title heading text if no prose line is found.
+# Prints "(no description)" when the README exists but is completely empty.
+# Prints nothing (returns 0) when no README exists.
+repo::pkg_description() {
+  local dots_dir="$1" pkg="$2"
+  local readme="${dots_dir}/${pkg}/README.md"
+  [[ -f "$readme" ]] || return 0
+
+  local line heading="" h skipped_heading=0
+
+  while IFS= read -r line; do
+    [[ -z "$line" ]] && continue
+
+    if [[ "$skipped_heading" -eq 0 ]]; then
+      if [[ "$line" == "#"* ]]; then
+        h="$line"
+        while [[ "$h" == "#"* ]]; do h="${h#\#}"; done
+        h="${h# }"
+        heading="$h"
+        skipped_heading=1
+        continue
+      else
+        printf '%s' "$line"
+        return 0
+      fi
+    fi
+
+    if [[ "$line" != "#"* ]]; then
+      printf '%s' "$line"
+      return 0
+    fi
+  done < "$readme"
+
+  if [[ -n "$heading" ]]; then
+    printf '%s' "$heading"
+  else
+    printf '(no description)'
+  fi
+}
+
 # Return a single-character status marker for <pkg> in <dots_dir>:
 #   ✓  all package files are symlinked into $HOME
 #   !  at least one target path is a real file (conflict)
