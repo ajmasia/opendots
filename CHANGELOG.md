@@ -6,6 +6,14 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.10.3] — 2026-05-01
+
+### Added
+- Global flags (`--profile`/`-p`, `--dir`/`-d`, `--lang`/`-l`, `--yes`/`-y`) are now accepted in any position — before or after the subcommand.
+- Short aliases: `-p` for `--profile`, `-d` for `--dir`, `-l` for `--lang`.
+- `dfy help`: lists `init` subcommand; global options section shows the new short aliases.
+- Shell completions (bash and zsh) updated with `init` subcommand and short flag aliases.
+
 ## [0.10.2] — 2026-05-01
 
 ### Fixed
