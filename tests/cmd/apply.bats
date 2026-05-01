@@ -14,37 +14,37 @@ teardown() {
   teardown_dirs
 }
 
-@test "install <pkg> creates the expected symlinks" {
+@test "apply <pkg> creates the expected symlinks" {
   make_package vim .vimrc "set nocompatible"
-  run "$DOTS_BIN" install vim
+  run "$DOTS_BIN" apply vim
   [ "$status" -eq 0 ]
   assert_symlink "${HOME}/.vimrc" "${DFY_DIR}/vim/.vimrc"
 }
 
-@test "install <pkg> aborts with exit 3 when a target file is real" {
+@test "apply <pkg> aborts with exit 3 when a target file is real" {
   make_package vim .vimrc
   printf 'existing\n' >"${HOME}/.vimrc"
-  run "$DOTS_BIN" install vim
+  run "$DOTS_BIN" apply vim
   [ "$status" -eq 3 ]
   [[ "$output" == *".vimrc"* ]]
 }
 
-@test "install with no args exits 2 with usage hint" {
-  run "$DOTS_BIN" install
+@test "apply with no args exits 2 with usage hint" {
+  run "$DOTS_BIN" apply
   [ "$status" -eq 2 ]
 }
 
-@test "--dry-run install creates no symlinks" {
+@test "--dry-run apply creates no symlinks" {
   make_package vim .vimrc
-  run "$DOTS_BIN" --dry-run install vim
+  run "$DOTS_BIN" --dry-run apply vim
   [ "$status" -eq 0 ]
   [[ ! -e "${HOME}/.vimrc" ]]
 }
 
-@test "--dry-run install reports conflict and exits 3 when target is real" {
+@test "--dry-run apply reports conflict and exits 3 when target is real" {
   make_package vim .vimrc
   printf 'existing\n' >"${HOME}/.vimrc"
-  run "$DOTS_BIN" --dry-run install vim
+  run "$DOTS_BIN" --dry-run apply vim
   [ "$status" -eq 3 ]
   [[ ! -L "${HOME}/.vimrc" ]]
 }

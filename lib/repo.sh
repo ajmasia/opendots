@@ -77,7 +77,7 @@ repo::pkg_description() {
       printf '%s' "$line"
       return 0
     fi
-  done < "$readme"
+  done <"$readme"
 
   if [[ -n "$heading" ]]; then
     printf '%s' "$heading"

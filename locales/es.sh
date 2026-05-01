@@ -14,7 +14,7 @@ MSG_HELP_SUBCMDS_HEADER="Subcomandos:"
 MSG_HELP_OPTS_HEADER="Opciones globales:"
 
 # Descripciones breves de subcomandos
-MSG_SUBCMD_INSTALL="Enlaza paquetes de tu repositorio de dotfiles"
+MSG_SUBCMD_APPLY="Aplica paquetes de tu repositorio de dotfiles"
 MSG_SUBCMD_REMOVE="Desenlaza paquetes"
 MSG_SUBCMD_ADOPT="Adopta un archivo existente en un paquete"
 MSG_SUBCMD_LIST="Lista los paquetes disponibles"
@@ -35,7 +35,7 @@ MSG_OPT_YES="Confirma automáticamente las preguntas"
 MSG_OPT_LANG="Cambia el idioma (en, es)"
 
 # Líneas de uso por subcomando
-MSG_HELP_INSTALL="Uso: dfy install <paquete...>"
+MSG_HELP_APPLY="Uso: dfy apply <paquete...>"
 MSG_HELP_REMOVE="Uso: dfy remove <paquete...>"
 MSG_HELP_ADOPT="Uso: dfy adopt <paquete>"
 MSG_HELP_LIST="Uso: dfy list"
@@ -48,11 +48,11 @@ MSG_HELP_UNINSTALL="Uso: dfy uninstall"
 MSG_REPO_NOT_FOUND="Directorio de dotfiles no encontrado: %s"
 MSG_REPO_HINT="Créalo, define DFY_DIR, o usa --dir <ruta>."
 
-# cmd_install.sh
+# cmd_apply.sh
 MSG_PKG_NOT_FOUND="Paquete no encontrado: %s"
-MSG_INSTALL_CONFLICT="Conflicto: el archivo destino ya existe (no es un enlace):"
-MSG_INSTALL_ADOPT_HINT="Ejecuta 'dfy adopt <paquete>' para adoptar los archivos existentes."
-MSG_INSTALL_OK="Instalado: %s"
+MSG_APPLY_CONFLICT="Conflicto: el archivo destino ya existe (no es un enlace):"
+MSG_APPLY_ADOPT_HINT="Ejecuta 'dfy adopt <paquete>' para adoptar los archivos existentes."
+MSG_APPLY_OK="Aplicado: %s"
 
 # cmd_remove.sh
 MSG_REMOVE_OK="Eliminado: %s"

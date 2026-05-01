@@ -30,7 +30,7 @@ cmd_help::run() {
     "$(printf '%sdfy%s [options] <subcommand> [args]' "$(theme::text)" "$(theme::reset)")"
   printf '\n'
   _help_section "${MSG_HELP_SUBCMDS_HEADER}"
-  _help_cmd_row "install" "${MSG_SUBCMD_INSTALL}"
+  _help_cmd_row "apply" "${MSG_SUBCMD_APPLY}"
   _help_cmd_row "remove" "${MSG_SUBCMD_REMOVE}"
   _help_cmd_row "adopt" "${MSG_SUBCMD_ADOPT}"
   _help_cmd_row "list" "${MSG_SUBCMD_LIST}"
@@ -66,7 +66,7 @@ cmd_help::run_subcmd() {
   local subcmd="$1"
   local usage
   case "$subcmd" in
-    install) usage="${MSG_HELP_INSTALL}" ;;
+    apply) usage="${MSG_HELP_APPLY}" ;;
     remove) usage="${MSG_HELP_REMOVE}" ;;
     adopt) usage="${MSG_HELP_ADOPT}" ;;
     list) usage="${MSG_HELP_LIST}" ;;

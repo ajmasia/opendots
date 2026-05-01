@@ -31,7 +31,7 @@ source "${DFY_LIB}/profile.sh"
 # shellcheck source=/dev/null
 source "${DFY_LIB}/cmd_help.sh"
 # shellcheck source=/dev/null
-source "${DFY_LIB}/cmd_install.sh"
+source "${DFY_LIB}/cmd_apply.sh"
 # shellcheck source=/dev/null
 source "${DFY_LIB}/cmd_remove.sh"
 # shellcheck source=/dev/null

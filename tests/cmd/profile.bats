@@ -23,35 +23,35 @@ make_profile() {
   printf '%s\n' "$@" >"$profile_file"
 }
 
-@test "install --profile installs exactly the listed packages" {
+@test "apply --profile applys exactly the listed packages" {
   make_package vim .vimrc "set nocompatible"
   make_package git .gitconfig "[core]"
   make_profile base vim git
-  run "$DOTS_BIN" --profile base install
+  run "$DOTS_BIN" --profile base apply
   [ "$status" -eq 0 ]
   assert_symlink "${HOME}/.vimrc" "${DFY_DIR}/vim/.vimrc"
   assert_symlink "${HOME}/.gitconfig" "${DFY_DIR}/git/.gitconfig"
 }
 
-@test "install --profile with missing profile exits 2 and mentions profile name" {
-  run "$DOTS_BIN" --profile ghost install
+@test "apply --profile with missing profile exits 2 and mentions profile name" {
+  run "$DOTS_BIN" --profile ghost apply
   [ "$status" -eq 2 ]
   [[ "$output" == *"ghost"* ]]
 }
 
-@test "install --profile with missing profile lists available profiles" {
+@test "apply --profile with missing profile lists available profiles" {
   make_profile work vim
   make_profile home git
-  run "$DOTS_BIN" --profile nope install
+  run "$DOTS_BIN" --profile nope apply
   [ "$status" -eq 2 ]
   [[ "$output" == *"work"* || "$output" == *"home"* ]]
 }
 
-@test "--dry-run install --profile creates no symlinks but reports planned set" {
+@test "--dry-run apply --profile creates no symlinks but reports planned set" {
   make_package vim .vimrc
   make_package git .gitconfig
   make_profile base vim git
-  run "$DOTS_BIN" --dry-run --profile base install
+  run "$DOTS_BIN" --dry-run --profile base apply
   [ "$status" -eq 0 ]
   [[ ! -e "${HOME}/.vimrc" ]]
   [[ ! -e "${HOME}/.gitconfig" ]]
@@ -60,14 +60,14 @@ make_profile() {
 @test "remove --profile removes exactly the package set" {
   make_package vim .vimrc "set nocompatible"
   make_profile base vim
-  "$DOTS_BIN" --profile base install
+  "$DOTS_BIN" --profile base apply
   assert_symlink "${HOME}/.vimrc" "${DFY_DIR}/vim/.vimrc"
   run "$DOTS_BIN" --profile base remove
   [ "$status" -eq 0 ]
   [[ ! -L "${HOME}/.vimrc" ]]
 }
 
-@test "install --profile ignores comment lines and blank lines in profile file" {
+@test "apply --profile ignores comment lines and blank lines in profile file" {
   make_package vim .vimrc
   cat >"${DFY_DIR}/profiles/mixed.txt" <<'EOF'
 # editor config
@@ -75,7 +75,7 @@ vim
 
 # end
 EOF
-  run "$DOTS_BIN" --profile mixed install
+  run "$DOTS_BIN" --profile mixed apply
   [ "$status" -eq 0 ]
   assert_symlink "${HOME}/.vimrc" "${DFY_DIR}/vim/.vimrc"
 }

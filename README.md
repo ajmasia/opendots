@@ -13,10 +13,12 @@ A Bash framework on top of [GNU Stow](https://www.gnu.org/software/stow/) for ma
 ## Usage
 
 ```
-dfy install <pkg...>         Link packages from your dotfiles repo
+dfy apply <pkg...>           Apply packages from your dotfiles repo
 dfy remove <pkg...>          Remove linked packages
 dfy adopt <pkg>              Absorb existing files into a package
 dfy list                     List available packages
+dfy info <pkg>               Show a package's README
+dfy create <pkg>             Scaffold a new package
 dfy status                   Show current state and active profile
 dfy doctor                   Check for broken links and conflicts
 dfy update                   Pull latest changes and refresh completions
@@ -98,7 +100,7 @@ examples/dotfiles/
 
 ```bash
 dfy --dir examples/dotfiles list
-dfy --dir examples/dotfiles --profile home install
+dfy --dir examples/dotfiles --profile home apply
 ```
 
 ## License

@@ -47,7 +47,7 @@ _dfy() {
 
   local -a subcommands
   subcommands=(
-    'install:install packages from the dotfiles repo'
+    'apply:apply packages from the dotfiles repo'
     'remove:remove installed packages'
     'adopt:adopt existing dotfiles into the repo'
     'list:list available packages'
@@ -90,7 +90,7 @@ _dfy() {
       ;;
     args)
       case "$words[2]" in
-        install | remove | adopt | info)
+        apply | remove | adopt | info)
           local dots_dir
           dots_dir="$(_dfy_resolve_dir)"
           local -a pkgs

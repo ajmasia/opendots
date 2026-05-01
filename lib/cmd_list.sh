@@ -29,7 +29,7 @@ cmd_list::run() {
     pkg="${pkgs[$i]}"
     desc="${descs[$i]}"
     if [[ -n "$desc" ]]; then
-      pad=$(( max_len - ${#pkg} ))
+      pad=$((max_len - ${#pkg}))
       printf '  %s-%s %s%s%s%*s  %s%s%s\n' \
         "$(theme::muted)" "$(theme::reset)" \
         "$(theme::info)" "$pkg" "$(theme::reset)" \
