@@ -163,6 +163,7 @@ install::deps() {
     _ui_ask "Proceed? [y/N]"
     local answer
     read -r answer
+    printf '\n'
     if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
       _ui_error "Aborted. Install stow and figlet manually, then re-run."
       exit 1
@@ -193,11 +194,14 @@ install::clone_or_update() {
   local dest="$DOTLIFY_CLONE_DIR"
   if [[ -d "${dest}/.git" ]]; then
     _ui_step "Updating existing clone at $(_ui_value "$dest") ..." >&2
+    printf '\n' >&2
     git -C "$dest" pull --ff-only >&2
   else
     _ui_step "Cloning Dotlify to $(_ui_value "$dest") ..." >&2
+    printf '\n' >&2
     git clone "$DOTLIFY_REPO" "$dest" >&2
   fi
+  printf '\n' >&2
   printf '%s' "$dest"
 }
 
@@ -232,7 +236,7 @@ install::completions() {
 
 install::post_install() {
   local bin_dir="$HOME/.local/bin"
-  printf '\n%s\n' "$(_ui_ok "Dotlify installed successfully!" && true)"
+  _ui_ok "Dotlify installed successfully!"
   _ui_section "Next steps:"
   printf '  %s Ensure %s is in your PATH:\n' "$(_ui_muted "1.")" "$(_ui_value "$bin_dir")"
   printf '       %s\n' "$(_ui_muted "export PATH=\"${bin_dir}:\$PATH\"")"

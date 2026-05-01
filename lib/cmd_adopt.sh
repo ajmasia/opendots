@@ -49,6 +49,7 @@ cmd_adopt::run() {
     ui::ask "${MSG_ADOPT_CONFIRM}"
     local answer
     read -r answer
+    printf '\n'
     if [[ "$answer" != [Yy]* ]]; then
       ui::info "${MSG_ADOPT_ABORTED}"
       exit 1

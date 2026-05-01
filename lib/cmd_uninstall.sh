@@ -23,6 +23,7 @@ cmd_uninstall::run() {
       ui::ask "$(printf "${MSG_UNINSTALL_CONFIG:-Remove config directory %s? [y/N]}" \
         "$(printf '%s%s%s' "$(theme::accent)" "$config_dir" "$(theme::reset)")")"
       read -r answer
+      printf '\n'
     fi
     if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
       rm -rf "$config_dir"
@@ -42,6 +43,7 @@ cmd_uninstall::run() {
       ui::ask "$(printf "${MSG_UNINSTALL_CLONE:-Remove clone directory %s? [y/N]}" \
         "$(printf '%s%s%s' "$(theme::accent)" "$clone_dir" "$(theme::reset)")")"
       read -r answer
+      printf '\n'
     fi
     if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
       rm -rf "$clone_dir"

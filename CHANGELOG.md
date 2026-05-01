@@ -6,6 +6,13 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.4] — 2026-05-01
+
+### Changed
+- UX: blank line after `[>]` step message and after external command output (git clone/pull) to visually separate blocks.
+- UX: blank line after each `[?]` prompt+answer before the result, applied consistently in `uninstall`, `adopt`, and `install.sh`.
+- `install.sh`: `[+] Dotlify installed successfully!` no longer preceded by a blank line — keeps it in the same result block as the preceding `[+]` lines.
+
 ## [0.8.3] — 2026-05-01
 
 ### Fixed
