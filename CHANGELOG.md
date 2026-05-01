@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.14] — 2026-05-01
+
+### Changed
+- `.gitignore`: add `result`, `result-*`, and `.direnv/` entries for Nix workflows.
+
 ## [0.11.13] — 2026-05-01
 
 ### Fixed
