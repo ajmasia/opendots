@@ -34,6 +34,8 @@ cmd_help::run() {
   _help_cmd_row "remove" "${MSG_SUBCMD_REMOVE}"
   _help_cmd_row "adopt" "${MSG_SUBCMD_ADOPT}"
   _help_cmd_row "list" "${MSG_SUBCMD_LIST}"
+  _help_cmd_row "info" "${MSG_SUBCMD_INFO}"
+  _help_cmd_row "create" "${MSG_SUBCMD_CREATE}"
   _help_cmd_row "status" "${MSG_SUBCMD_STATUS}"
   _help_cmd_row "doctor" "${MSG_SUBCMD_DOCTOR}"
   _help_cmd_row "update" "${MSG_SUBCMD_UPDATE}"
@@ -68,6 +70,8 @@ cmd_help::run_subcmd() {
     remove) usage="${MSG_HELP_REMOVE}" ;;
     adopt) usage="${MSG_HELP_ADOPT}" ;;
     list) usage="${MSG_HELP_LIST}" ;;
+    info) usage="${MSG_HELP_INFO}" ;;
+    create) usage="${MSG_HELP_CREATE}" ;;
     status) usage="${MSG_HELP_STATUS}" ;;
     doctor) usage="${MSG_HELP_DOCTOR}" ;;
     update) usage="${MSG_HELP_UPDATE}" ;;

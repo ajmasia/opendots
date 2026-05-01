@@ -46,6 +46,10 @@ source "${DFY_LIB}/cmd_doctor.sh"
 source "${DFY_LIB}/cmd_update.sh"
 # shellcheck source=/dev/null
 source "${DFY_LIB}/cmd_uninstall.sh"
+# shellcheck source=/dev/null
+source "${DFY_LIB}/cmd_info.sh"
+# shellcheck source=/dev/null
+source "${DFY_LIB}/cmd_create.sh"
 
 # Pre-load English so error messages during flag parsing have MSG_* values.
 i18n::load "en"
