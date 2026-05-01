@@ -81,6 +81,13 @@ cmd_create::run() {
   repo::update_readme_table "$dots_dir" "$pkg" "$desc"
   # shellcheck disable=SC2059
   ui::ok "$(printf "${MSG_CREATE_DONE:-Package scaffolded: %s}" "$pkg")"
+  printf '\n'
+  ui::step "${MSG_CREATE_NEXT_STEPS:-Next steps:}"
   # shellcheck disable=SC2059
-  ui::info "$(printf "${MSG_CREATE_HINT:-Add your config files under %s, then run: dfy apply %s}" "$pkg_dir" "$pkg")"
+  printf '  %s\n' "$(printf "${MSG_CREATE_NEXT_ADD:-Add dotfiles to %s then run: dfy link %s}" \
+    "$(printf '%s%s%s' "$(theme::accent)" "$pkg_dir" "$(theme::reset)")" \
+    "$(printf '%s%s%s' "$(theme::info)" "$pkg" "$(theme::reset)")")"
+  # shellcheck disable=SC2059
+  printf '  %s\n' "$(printf "${MSG_CREATE_NEXT_ADOPT:-Or adopt existing files: dfy adopt %s}" \
+    "$(printf '%s%s%s' "$(theme::info)" "$pkg" "$(theme::reset)")")"
 }
