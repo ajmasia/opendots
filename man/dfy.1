@@ -65,13 +65,13 @@ repository path to the config file.
 Use \fB\-\-bare\fR to skip the scaffold and create only the git
 repository.
 .
-.SS dfy apply \fIPKG\fR...
+.SS dfy link \fIPKG\fR...
 Link one or more packages into \fI$HOME\fR using \fBstow\fR.
 Aborts with exit code 3 when a target path already exists as a real
 file (run \fBdfy adopt\fR to absorb it first).
 .
 .SS dfy unlink \fIPKG\fR...
-Remove the symlinks created by \fBdfy apply\fR for the given packages.
+Remove the symlinks created by \fBdfy link\fR for the given packages.
 The package files in the repository are not affected.
 .
 .SS dfy adopt \fIPKG\fR

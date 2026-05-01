@@ -47,7 +47,7 @@ source "${DFY_LIB}/profile.sh"
 # shellcheck source=/dev/null
 source "${DFY_LIB}/cmd_help.sh"
 # shellcheck source=/dev/null
-source "${DFY_LIB}/cmd_apply.sh"
+source "${DFY_LIB}/cmd_link.sh"
 # shellcheck source=/dev/null
 source "${DFY_LIB}/cmd_unlink.sh"
 # shellcheck source=/dev/null

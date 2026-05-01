@@ -15,7 +15,7 @@ MSG_HELP_SUBCMDS_HEADER="Subcommands:"
 MSG_HELP_OPTS_HEADER="Global options:"
 
 # Subcommand one-liners
-MSG_SUBCMD_APPLY="Apply packages from your dotfiles repo"
+MSG_SUBCMD_LINK="Link packages from your dotfiles repo"
 MSG_SUBCMD_REMOVE="Unstow packages"
 MSG_SUBCMD_ADOPT="Adopt an existing file into a package"
 MSG_SUBCMD_LIST="List available packages"
@@ -36,7 +36,7 @@ MSG_OPT_YES="Auto-confirm prompts"
 MSG_OPT_LANG="Override language (en, es)"
 
 # Per-subcommand usage lines
-MSG_HELP_APPLY="Usage: dfy apply <package...>"
+MSG_HELP_LINK="Usage: dfy link <package...>"
 MSG_HELP_REMOVE="Usage: dfy remove <package...>"
 MSG_HELP_ADOPT="Usage: dfy adopt <package>"
 MSG_HELP_LIST="Usage: dfy list"
@@ -53,7 +53,7 @@ MSG_REPO_HINT="Create it, set DFY_DIR, or pass --dir <path>."
 MSG_PKG_NOT_FOUND="Package not found: %s"
 MSG_APPLY_CONFLICT="Conflict: target file already exists (not a symlink):"
 MSG_APPLY_ADOPT_HINT="Run 'dfy adopt <package>' to adopt existing files."
-MSG_APPLY_OK="Applied: %s"
+MSG_LINK_OK="Linked: %s"
 
 # cmd_unlink.sh
 MSG_UNLINK_OK="Unlinked: %s"

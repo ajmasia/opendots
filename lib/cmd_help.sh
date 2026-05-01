@@ -30,7 +30,7 @@ cmd_help::run() {
     "$(theme::subtext)" "${MSG_HELP_USAGE_BODY}" "$(theme::reset)"
   printf '\n'
   _help_section "${MSG_HELP_SUBCMDS_HEADER}"
-  _help_cmd_row "apply" "${MSG_SUBCMD_APPLY}"
+  _help_cmd_row "link" "${MSG_SUBCMD_LINK}"
   _help_cmd_row "unlink" "${MSG_SUBCMD_UNLINK}"
   _help_cmd_row "adopt" "${MSG_SUBCMD_ADOPT}"
   _help_cmd_row "list" "${MSG_SUBCMD_LIST}"
@@ -68,7 +68,7 @@ cmd_help::run_subcmd() {
   local subcmd="$1"
   local usage
   case "$subcmd" in
-    apply) usage="${MSG_HELP_APPLY}" ;;
+    link) usage="${MSG_HELP_LINK}" ;;
     unlink) usage="${MSG_HELP_UNLINK}" ;;
     adopt) usage="${MSG_HELP_ADOPT}" ;;
     list) usage="${MSG_HELP_LIST}" ;;

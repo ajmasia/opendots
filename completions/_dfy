@@ -47,7 +47,7 @@ _dfy() {
 
   local -a subcommands
   subcommands=(
-    'apply:apply packages from the dotfiles repo'
+    'link:link packages from the dotfiles repo'
     'unlink:remove symlinks for packages'
     'adopt:adopt existing dotfiles into the repo'
     'list:list available packages'

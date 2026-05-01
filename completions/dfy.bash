@@ -46,13 +46,13 @@ _dfy_complete() {
   prev="${COMP_WORDS[COMP_CWORD - 1]}"
   subcmd=""
 
-  local -a subcommands=(apply unlink adopt list info create init config status doctor update uninstall help)
+  local -a subcommands=(link unlink adopt list info create init config status doctor update uninstall help)
   local -a global_flags=(--help -h --version -V --no-color --dry-run --profile -p --yes -y --dir -d --lang -l)
 
   local i
   for ((i = 1; i < COMP_CWORD; i++)); do
     case "${COMP_WORDS[i]}" in
-      apply | unlink | adopt | list | info | create | init | config | status | doctor | update | uninstall | help)
+      link | unlink | adopt | list | info | create | init | config | status | doctor | update | uninstall | help)
         subcmd="${COMP_WORDS[i]}"
         break
         ;;
@@ -93,7 +93,7 @@ _dfy_complete() {
   fi
 
   case "$subcmd" in
-    apply | unlink | adopt | info)
+    link | unlink | adopt | info)
       local dots_dir
       dots_dir="$(_dfy_resolve_dir)"
       local -a packages

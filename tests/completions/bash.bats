@@ -28,7 +28,7 @@ teardown() {
 
 @test "completes all subcommands at position 1" {
   _complete dfy ""
-  [[ " ${COMPREPLY[*]} " == *" apply "* ]]
+  [[ " ${COMPREPLY[*]} " == *" link "* ]]
   [[ " ${COMPREPLY[*]} " == *" unlink "* ]]
   [[ " ${COMPREPLY[*]} " == *" adopt "* ]]
   [[ " ${COMPREPLY[*]} " == *" list "* ]]
@@ -40,9 +40,9 @@ teardown() {
 }
 
 @test "filters subcommands by prefix" {
-  _complete dfy "ap"
-  [[ " ${COMPREPLY[*]} " == *" apply "* ]]
-  [[ " ${COMPREPLY[*]} " != *" remove "* ]]
+  _complete dfy "li"
+  [[ " ${COMPREPLY[*]} " == *" link "* ]]
+  [[ " ${COMPREPLY[*]} " != *" unlink "* ]]
 }
 
 @test "completes global flags when cur starts with -" {
@@ -55,10 +55,10 @@ teardown() {
   [[ " ${COMPREPLY[*]} " == *" --yes "* ]]
 }
 
-@test "completes packages after apply" {
+@test "completes packages after link" {
   make_package vim .vimrc
   make_package tmux .tmux.conf
-  _complete dfy apply ""
+  _complete dfy link ""
   [[ " ${COMPREPLY[*]} " == *" vim "* ]]
   [[ " ${COMPREPLY[*]} " == *" tmux "* ]]
 }
@@ -81,7 +81,7 @@ teardown() {
   mkdir -p "$other_dir/custom-pkg"
   saved="${DFY_DIR}"
   DFY_DIR="$other_dir"
-  _complete dfy apply ""
+  _complete dfy link ""
   DFY_DIR="$saved"
   [[ " ${COMPREPLY[*]} " == *" custom-pkg "* ]]
   rm -rf "$other_dir"
@@ -91,7 +91,7 @@ teardown() {
   make_package vim .vimrc
   mkdir -p "${DFY_DIR}/.git"
   mkdir -p "${DFY_DIR}/profiles"
-  _complete dfy apply ""
+  _complete dfy link ""
   [[ " ${COMPREPLY[*]} " == *" vim "* ]]
   [[ " ${COMPREPLY[*]} " != *" .git "* ]]
   [[ " ${COMPREPLY[*]} " != *" profiles "* ]]
@@ -133,7 +133,7 @@ teardown() {
 }
 
 @test "flags are completed after a subcommand when cur starts with -" {
-  _complete dfy apply "--"
+  _complete dfy link "--"
   [[ " ${COMPREPLY[*]} " == *" --profile "* ]]
   [[ " ${COMPREPLY[*]} " == *" --dry-run "* ]]
 }
