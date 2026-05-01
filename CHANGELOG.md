@@ -6,6 +6,18 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.12.1] — 2026-05-01
+
+### Added
+- `dfy link` replaces `dfy apply` for symmetry with `dfy unlink`.
+- `dfy create` now prints a "next steps" hint after scaffolding a package.
+- `dfy delete <pkg>` removes a package directory (unlinking first if linked).
+- `dfy delete profile <name>` removes a profile file.
+- Both `delete` forms warn when the target has uncommitted git changes.
+
+### Fixed
+- Help usage line: `Usage:` label rendered in accent colour, body in subtext.
+
 ## [0.12.0] — 2026-05-01
 
 ### Fixed
