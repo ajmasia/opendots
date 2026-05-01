@@ -74,9 +74,10 @@ MSG_SUBCMD_INFO="Muestra el README de un paquete"
 MSG_HELP_INFO="Uso: dfy info <paquete>"
 
 # cmd_create.sh
-MSG_CREATE_EXISTS="El paquete ya existe: %s"
+MSG_CREATE_EXISTS="El paquete ya existe y tiene README: %s"
 MSG_CREATE_ASK_DESC="Descripción (opcional, Enter para omitir): "
 MSG_CREATE_DONE="Paquete creado: %s"
+MSG_CREATE_README_DONE="README creado para %s"
 MSG_CREATE_HINT="Añade tus archivos de configuración en %s"
 MSG_SUBCMD_CREATE="Crea un nuevo paquete"
 MSG_HELP_CREATE="Uso: dfy create <paquete>"

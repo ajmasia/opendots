@@ -28,11 +28,27 @@ teardown() {
   [[ "$(cat "${DFY_DIR}/mypkg/README.md")" == *"TODO: add a description"* ]]
 }
 
-@test "create exits 1 when package already exists" {
+@test "create exits 1 when package already exists and has a README" {
   mkdir -p "${DFY_DIR}/existing"
+  printf '# existing\n' >"${DFY_DIR}/existing/README.md"
   run "$DOTS_BIN" --yes create existing
   [ "$status" -eq 1 ]
   [[ "$output" == *"already exists"* ]]
+}
+
+@test "create adds README when package exists but has none" {
+  mkdir -p "${DFY_DIR}/mypkg"
+  run "$DOTS_BIN" --yes create mypkg
+  [ "$status" -eq 0 ]
+  [[ -f "${DFY_DIR}/mypkg/README.md" ]]
+  [[ "$(cat "${DFY_DIR}/mypkg/README.md")" == *"# mypkg"* ]]
+}
+
+@test "create adds README does not create extra directories" {
+  mkdir -p "${DFY_DIR}/mypkg"
+  run "$DOTS_BIN" --yes create mypkg
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"README"* ]]
 }
 
 @test "create with no args shows usage" {
