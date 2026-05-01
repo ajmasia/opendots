@@ -22,3 +22,46 @@ setup() {
   [ "$status" -eq 0 ]
   [[ "$output" != *$'\033['* ]]
 }
+
+@test "global flags accepted after the subcommand" {
+  source "${BATS_TEST_DIRNAME}/../../tests/test_helper.bash"
+  setup_home
+  setup_dots_dir bash
+  run "$DOTS_BIN" list --dir "$DFY_DIR" --no-color
+  [ "$status" -eq 0 ]
+  teardown_dirs
+}
+
+@test "short alias -d sets dotfiles directory" {
+  source "${BATS_TEST_DIRNAME}/../../tests/test_helper.bash"
+  setup_home
+  setup_dots_dir bash
+  run "$DOTS_BIN" -d "$DFY_DIR" list --no-color
+  [ "$status" -eq 0 ]
+  teardown_dirs
+}
+
+@test "short alias -p sets profile" {
+  source "${BATS_TEST_DIRNAME}/../../tests/test_helper.bash"
+  setup_home
+  setup_dots_dir
+  run "$DOTS_BIN" -d "$DFY_DIR" list -p nonexistent --no-color
+  # profile is validated by apply/unlink, not list — just check -p is parsed
+  [ "$status" -eq 0 ]
+  teardown_dirs
+}
+
+@test "short alias -l sets language" {
+  run "$DOTS_BIN" -l es --help
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"Subcomandos"* ]] || [[ "$output" == *"subcomand"* ]]
+}
+
+@test "-y is accepted as alias for --yes" {
+  source "${BATS_TEST_DIRNAME}/../../tests/test_helper.bash"
+  setup_home
+  setup_dots_dir
+  run "$DOTS_BIN" -d "$DFY_DIR" -y create testpkg
+  [ "$status" -eq 0 ]
+  teardown_dirs
+}
