@@ -6,6 +6,12 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.10.2] — 2026-05-01
+
+### Fixed
+- `dfy init --dir <path>` now works when `--dir` is placed after the subcommand (previously only accepted as a global flag before `init`).
+- Version test no longer hardcodes the version string — reads it from `lib/version.sh` so CI passes on every future bump without manual edits.
+
 ## [0.10.1] — 2026-05-01
 
 ### Added
