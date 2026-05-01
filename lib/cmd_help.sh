@@ -36,6 +36,7 @@ cmd_help::run() {
   _help_cmd_row "list" "${MSG_SUBCMD_LIST}"
   _help_cmd_row "info" "${MSG_SUBCMD_INFO}"
   _help_cmd_row "create" "${MSG_SUBCMD_CREATE}"
+  _help_cmd_row "delete" "${MSG_SUBCMD_DELETE}"
   _help_cmd_row "init" "${MSG_SUBCMD_INIT}"
   _help_cmd_row "config" "${MSG_SUBCMD_CONFIG}"
   _help_cmd_row "status" "${MSG_SUBCMD_STATUS}"
@@ -74,6 +75,7 @@ cmd_help::run_subcmd() {
     list) usage="${MSG_HELP_LIST}" ;;
     info) usage="${MSG_HELP_INFO}" ;;
     create) usage="${MSG_HELP_CREATE}" ;;
+    delete) usage="${MSG_HELP_DELETE}" ;;
     init) usage="${MSG_HELP_INIT}" ;;
     config) usage="${MSG_HELP_CONFIG}" ;;
     status) usage="${MSG_HELP_STATUS}" ;;

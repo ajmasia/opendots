@@ -53,6 +53,7 @@ _dfy() {
     'list:list available packages'
     'info:show a package README'
     'create:scaffold a new package'
+    'delete:delete a package or profile'
     'init:bootstrap a new dotfiles repository'
     'config:read or write Dotlify configuration'
     'status:show link status of packages'
@@ -92,7 +93,7 @@ _dfy() {
       ;;
     args)
       case "$words[2]" in
-        apply | unlink | adopt | info)
+        link | unlink | adopt | info | delete)
           local dots_dir
           dots_dir="$(_dfy_resolve_dir)"
           local -a pkgs

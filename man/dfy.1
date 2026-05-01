@@ -99,6 +99,21 @@ The optional \fB\-s\fR/\fB\-\-subdir\fR flag pre-creates a
 subdirectory inside the package (e.g.\& \fB\-s .config/btop\fR
 creates \fIPKG/.config/btop/\fR).
 .
+.SS dfy delete \fIPKG\fR | profile \fINAME\fR
+Delete a package or a profile.
+.PP
+Without the \fBprofile\fR keyword, removes the package directory \fIPKG\fR
+from the dotfiles repository.
+If the package is currently linked, \fBdfy unlink\fR is called first to
+remove its symlinks from \fI$HOME\fR.
+.PP
+With \fBprofile \fINAME\fR, removes the named profile file from the
+\fIprofiles/\fR directory inside the dotfiles repository.
+.PP
+Both forms warn when the target has uncommitted git changes (data that
+would be lost permanently), and ask for confirmation unless \fB\-\-yes\fR
+is given.
+.
 .SS dfy doctor
 Check for broken symlinks pointing into the dotfiles repository and
 warn about a stow version that is too old.

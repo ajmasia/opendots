@@ -67,6 +67,8 @@ source "${DFY_LIB}/cmd_info.sh"
 # shellcheck source=/dev/null
 source "${DFY_LIB}/cmd_create.sh"
 # shellcheck source=/dev/null
+source "${DFY_LIB}/cmd_delete.sh"
+# shellcheck source=/dev/null
 source "${DFY_LIB}/config.sh"
 # shellcheck source=/dev/null
 source "${DFY_LIB}/cmd_init.sh"

@@ -160,3 +160,15 @@ MSG_INSTALL_HINT_INIT="Ejecuta 'dfy init' para crear tu repositorio de dotfiles.
 # notify.sh
 MSG_NOTIFY_UNCOMMITTED="Tu repositorio de dotfiles tiene cambios sin commitear. Ejecuta: git -C %s status"
 MSG_NOTIFY_IDLE="Llevas %d días sin usar dfy. Ejecuta 'dfy help' para ver qué está disponible."
+
+# cmd_delete.sh
+MSG_SUBCMD_DELETE="Elimina un paquete o perfil"
+MSG_HELP_DELETE="Uso: dfy delete <paquete> | profile <nombre>"
+MSG_DELETE_GIT_WARN="'%s' tiene cambios sin commitear y se perderá permanentemente."
+MSG_DELETE_PKG_LINKED="El paquete '%s' está enlazado actualmente. Desenlazando primero..."
+MSG_DELETE_PKG_CONFIRM="¿Eliminar el paquete '%s'? [s/N] "
+MSG_DELETE_ABORTED="Cancelado."
+MSG_DELETE_PKG_OK="Paquete eliminado: %s"
+MSG_DELETE_PROFILE_MISSING="--profile / -p requiere un nombre"
+MSG_DELETE_PROFILE_CONFIRM="¿Eliminar el perfil '%s'? [s/N] "
+MSG_DELETE_PROFILE_OK="Perfil eliminado: %s"

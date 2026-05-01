@@ -160,3 +160,15 @@ MSG_INSTALL_HINT_INIT="Run 'dfy init' to create your dotfiles repository."
 # notify.sh
 MSG_NOTIFY_UNCOMMITTED="Your dotfiles repo has uncommitted changes. Run: git -C %s status"
 MSG_NOTIFY_IDLE="You haven't used dfy in %d days. Run 'dfy help' to see what's available."
+
+# cmd_delete.sh
+MSG_SUBCMD_DELETE="Delete a package or profile"
+MSG_HELP_DELETE="Usage: dfy delete <package> | profile <name>"
+MSG_DELETE_GIT_WARN="'%s' has uncommitted changes and will be lost permanently."
+MSG_DELETE_PKG_LINKED="Package '%s' is currently linked. Unlinking first..."
+MSG_DELETE_PKG_CONFIRM="Delete package '%s'? [y/N] "
+MSG_DELETE_ABORTED="Aborted."
+MSG_DELETE_PKG_OK="Deleted package: %s"
+MSG_DELETE_PROFILE_MISSING="--profile / -p requires a name"
+MSG_DELETE_PROFILE_CONFIRM="Delete profile '%s'? [y/N] "
+MSG_DELETE_PROFILE_OK="Deleted profile: %s"
