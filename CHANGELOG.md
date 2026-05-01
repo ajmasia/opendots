@@ -6,6 +6,14 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.7] — 2026-05-01
+
+### Added
+- `tests/fixtures/dotfiles/`: minimal dotfiles repo fixture (packages `bash-aliases`, `zsh-aliases`, `vim`) available to all test suites via `FIXTURES_DOTFILES` in `test_helper.bash`.
+
+### Fixed
+- `tests/install/detect.bats`: Linux distro-detection tests now pass on macOS by forcing `_INSTALL_UNAME=Linux` in `_pkg_manager_for`, preventing the Darwin early-return from masking the fixture results.
+
 ## [0.11.6] — 2026-05-01
 
 ### Changed
