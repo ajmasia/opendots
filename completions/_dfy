@@ -1,12 +1,12 @@
-#compdef opendots
+#compdef dfy
 # SPDX-License-Identifier: GPL-3.0-or-later
-# Zsh tab completion for the opendots command. Place this file in a directory on
-# $fpath, e.g. /usr/local/share/zsh/site-functions/_opendots.
+# Zsh tab completion for the dfy command. Place this file in a directory on
+# $fpath, e.g. /usr/local/share/zsh/site-functions/_dfy.
 
-_opendots_resolve_dir() {
-  local dir="${DOTS_DIR:-}"
+_dfy_resolve_dir() {
+  local dir="${DFY_DIR:-}"
   if [[ -z "$dir" ]]; then
-    local config_file="${XDG_CONFIG_HOME:-${HOME}/.config}/opendots/config"
+    local config_file="${XDG_CONFIG_HOME:-${HOME}/.config}/dotlify/config"
     if [[ -f "$config_file" ]]; then
       local line
       line="$(grep -m1 '^dir=' "$config_file" 2>/dev/null || true)"
@@ -20,7 +20,7 @@ _opendots_resolve_dir() {
   print "${dir:-${HOME}/.dotfiles}"
 }
 
-_opendots_list_packages() {
+_dfy_list_packages() {
   local dir="$1"
   [[ -d "$dir" ]] || return
   local entry name
@@ -31,7 +31,7 @@ _opendots_list_packages() {
   done < <(find "$dir" -mindepth 1 -maxdepth 1 -type d -print0 2>/dev/null | sort -z)
 }
 
-_opendots_list_profiles() {
+_dfy_list_profiles() {
   local dir="$1/profiles"
   [[ -d "$dir" ]] || return
   local f name
@@ -41,7 +41,7 @@ _opendots_list_profiles() {
   done < <(find "$dir" -maxdepth 1 -name '*.txt' -print0 2>/dev/null | sort -z)
 }
 
-_opendots() {
+_dfy() {
   local state line context
   typeset -A opt_args
 
@@ -53,8 +53,8 @@ _opendots() {
     'list:list available packages'
     'status:show link status of packages'
     'doctor:check runtime dependencies'
-    'update:update OpenDots to the latest version'
-    'uninstall:remove OpenDots from this system'
+    'update:update Dotlify to the latest version'
+    'uninstall:remove Dotlify from this system'
     'help:show help'
   )
 
@@ -81,18 +81,18 @@ _opendots() {
       ;;
     profile_names)
       local dots_dir
-      dots_dir="$(_opendots_resolve_dir)"
+      dots_dir="$(_dfy_resolve_dir)"
       local -a profs
-      profs=("${(@f)$(_opendots_list_profiles "$dots_dir")}")
+      profs=("${(@f)$(_dfy_list_profiles "$dots_dir")}")
       compadd -a profs
       ;;
     args)
       case "$words[2]" in
         install | remove | adopt)
           local dots_dir
-          dots_dir="$(_opendots_resolve_dir)"
+          dots_dir="$(_dfy_resolve_dir)"
           local -a pkgs
-          pkgs=("${(@f)$(_opendots_list_packages "$dots_dir")}")
+          pkgs=("${(@f)$(_dfy_list_packages "$dots_dir")}")
           compadd -a pkgs
           ;;
       esac
@@ -100,4 +100,4 @@ _opendots() {
   esac
 }
 
-(( ${+CURRENT} )) && _opendots "$@"
+(( ${+CURRENT} )) && _dfy "$@"

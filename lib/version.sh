@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # shellcheck shell=bash
 
-OPENDOTS_VERSION="0.7.7"
-export OPENDOTS_VERSION
+DOTLIFY_VERSION="0.8.0"
+export DOTLIFY_VERSION

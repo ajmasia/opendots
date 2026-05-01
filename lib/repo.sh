@@ -2,13 +2,13 @@
 # shellcheck shell=bash
 
 # Resolve the dotfiles directory with precedence:
-#   --dir flag (DOTS_DIR set by args parser) > DOTS_DIR env var >
-#   dir= in ~/.config/opendots/config > ~/.dotfiles
+#   --dir flag (DFY_DIR set by args parser) > DFY_DIR env var >
+#   dir= in ~/.config/dotlify/config > ~/.dotfiles
 # Prints the resolved path; aborts with exit 1 if not found.
 repo::resolve_dir() {
-  local dir="${DOTS_DIR:-}"
+  local dir="${DFY_DIR:-}"
   if [[ -z "$dir" ]]; then
-    local config_file="${XDG_CONFIG_HOME:-${HOME}/.config}/opendots/config"
+    local config_file="${XDG_CONFIG_HOME:-${HOME}/.config}/dotlify/config"
     if [[ -f "$config_file" ]]; then
       local line
       line="$(grep -m1 '^dir=' "$config_file" 2>/dev/null || true)"
@@ -25,7 +25,7 @@ repo::resolve_dir() {
   if [[ ! -d "$dir" ]]; then
     # shellcheck disable=SC2059
     printf "${MSG_REPO_NOT_FOUND:-Dotfiles directory not found: %s}\n" "$dir" >&2
-    printf '%s\n' "${MSG_REPO_HINT:-Create it, set DOTS_DIR, or pass --dir <path>.}" >&2
+    printf '%s\n' "${MSG_REPO_HINT:-Create it, set DFY_DIR, or pass --dir <path>.}" >&2
     exit 1
   fi
   printf '%s' "$dir"

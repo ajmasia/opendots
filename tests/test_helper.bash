@@ -4,14 +4,14 @@
 # shellcheck disable=SC2034
 EXAMPLES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../examples/dotfiles" && pwd)"
 
-# Creates a temporary DOTS_DIR with optional package skeletons.
+# Creates a temporary DFY_DIR with optional package skeletons.
 # Usage: setup_dots_dir [pkg...]
 setup_dots_dir() {
-  export DOTS_DIR
-  DOTS_DIR="$(mktemp -d)"
-  DOTS_DIR="$(cd "$DOTS_DIR" && pwd -P)"
+  export DFY_DIR
+  DFY_DIR="$(mktemp -d)"
+  DFY_DIR="$(cd "$DFY_DIR" && pwd -P)"
   for pkg in "$@"; do
-    mkdir -p "${DOTS_DIR}/${pkg}"
+    mkdir -p "${DFY_DIR}/${pkg}"
   done
 }
 
@@ -26,8 +26,8 @@ setup_home() {
 # Usage: make_package <pkg> <relpath> [content]
 make_package() {
   local pkg="$1" relpath="$2" content="${3:-# placeholder}"
-  mkdir -p "${DOTS_DIR}/${pkg}/$(dirname "$relpath")"
-  printf '%s\n' "$content" >"${DOTS_DIR}/${pkg}/${relpath}"
+  mkdir -p "${DFY_DIR}/${pkg}/$(dirname "$relpath")"
+  printf '%s\n' "$content" >"${DFY_DIR}/${pkg}/${relpath}"
 }
 
 # Asserts that a symlink at $1 resolves to $2.
@@ -47,7 +47,7 @@ assert_symlink() {
 teardown_dirs() {
   local sys_tmp
   sys_tmp="$(cd "${TMPDIR:-/tmp}" && pwd -P)"
-  [[ -n "${DOTS_DIR:-}" && "$DOTS_DIR" == "${sys_tmp}"/* ]] && rm -rf "$DOTS_DIR"
+  [[ -n "${DFY_DIR:-}" && "$DFY_DIR" == "${sys_tmp}"/* ]] && rm -rf "$DFY_DIR"
   [[ -n "${HOME:-}" && "$HOME" == "${sys_tmp}"/* ]] && rm -rf "$HOME"
   return 0
 }

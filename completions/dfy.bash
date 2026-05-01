@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: GPL-3.0-or-later
-# Bash tab completion for the opendots command. Source this file in ~/.bashrc or
+# Bash tab completion for the dfy command. Source this file in ~/.bashrc or
 # drop it in /etc/bash_completion.d/.
 
-_opendots_resolve_dir() {
-  local dir="${DOTS_DIR:-}"
+_dfy_resolve_dir() {
+  local dir="${DFY_DIR:-}"
   if [[ -z "$dir" ]]; then
-    local config_file="${XDG_CONFIG_HOME:-${HOME}/.config}/opendots/config"
+    local config_file="${XDG_CONFIG_HOME:-${HOME}/.config}/dotlify/config"
     if [[ -f "$config_file" ]]; then
       local line
       line="$(grep -m1 '^dir=' "$config_file" 2>/dev/null || true)"
@@ -20,7 +20,7 @@ _opendots_resolve_dir() {
   printf '%s' "${dir:-${HOME}/.dotfiles}"
 }
 
-_opendots_packages() {
+_dfy_packages() {
   local dir="$1"
   [[ -d "$dir" ]] || return
   local entry name
@@ -31,7 +31,7 @@ _opendots_packages() {
   done < <(find "$dir" -mindepth 1 -maxdepth 1 -type d -print0 2>/dev/null | sort -z)
 }
 
-_opendots_profiles() {
+_dfy_profiles() {
   local dir="$1/profiles"
   [[ -d "$dir" ]] || return
   local f
@@ -40,7 +40,7 @@ _opendots_profiles() {
   done
 }
 
-_opendots_complete() {
+_dfy_complete() {
   local cur prev subcmd
   cur="${COMP_WORDS[COMP_CWORD]}"
   prev="${COMP_WORDS[COMP_CWORD - 1]}"
@@ -61,9 +61,9 @@ _opendots_complete() {
 
   if [[ "$prev" == "--profile" ]]; then
     local dots_dir
-    dots_dir="$(_opendots_resolve_dir)"
+    dots_dir="$(_dfy_resolve_dir)"
     local -a profiles
-    mapfile -t profiles < <(_opendots_profiles "$dots_dir")
+    mapfile -t profiles < <(_dfy_profiles "$dots_dir")
     mapfile -t COMPREPLY < <(compgen -W "${profiles[*]}" -- "$cur")
     return
   fi
@@ -95,12 +95,12 @@ _opendots_complete() {
   case "$subcmd" in
     install | remove | adopt)
       local dots_dir
-      dots_dir="$(_opendots_resolve_dir)"
+      dots_dir="$(_dfy_resolve_dir)"
       local -a packages
-      mapfile -t packages < <(_opendots_packages "$dots_dir")
+      mapfile -t packages < <(_dfy_packages "$dots_dir")
       mapfile -t COMPREPLY < <(compgen -W "${packages[*]}" -- "$cur")
       ;;
   esac
 }
 
-complete -F _opendots_complete opendots
+complete -F _dfy_complete dfy

@@ -10,20 +10,20 @@ setup() {
   source "${LIB_DIR}/repo.sh"
   # shellcheck source=/dev/null
   source "${LIB_DIR}/profile.sh"
-  unset DOTS_DIR XDG_CONFIG_HOME
-  export HOME DOTS_DIR
+  unset DFY_DIR XDG_CONFIG_HOME
+  export HOME DFY_DIR
   HOME="$(mktemp -d)"
-  DOTS_DIR="$(mktemp -d)"
-  mkdir -p "${DOTS_DIR}/profiles"
+  DFY_DIR="$(mktemp -d)"
+  mkdir -p "${DFY_DIR}/profiles"
 }
 
 teardown() {
   [[ -n "${HOME:-}" && "$HOME" == /tmp/* ]] && rm -rf "$HOME" || true
-  [[ -n "${DOTS_DIR:-}" && "$DOTS_DIR" == /tmp/* ]] && rm -rf "$DOTS_DIR" || true
+  [[ -n "${DFY_DIR:-}" && "$DFY_DIR" == /tmp/* ]] && rm -rf "$DFY_DIR" || true
 }
 
 @test "profile::load strips comments, blank lines, and surrounding whitespace" {
-  cat >"${DOTS_DIR}/profiles/base.txt" <<'EOF'
+  cat >"${DFY_DIR}/profiles/base.txt" <<'EOF'
 # this is a comment
 vim
   zsh   # shell config
@@ -35,7 +35,7 @@ EOF
 }
 
 @test "profile::exists returns 0 for an existing profile" {
-  touch "${DOTS_DIR}/profiles/base.txt"
+  touch "${DFY_DIR}/profiles/base.txt"
   profile::exists base
 }
 
@@ -51,8 +51,8 @@ EOF
 }
 
 @test "profile::load lists available profiles in error output" {
-  touch "${DOTS_DIR}/profiles/work.txt"
-  touch "${DOTS_DIR}/profiles/home.txt"
+  touch "${DFY_DIR}/profiles/work.txt"
+  touch "${DFY_DIR}/profiles/home.txt"
   run profile::load nope
   [ "$status" -eq 2 ]
   [[ "$output" == *"work"* || "$output" == *"home"* ]]

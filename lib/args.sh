@@ -2,50 +2,50 @@
 # shellcheck shell=bash
 
 # Globals populated by args::parse_global — exported so consumers see them.
-# Env-var forms of DOTS_DIR / DOTS_PROFILE / DOTS_LANG are preserved when not
+# Env-var forms of DFY_DIR / DFY_PROFILE / DFY_LANG are preserved when not
 # overridden by flags, so users can set them in their shell profile.
-export DOTS_SHOW_HELP=0
-export DOTS_SHOW_VERSION=0
-export DOTS_DRY_RUN="${DOTS_DRY_RUN:-0}"
-export DOTS_YES="${DOTS_YES:-0}"
-export DOTS_PROFILE="${DOTS_PROFILE:-}"
-export DOTS_DIR="${DOTS_DIR:-}"
-export DOTS_LANG="${DOTS_LANG:-}"
-export DOTS_SUBCMD=""
-# shellcheck disable=SC2034  # read by bin/dots after args::parse_global returns
-DOTS_SUBCMD_ARGS=()
+export DFY_SHOW_HELP=0
+export DFY_SHOW_VERSION=0
+export DFY_DRY_RUN="${DFY_DRY_RUN:-0}"
+export DFY_YES="${DFY_YES:-0}"
+export DFY_PROFILE="${DFY_PROFILE:-}"
+export DFY_DIR="${DFY_DIR:-}"
+export DFY_LANG="${DFY_LANG:-}"
+export DFY_SUBCMD=""
+# shellcheck disable=SC2034  # read by bin/dfy after args::parse_global returns
+DFY_SUBCMD_ARGS=()
 
 _ARGS_KNOWN_SUBCMDS=(install remove adopt list status doctor update uninstall help)
 
 # Parse global flags from "$@".
-# Sets the DOTS_* globals above; stops at the first non-flag argument (subcommand).
+# Sets the DFY_* globals above; stops at the first non-flag argument (subcommand).
 args::parse_global() {
-  DOTS_SHOW_HELP=0
-  DOTS_SHOW_VERSION=0
-  DOTS_SUBCMD=""
-  DOTS_SUBCMD_ARGS=()
+  DFY_SHOW_HELP=0
+  DFY_SHOW_VERSION=0
+  DFY_SUBCMD=""
+  DFY_SUBCMD_ARGS=()
 
   while [[ $# -gt 0 ]]; do
     case "$1" in
       --help | -h)
-        DOTS_SHOW_HELP=1
+        DFY_SHOW_HELP=1
         shift
         ;;
       --version | -V)
-        DOTS_SHOW_VERSION=1
+        DFY_SHOW_VERSION=1
         shift
         ;;
       --no-color)
-        export DOTS_NO_COLOR=1
+        export DFY_NO_COLOR=1
         export THEME_COLORS_ENABLED=0
         shift
         ;;
       --dry-run)
-        DOTS_DRY_RUN=1
+        DFY_DRY_RUN=1
         shift
         ;;
       --yes | -y)
-        DOTS_YES=1
+        DFY_YES=1
         shift
         ;;
       --profile)
@@ -53,7 +53,7 @@ args::parse_global() {
         if [[ $# -eq 0 ]]; then
           _args_flag_needs_value "--profile"
         fi
-        DOTS_PROFILE="$1"
+        DFY_PROFILE="$1"
         shift
         ;;
       --dir)
@@ -61,7 +61,7 @@ args::parse_global() {
         if [[ $# -eq 0 ]]; then
           _args_flag_needs_value "--dir"
         fi
-        DOTS_DIR="$1"
+        DFY_DIR="$1"
         shift
         ;;
       --lang)
@@ -69,17 +69,17 @@ args::parse_global() {
         if [[ $# -eq 0 ]]; then
           _args_flag_needs_value "--lang"
         fi
-        DOTS_LANG="$1"
+        DFY_LANG="$1"
         shift
         ;;
       --* | -*)
         _args_unknown_flag "$1"
         ;;
       *)
-        DOTS_SUBCMD="$1"
+        DFY_SUBCMD="$1"
         shift
         # shellcheck disable=SC2034
-        DOTS_SUBCMD_ARGS=("$@")
+        DFY_SUBCMD_ARGS=("$@")
         return 0
         ;;
     esac
@@ -89,14 +89,14 @@ args::parse_global() {
 _args_flag_needs_value() {
   # shellcheck disable=SC2059
   printf "${MSG_UNKNOWN_FLAG:-Unknown flag: %s}\n" "$1 requires a value" >&2
-  printf '%s\n' "${MSG_USAGE_HINT:-Run 'opendots --help' for usage.}" >&2
+  printf '%s\n' "${MSG_USAGE_HINT:-Run 'dfy --help' for usage.}" >&2
   exit 2
 }
 
 _args_unknown_flag() {
   # shellcheck disable=SC2059
   printf "${MSG_UNKNOWN_FLAG:-Unknown flag: %s}\n" "$1" >&2
-  printf '%s\n' "${MSG_USAGE_HINT:-Run 'opendots --help' for usage.}" >&2
+  printf '%s\n' "${MSG_USAGE_HINT:-Run 'dfy --help' for usage.}" >&2
   exit 2
 }
 
@@ -151,7 +151,7 @@ args::dispatch() {
         # shellcheck disable=SC2059
         printf "${MSG_SUGGEST_SUBCMD:-  Did you mean: %s}\n" "$suggestion" >&2
       fi
-      printf '%s\n' "${MSG_USAGE_HINT:-Run 'opendots --help' for usage.}" >&2
+      printf '%s\n' "${MSG_USAGE_HINT:-Run 'dfy --help' for usage.}" >&2
       exit 2
       ;;
   esac

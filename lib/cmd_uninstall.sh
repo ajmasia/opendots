@@ -3,12 +3,12 @@
 
 cmd_uninstall::run() {
   local clone_dir
-  clone_dir="$(cd "$(dirname "$DOTS_LIB")" && pwd)"
+  clone_dir="$(cd "$(dirname "$DFY_LIB")" && pwd)"
 
-  local bin_link="$HOME/.local/bin/opendots"
-  local bash_comp="$HOME/.local/share/bash-completion/completions/opendots"
-  local zsh_comp="$HOME/.local/share/zsh/site-functions/_opendots"
-  local config_dir="${XDG_CONFIG_HOME:-${HOME}/.config}/opendots"
+  local bin_link="$HOME/.local/bin/dfy"
+  local bash_comp="$HOME/.local/share/bash-completion/completions/dfy"
+  local zsh_comp="$HOME/.local/share/zsh/site-functions/_dfy"
+  local config_dir="${XDG_CONFIG_HOME:-${HOME}/.config}/dotlify"
   local answer
 
   [[ -L "$bin_link" ]] && rm "$bin_link" && printf 'Removed: %s\n' "$bin_link"
@@ -17,7 +17,7 @@ cmd_uninstall::run() {
 
   if [[ -d "$config_dir" ]]; then
     answer="y"
-    if [[ "${DOTS_YES:-0}" != "1" ]]; then
+    if [[ "${DFY_YES:-0}" != "1" ]]; then
       # shellcheck disable=SC2059
       printf "${MSG_UNINSTALL_CONFIG:-Remove config directory %s? [y/N] }" "$config_dir"
       read -r answer
@@ -33,7 +33,7 @@ cmd_uninstall::run() {
 
   if [[ -d "$clone_dir" ]]; then
     answer="y"
-    if [[ "${DOTS_YES:-0}" != "1" ]]; then
+    if [[ "${DFY_YES:-0}" != "1" ]]; then
       # shellcheck disable=SC2059
       printf "${MSG_UNINSTALL_CLONE:-Remove clone directory %s? [y/N] }" "$clone_dir"
       read -r answer
@@ -44,5 +44,5 @@ cmd_uninstall::run() {
     fi
   fi
 
-  printf '\n%s\n' "${MSG_UNINSTALL_OK:-OpenDots uninstalled.}"
+  printf '\n%s\n' "${MSG_UNINSTALL_OK:-Dotlify uninstalled.}"
 }

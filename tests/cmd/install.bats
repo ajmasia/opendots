@@ -6,7 +6,7 @@ setup() {
   source "${BATS_TEST_DIRNAME}/../../tests/test_helper.bash"
   setup_home
   setup_dots_dir
-  DOTS_BIN="${BATS_TEST_DIRNAME}/../../bin/opendots"
+  DOTS_BIN="${BATS_TEST_DIRNAME}/../../bin/dfy"
   export THEME_COLORS_ENABLED=0
 }
 
@@ -18,7 +18,7 @@ teardown() {
   make_package vim .vimrc "set nocompatible"
   run "$DOTS_BIN" install vim
   [ "$status" -eq 0 ]
-  assert_symlink "${HOME}/.vimrc" "${DOTS_DIR}/vim/.vimrc"
+  assert_symlink "${HOME}/.vimrc" "${DFY_DIR}/vim/.vimrc"
 }
 
 @test "install <pkg> aborts with exit 3 when a target file is real" {

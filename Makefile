@@ -1,4 +1,4 @@
-SHELL_FILES := bin/opendots lib/*.sh install.sh tests/test_helper.bash completions/opendots.bash
+SHELL_FILES := bin/dfy lib/*.sh install.sh tests/test_helper.bash completions/dfy.bash
 
 .PHONY: lint fmt fmt-check test check
 

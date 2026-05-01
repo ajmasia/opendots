@@ -34,8 +34,8 @@ setup() {
   [[ -z "$result" ]]
 }
 
-@test "theme: no escapes when DOTS_NO_COLOR is set" {
-  export DOTS_NO_COLOR=1
+@test "theme: no escapes when DFY_NO_COLOR is set" {
+  export DFY_NO_COLOR=1
   unset NO_COLOR
   unset THEME_COLORS_ENABLED
   # shellcheck source=/dev/null
@@ -48,7 +48,7 @@ setup() {
 @test "theme: no escapes in non-TTY context (stdout is piped in bats)" {
   unset THEME_COLORS_ENABLED
   unset NO_COLOR
-  unset DOTS_NO_COLOR
+  unset DFY_NO_COLOR
   # shellcheck source=/dev/null
   source "${LIB_DIR}/theme.sh"
   # bats runs tests with stdout piped, so theme::supports_color returns 1

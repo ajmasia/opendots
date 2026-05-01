@@ -8,7 +8,7 @@
 
 # Returns 0 if stdout is a TTY, NO_COLOR is unset, and --no-color was not passed.
 theme::supports_color() {
-  [[ -t 1 && -z "${NO_COLOR:-}" && -z "${DOTS_NO_COLOR:-}" ]]
+  [[ -t 1 && -z "${NO_COLOR:-}" && -z "${DFY_NO_COLOR:-}" ]]
 }
 
 # Auto-detect on first source; an already-exported value is preserved.

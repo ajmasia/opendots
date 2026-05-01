@@ -6,7 +6,7 @@ setup() {
   source "${BATS_TEST_DIRNAME}/../../tests/test_helper.bash"
   setup_home
   setup_dots_dir
-  DOTS_BIN="${BATS_TEST_DIRNAME}/../../bin/opendots"
+  DOTS_BIN="${BATS_TEST_DIRNAME}/../../bin/dfy"
   export THEME_COLORS_ENABLED=0
 }
 
@@ -21,8 +21,8 @@ teardown() {
   printf 'my real vimrc\n' >"${HOME}/.vimrc"
   run "$DOTS_BIN" --yes adopt vim
   [ "$status" -eq 0 ]
-  assert_symlink "${HOME}/.vimrc" "${DOTS_DIR}/vim/.vimrc"
-  [[ "$(cat "${DOTS_DIR}/vim/.vimrc")" == "my real vimrc" ]]
+  assert_symlink "${HOME}/.vimrc" "${DFY_DIR}/vim/.vimrc"
+  [[ "$(cat "${DFY_DIR}/vim/.vimrc")" == "my real vimrc" ]]
 }
 
 @test "adopt <pkg> aborts with exit 1 when user rejects the prompt" {
@@ -38,5 +38,5 @@ teardown() {
   printf 'existing\n' >"${HOME}/.vimrc"
   run "$DOTS_BIN" --yes adopt vim
   [ "$status" -eq 0 ]
-  assert_symlink "${HOME}/.vimrc" "${DOTS_DIR}/vim/.vimrc"
+  assert_symlink "${HOME}/.vimrc" "${DFY_DIR}/vim/.vimrc"
 }

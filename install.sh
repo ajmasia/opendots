@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 set -euo pipefail
 
-OPENDOTS_REPO="https://github.com/ajmasia/opendots"
-OPENDOTS_CLONE_DIR="${HOME}/.local/share/opendots"
+DOTLIFY_REPO="https://github.com/ajmasia/dotlify"
+DOTLIFY_CLONE_DIR="${HOME}/.local/share/dotlify"
 
 # Override path for testing
 _OS_RELEASE="${_OS_RELEASE:-/etc/os-release}"
@@ -56,7 +56,7 @@ install::compose_cmd() {
 install::check_bash() {
   local bash_major="${_INSTALL_BASH_MAJOR:-${BASH_VERSINFO[0]}}"
   if ((bash_major < 4)); then
-    printf 'Error: dots requires bash >= 4 (found: %s).\n' "$BASH_VERSION" >&2
+    printf 'Error: dfy requires bash >= 4 (found: %s).\n' "$BASH_VERSION" >&2
     printf 'On macOS: brew install bash\n' >&2
     exit 4
   fi
@@ -89,7 +89,7 @@ install::check_stow() {
     return
   fi
   if ! install::version_ge "$version" "2.3.1"; then
-    printf 'Error: dots requires stow >= 2.3.1 (found: %s).\n' "$version" >&2
+    printf 'Error: dfy requires stow >= 2.3.1 (found: %s).\n' "$version" >&2
     exit 4
   fi
 }
@@ -152,20 +152,20 @@ install::deps() {
 
 install::check_git() {
   if ! command -v git &>/dev/null; then
-    printf 'Error: git is required to install OpenDots. Install it and re-run.\n' >&2
+    printf 'Error: git is required to install Dotlify. Install it and re-run.\n' >&2
     exit 4
   fi
 }
 
 # Clone or pull the repo; prints clone_dir to stdout, progress to stderr.
 install::clone_or_update() {
-  local dest="$OPENDOTS_CLONE_DIR"
+  local dest="$DOTLIFY_CLONE_DIR"
   if [[ -d "${dest}/.git" ]]; then
     printf 'Updating existing clone at %s ...\n' "$dest" >&2
     git -C "$dest" pull --ff-only >&2
   else
-    printf 'Cloning OpenDots to %s ...\n' "$dest" >&2
-    git clone "$OPENDOTS_REPO" "$dest" >&2
+    printf 'Cloning Dotlify to %s ...\n' "$dest" >&2
+    git clone "$DOTLIFY_REPO" "$dest" >&2
   fi
   printf '%s' "$dest"
 }
@@ -178,8 +178,8 @@ install::link_binary() {
   local clone_dir="$1"
   local bin_dir="$HOME/.local/bin"
   mkdir -p "$bin_dir"
-  local target="${clone_dir}/bin/opendots"
-  local link="${bin_dir}/opendots"
+  local target="${clone_dir}/bin/dfy"
+  local link="${bin_dir}/dfy"
   [[ -L "$link" ]] && rm "$link"
   ln -s "$target" "$link"
   printf 'Linked %s -> %s\n' "$link" "$target"
@@ -190,29 +190,29 @@ install::completions() {
 
   local bash_dir="$HOME/.local/share/bash-completion/completions"
   mkdir -p "$bash_dir"
-  cp "${clone_dir}/completions/opendots.bash" "${bash_dir}/opendots"
-  printf 'Installed bash completion: %s\n' "${bash_dir}/opendots"
+  cp "${clone_dir}/completions/dfy.bash" "${bash_dir}/dfy"
+  printf 'Installed bash completion: %s\n' "${bash_dir}/dfy"
 
   local zsh_dir="$HOME/.local/share/zsh/site-functions"
   mkdir -p "$zsh_dir"
-  cp "${clone_dir}/completions/_opendots" "${zsh_dir}/_opendots"
-  printf 'Installed zsh completion: %s\n' "${zsh_dir}/_opendots"
+  cp "${clone_dir}/completions/_dfy" "${zsh_dir}/_dfy"
+  printf 'Installed zsh completion: %s\n' "${zsh_dir}/_dfy"
 }
 
 install::post_install() {
   local bin_dir="$HOME/.local/bin"
-  printf '\nOpenDots installed successfully!\n\n'
+  printf '\nDotlify installed successfully!\n\n'
   printf 'Next steps:\n'
   printf '  1. Ensure %s is in your PATH:\n' "$bin_dir"
   # shellcheck disable=SC2016
   printf '       export PATH="%s:$PATH"\n\n' "$bin_dir"
   printf '  2. Bash completion — add to ~/.bashrc:\n'
-  printf '       source ~/.local/share/bash-completion/completions/opendots\n\n'
+  printf '       source ~/.local/share/bash-completion/completions/dfy\n\n'
   printf '  3. Zsh completion — add to ~/.zshrc before compinit:\n'
   # shellcheck disable=SC2016
   printf '       fpath=(~/.local/share/zsh/site-functions $fpath)\n\n'
-  printf 'Update: opendots update\n'
-  printf 'Uninstall: opendots uninstall\n'
+  printf 'Update: dfy update\n'
+  printf 'Uninstall: dfy uninstall\n'
 }
 
 # --------------------------------------------------------------------------- #

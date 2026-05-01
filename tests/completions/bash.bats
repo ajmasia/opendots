@@ -7,7 +7,7 @@ _complete() {
   COMPREPLY=()
   COMP_WORDS=("$@")
   COMP_CWORD=$(("${#COMP_WORDS[@]}" - 1))
-  _opendots_complete
+  _dfy_complete
 }
 
 setup() {
@@ -18,8 +18,8 @@ setup() {
   COMP_WORDS=()
   COMP_CWORD=0
   COMPREPLY=()
-  # shellcheck source=completions/opendots.bash
-  source "${BATS_TEST_DIRNAME}/../../completions/opendots.bash"
+  # shellcheck source=completions/dfy.bash
+  source "${BATS_TEST_DIRNAME}/../../completions/dfy.bash"
 }
 
 teardown() {
@@ -27,7 +27,7 @@ teardown() {
 }
 
 @test "completes all subcommands at position 1" {
-  _complete opendots ""
+  _complete dfy ""
   [[ " ${COMPREPLY[*]} " == *" install "* ]]
   [[ " ${COMPREPLY[*]} " == *" remove "* ]]
   [[ " ${COMPREPLY[*]} " == *" adopt "* ]]
@@ -40,13 +40,13 @@ teardown() {
 }
 
 @test "filters subcommands by prefix" {
-  _complete opendots "in"
+  _complete dfy "in"
   [[ " ${COMPREPLY[*]} " == *" install "* ]]
   [[ " ${COMPREPLY[*]} " != *" remove "* ]]
 }
 
 @test "completes global flags when cur starts with -" {
-  _complete opendots "--"
+  _complete dfy "--"
   [[ " ${COMPREPLY[*]} " == *" --help "* ]]
   [[ " ${COMPREPLY[*]} " == *" --version "* ]]
   [[ " ${COMPREPLY[*]} " == *" --no-color "* ]]
@@ -58,82 +58,82 @@ teardown() {
 @test "completes packages after install" {
   make_package vim .vimrc
   make_package tmux .tmux.conf
-  _complete opendots install ""
+  _complete dfy install ""
   [[ " ${COMPREPLY[*]} " == *" vim "* ]]
   [[ " ${COMPREPLY[*]} " == *" tmux "* ]]
 }
 
 @test "completes packages after remove" {
   make_package zsh .zshrc
-  _complete opendots remove ""
+  _complete dfy remove ""
   [[ " ${COMPREPLY[*]} " == *" zsh "* ]]
 }
 
 @test "completes packages after adopt" {
   make_package git .gitconfig
-  _complete opendots adopt ""
+  _complete dfy adopt ""
   [[ " ${COMPREPLY[*]} " == *" git "* ]]
 }
 
-@test "package completion respects DOTS_DIR override" {
+@test "package completion respects DFY_DIR override" {
   local other_dir saved
   other_dir="$(mktemp -d)"
   mkdir -p "$other_dir/custom-pkg"
-  saved="${DOTS_DIR}"
-  DOTS_DIR="$other_dir"
-  _complete opendots install ""
-  DOTS_DIR="$saved"
+  saved="${DFY_DIR}"
+  DFY_DIR="$other_dir"
+  _complete dfy install ""
+  DFY_DIR="$saved"
   [[ " ${COMPREPLY[*]} " == *" custom-pkg "* ]]
   rm -rf "$other_dir"
 }
 
 @test "package completion excludes hidden dirs and profiles/" {
   make_package vim .vimrc
-  mkdir -p "${DOTS_DIR}/.git"
-  mkdir -p "${DOTS_DIR}/profiles"
-  _complete opendots install ""
+  mkdir -p "${DFY_DIR}/.git"
+  mkdir -p "${DFY_DIR}/profiles"
+  _complete dfy install ""
   [[ " ${COMPREPLY[*]} " == *" vim "* ]]
   [[ " ${COMPREPLY[*]} " != *" .git "* ]]
   [[ " ${COMPREPLY[*]} " != *" profiles "* ]]
 }
 
 @test "completes profile names after --profile" {
-  mkdir -p "${DOTS_DIR}/profiles"
-  printf '' >"${DOTS_DIR}/profiles/work.txt"
-  printf '' >"${DOTS_DIR}/profiles/home.txt"
-  _complete opendots --profile ""
+  mkdir -p "${DFY_DIR}/profiles"
+  printf '' >"${DFY_DIR}/profiles/work.txt"
+  printf '' >"${DFY_DIR}/profiles/home.txt"
+  _complete dfy --profile ""
   [[ " ${COMPREPLY[*]} " == *" work "* ]]
   [[ " ${COMPREPLY[*]} " == *" home "* ]]
   [[ " ${COMPREPLY[*]} " != *".txt"* ]]
 }
 
-@test "profile completion respects DOTS_DIR override" {
+@test "profile completion respects DFY_DIR override" {
   local other_dir saved
   other_dir="$(mktemp -d)"
   mkdir -p "$other_dir/profiles"
   printf '' >"$other_dir/profiles/server.txt"
-  saved="${DOTS_DIR}"
-  DOTS_DIR="$other_dir"
-  _complete opendots --profile ""
-  DOTS_DIR="$saved"
+  saved="${DFY_DIR}"
+  DFY_DIR="$other_dir"
+  _complete dfy --profile ""
+  DFY_DIR="$saved"
   [[ " ${COMPREPLY[*]} " == *" server "* ]]
   rm -rf "$other_dir"
 }
 
 @test "no package completions for list, status, doctor, or help" {
   make_package vim .vimrc
-  _complete opendots list ""
+  _complete dfy list ""
   [[ ${#COMPREPLY[@]} -eq 0 ]]
-  _complete opendots status ""
+  _complete dfy status ""
   [[ ${#COMPREPLY[@]} -eq 0 ]]
-  _complete opendots doctor ""
+  _complete dfy doctor ""
   [[ ${#COMPREPLY[@]} -eq 0 ]]
-  _complete opendots help ""
+  _complete dfy help ""
   [[ ${#COMPREPLY[@]} -eq 0 ]]
 }
 
 @test "flags are completed after a subcommand when cur starts with -" {
-  _complete opendots install "--"
+  _complete dfy install "--"
   [[ " ${COMPREPLY[*]} " == *" --profile "* ]]
   [[ " ${COMPREPLY[*]} " == *" --dry-run "* ]]
 }

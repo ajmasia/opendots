@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 setup() {
-  DOTS_BIN="${BATS_TEST_DIRNAME}/../../bin/opendots"
+  DOTS_BIN="${BATS_TEST_DIRNAME}/../../bin/dfy"
   export THEME_COLORS_ENABLED=0
 }
 

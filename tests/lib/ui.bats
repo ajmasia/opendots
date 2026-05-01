@@ -12,29 +12,29 @@ setup() {
 
 # --- plain-text (no color) output format ---
 
-@test "ui::info outputs [info] prefix and message" {
+@test "ui::info outputs [i] prefix and message" {
   result="$(ui::info "hello world")"
-  [[ "$result" == "[info] hello world" ]]
+  [[ "$result" == "[i] hello world" ]]
 }
 
-@test "ui::warn outputs [warn] prefix and message" {
+@test "ui::warn outputs [!] prefix and message" {
   result="$(ui::warn "something off" 2>&1)"
-  [[ "$result" == "[warn] something off" ]]
+  [[ "$result" == "[!] something off" ]]
 }
 
-@test "ui::error outputs [error] prefix and message" {
+@test "ui::error outputs [x] prefix and message" {
   result="$(ui::error "bad thing" 2>&1)"
-  [[ "$result" == "[error] bad thing" ]]
+  [[ "$result" == "[x] bad thing" ]]
 }
 
-@test "ui::step outputs [step] prefix and message" {
+@test "ui::step outputs [>] prefix and message" {
   result="$(ui::step "doing something")"
-  [[ "$result" == "[step] doing something" ]]
+  [[ "$result" == "[>] doing something" ]]
 }
 
-@test "ui::ok outputs [ok] prefix and message" {
+@test "ui::ok outputs [+] prefix and message" {
   result="$(ui::ok "all done")"
-  [[ "$result" == "[ok] all done" ]]
+  [[ "$result" == "[+] all done" ]]
 }
 
 # --- routing: error/warn to stderr, others to stdout ---
@@ -64,7 +64,7 @@ setup() {
   source "${LIB_DIR}/ui.sh"
   result="$(ui::info "hello")"
   [[ "$result" == *$'\033['* ]]
-  [[ "$result" == *"[info]"* ]]
+  [[ "$result" == *"[i]"* ]]
   [[ "$result" == *"hello"* ]]
 }
 
@@ -76,7 +76,7 @@ setup() {
   # shellcheck source=/dev/null
   source "${LIB_DIR}/ui.sh"
   result="$(ui::info "hello")"
-  [[ "$result" == "[info] hello" ]]
+  [[ "$result" == "[i] hello" ]]
   [[ "$result" != *$'\033['* ]]
 }
 
@@ -84,12 +84,12 @@ setup() {
 
 @test "ui::banner falls back to plain text when figlet is absent" {
   tmpdir="$(mktemp -d)"
-  result="$(PATH="$tmpdir" ui::banner "OpenDots")"
+  result="$(PATH="$tmpdir" ui::banner "Dotlify")"
   rm -rf "$tmpdir"
-  [[ "$result" == "OpenDots" ]]
+  [[ "$result" == "Dotlify" ]]
 }
 
 @test "ui::banner prints plain text when colors are off regardless of figlet" {
-  result="$(ui::banner "OpenDots")"
-  [[ "$result" == "OpenDots" ]]
+  result="$(ui::banner "Dotlify")"
+  [[ "$result" == "Dotlify" ]]
 }

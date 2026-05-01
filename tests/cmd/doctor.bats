@@ -6,7 +6,7 @@ setup() {
   source "${BATS_TEST_DIRNAME}/../../tests/test_helper.bash"
   setup_home
   setup_dots_dir
-  DOTS_BIN="${BATS_TEST_DIRNAME}/../../bin/opendots"
+  DOTS_BIN="${BATS_TEST_DIRNAME}/../../bin/dfy"
   export THEME_COLORS_ENABLED=0
 }
 
@@ -14,11 +14,11 @@ teardown() {
   teardown_dirs
 }
 
-@test "doctor reports broken symlinks pointing into DOTS_DIR" {
+@test "doctor reports broken symlinks pointing into DFY_DIR" {
   make_package vim .vimrc
-  stow -d "$DOTS_DIR" -t "$HOME" vim
+  stow -d "$DFY_DIR" -t "$HOME" vim
   # Break the symlink by removing the package file
-  rm "${DOTS_DIR}/vim/.vimrc"
+  rm "${DFY_DIR}/vim/.vimrc"
   run "$DOTS_BIN" doctor
   [ "$status" -eq 0 ]
   [[ "$output" == *".vimrc"* ]]
