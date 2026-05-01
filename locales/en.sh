@@ -85,6 +85,10 @@ MSG_CREATE_HINT="Add your config files under %s, then run: dfy apply %s"
 MSG_SUBCMD_CREATE="Scaffold a new package"
 MSG_HELP_CREATE="Usage: dfy create <package>"
 
+# cmd_init.sh (subcommand description and usage)
+MSG_SUBCMD_INIT="Bootstrap a new dotfiles repository"
+MSG_HELP_INIT="Usage: dfy init [--dir, -d <path>] [--bare]"
+
 # cmd_status.sh
 MSG_STATUS_DOTFILES="Dotfiles: %s"
 MSG_STATUS_LINKED="Linked packages (%s):"

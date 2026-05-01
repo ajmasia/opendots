@@ -36,6 +36,7 @@ cmd_help::run() {
   _help_cmd_row "list" "${MSG_SUBCMD_LIST}"
   _help_cmd_row "info" "${MSG_SUBCMD_INFO}"
   _help_cmd_row "create" "${MSG_SUBCMD_CREATE}"
+  _help_cmd_row "init" "${MSG_SUBCMD_INIT}"
   _help_cmd_row "status" "${MSG_SUBCMD_STATUS}"
   _help_cmd_row "doctor" "${MSG_SUBCMD_DOCTOR}"
   _help_cmd_row "update" "${MSG_SUBCMD_UPDATE}"
@@ -47,10 +48,10 @@ cmd_help::run() {
   _help_opt_row "--version, -V" "${MSG_OPT_VERSION}"
   _help_opt_row "--no-color" "${MSG_OPT_NO_COLOR}"
   _help_opt_row "--dry-run" "${MSG_OPT_DRY_RUN}"
-  _help_opt_row "--profile <name>" "${MSG_OPT_PROFILE}"
-  _help_opt_row "--dir <path>" "${MSG_OPT_DIR}"
+  _help_opt_row "--profile, -p <name>" "${MSG_OPT_PROFILE}"
+  _help_opt_row "--dir, -d <path>" "${MSG_OPT_DIR}"
   _help_opt_row "--yes, -y" "${MSG_OPT_YES}"
-  _help_opt_row "--lang <code>" "${MSG_OPT_LANG}"
+  _help_opt_row "--lang, -l <code>" "${MSG_OPT_LANG}"
 }
 
 # Version line: banner (respects color/figlet rules) + version string.
@@ -72,6 +73,7 @@ cmd_help::run_subcmd() {
     list) usage="${MSG_HELP_LIST}" ;;
     info) usage="${MSG_HELP_INFO}" ;;
     create) usage="${MSG_HELP_CREATE}" ;;
+    init) usage="${MSG_HELP_INIT}" ;;
     status) usage="${MSG_HELP_STATUS}" ;;
     doctor) usage="${MSG_HELP_DOCTOR}" ;;
     update) usage="${MSG_HELP_UPDATE}" ;;

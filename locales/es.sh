@@ -85,6 +85,10 @@ MSG_CREATE_HINT="Añade tus archivos de configuración en %s y ejecuta: dfy appl
 MSG_SUBCMD_CREATE="Crea un nuevo paquete"
 MSG_HELP_CREATE="Uso: dfy create <paquete>"
 
+# cmd_init.sh (descripción y uso del subcomando)
+MSG_SUBCMD_INIT="Inicializa un nuevo repositorio de dotfiles"
+MSG_HELP_INIT="Uso: dfy init [--dir, -d <ruta>] [--bare]"
+
 # cmd_status.sh
 MSG_STATUS_DOTFILES="Dotfiles: %s"
 MSG_STATUS_LINKED="Paquetes enlazados (%s):"
