@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.9] — 2026-05-01
+
+### Fixed
+- `flake.nix`: set `dontBuild = true` and `doCheck = false` to prevent `stdenv.mkDerivation` from running `make` inside the Nix sandbox, where `shellcheck` is unavailable.
+
 ## [0.11.8] — 2026-05-01
 
 ### Added
