@@ -6,6 +6,14 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.10.0] — 2026-05-01
+
+### Added
+- `dfy init [--dir <path>] [--bare]`: creates a dotfiles git repo, scaffolds starter packages (`bash-aliases`, `zsh-aliases`, `vim`) and a root `.gitignore`, writes `dir=<path>` to `~/.config/dotlify/config`, and prints a remote-linking reminder.
+- `lib/config.sh`: `config::get` and `config::set` helpers for reading and writing the `~/.config/dotlify/config` key=value store.
+- `install.sh`: post-install hint prompting the user to run `dfy init`.
+- README: "Getting started" section with `dfy init` walkthrough.
+
 ## [0.9.0] — 2026-05-01
 
 ### Added
