@@ -84,6 +84,7 @@ MSG_HELP_CREATE="Uso: dfy create <paquete>"
 MSG_STATUS_DOTFILES="Dotfiles: %s"
 MSG_STATUS_LINKED="Paquetes enlazados (%s):"
 MSG_STATUS_CONFLICTS="Conflictos (%s):"
+MSG_STATUS_NOT_LINKED="No enlazados (%s):"
 MSG_STATUS_NONE="No se encontraron paquetes."
 MSG_STATUS_CONFLICT_HINT="el destino ya existe, ejecuta: dfy adopt"
 

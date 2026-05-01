@@ -22,6 +22,14 @@ teardown() {
   [[ "$output" == *"[+]"*"vim"* ]]
 }
 
+@test "status shows [>] section header for linked packages" {
+  make_package vim .vimrc
+  stow -d "$DFY_DIR" -t "$HOME" vim
+  run "$DOTS_BIN" status
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"[>]"*"Linked"* ]]
+}
+
 @test "status shows [!] and adopt hint for conflicts" {
   make_package vim .vimrc
   printf 'existing\n' >"${HOME}/.vimrc"
@@ -31,9 +39,24 @@ teardown() {
   [[ "$output" == *"adopt"* ]]
 }
 
+@test "status shows [>] section header for conflicts" {
+  make_package vim .vimrc
+  printf 'existing\n' >"${HOME}/.vimrc"
+  run "$DOTS_BIN" status
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"[>]"*"Conflict"* ]]
+}
+
 @test "status shows [-] for unlinked packages" {
   make_package vim .vimrc
   run "$DOTS_BIN" status
   [ "$status" -eq 0 ]
   [[ "$output" == *"[-]"*"vim"* ]]
+}
+
+@test "status shows [>] section header for not-linked packages" {
+  make_package vim .vimrc
+  run "$DOTS_BIN" status
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"[>]"*"Not linked"* ]]
 }

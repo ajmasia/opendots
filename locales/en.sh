@@ -84,6 +84,7 @@ MSG_HELP_CREATE="Usage: dfy create <package>"
 MSG_STATUS_DOTFILES="Dotfiles: %s"
 MSG_STATUS_LINKED="Linked packages (%s):"
 MSG_STATUS_CONFLICTS="Conflicts (%s):"
+MSG_STATUS_NOT_LINKED="Not linked (%s):"
 MSG_STATUS_NONE="No packages found."
 MSG_STATUS_CONFLICT_HINT="target exists, run: dfy adopt"
 
