@@ -6,6 +6,7 @@
 [![Platform: Linux/macOS](https://img.shields.io/badge/platform-linux%20%7C%20macos-orange)](https://github.com/ajmasia/dotlify)
 [![Version](https://img.shields.io/github/v/tag/ajmasia/dotlify?label=version)](https://github.com/ajmasia/dotlify/tags)
 [![Tests](https://img.shields.io/badge/tests-bats-purple)](https://bats-core.readthedocs.io/)
+[![Nix flake](https://img.shields.io/badge/nix-flake-5277C3?logo=nixos)](https://github.com/ajmasia/dotlify/blob/main/flake.nix)
 
 A Bash framework on top of [GNU Stow](https://www.gnu.org/software/stow/) for managing dotfiles on Linux and macOS.
 
