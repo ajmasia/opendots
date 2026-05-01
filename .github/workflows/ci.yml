@@ -46,7 +46,27 @@ jobs:
           nix_path: nixpkgs=channel:nixpkgs-unstable
 
       - name: Build Nix package
-        run: nix build --no-link
+        run: nix build
 
-      - name: Smoke-test Nix binary
-        run: nix run . -- --version
+      - name: Version and help (lib/ + locales/ path resolution)
+        run: |
+          ./result/bin/dfy --version
+          ./result/bin/dfy --help
+
+      - name: Spanish locale (i18n works from Nix store)
+        run: ./result/bin/dfy --lang es --help | grep -q "Uso:"
+
+      - name: doctor (bash >= 4, stow and figlet reachable via wrapProgram)
+        run: DFY_DIR=$(mktemp -d) ./result/bin/dfy doctor
+
+      - name: update shows Nix hint
+        run: ./result/bin/dfy update | grep -q "nix profile upgrade dotlify"
+
+      - name: uninstall shows Nix hint
+        run: ./result/bin/dfy uninstall | grep -q "nix profile remove dotlify"
+
+      - name: Installed files (man, completions)
+        run: |
+          test -f result/share/man/man1/dfy.1
+          test -f result/share/bash-completion/completions/dfy
+          test -f result/share/zsh/site-functions/_dfy
