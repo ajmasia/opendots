@@ -4,6 +4,12 @@
 # True when running on macOS.
 os::is_macos() { [[ "$(uname -s)" == "Darwin" ]]; }
 
+# True when running from a Nix store path (read-only; no git clone).
+# _DFY_NIX=1 can be set in tests to simulate a Nix install.
+os::is_nix_store() {
+  [[ "${_DFY_NIX:-0}" == "1" ]] || [[ "${DFY_LIB:-}" == /nix/store/* ]]
+}
+
 # True when running on Linux.
 os::is_linux() { [[ "$(uname -s)" == "Linux" ]]; }
 

@@ -127,12 +127,16 @@ MSG_UPDATE_PULLING="Pulling latest changes..."
 MSG_UPDATE_COMP="Updating shell completions..."
 MSG_UPDATE_OK="Dotlify updated successfully."
 MSG_UPDATE_NOT_GIT="Not a git repository, cannot update: %s"
+MSG_UPDATE_NIX="Dotlify is managed by Nix. To upgrade, run:"
+MSG_UPDATE_NIX_CMD="  nix profile upgrade dotlify"
 
 # cmd_uninstall.sh
 MSG_UNINSTALL_CONFIG="Remove config directory %s? [y/N] "
 MSG_UNINSTALL_CONFIG_KEPT="Kept: %s"
 MSG_UNINSTALL_CLONE="Remove clone directory %s? [y/N] "
 MSG_UNINSTALL_OK="Dotlify uninstalled."
+MSG_UNINSTALL_NIX="Dotlify is managed by Nix. To remove, run:"
+MSG_UNINSTALL_NIX_CMD="  nix profile remove dotlify"
 
 # cmd_init.sh
 MSG_INIT_DIR_EXISTS="Path already exists: %s. Enter an alternative path: "

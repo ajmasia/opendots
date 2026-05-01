@@ -2,6 +2,12 @@
 # shellcheck shell=bash
 
 cmd_uninstall::run() {
+  if os::is_nix_store; then
+    ui::info "${MSG_UNINSTALL_NIX}"
+    printf '%s\n' "${MSG_UNINSTALL_NIX_CMD}"
+    return 0
+  fi
+
   local clone_dir
   clone_dir="$(cd "$(dirname "$DFY_LIB")" && pwd)"
 
