@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.2] — 2026-05-01
+
+### Changed
+- README updated for Dotlify rename: binary name, install URL, clone path, and new configuration reference table.
+
 ## [0.8.1] — 2026-05-01
 
 ### Changed
