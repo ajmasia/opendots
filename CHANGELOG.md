@@ -6,6 +6,12 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.1] — 2026-05-01
+
+### Changed
+- `install.sh`: colorized output with inline Catppuccin Mocha helpers (`_ui_step`, `_ui_ok`, `_ui_info`, `_ui_warn`, `_ui_error`, `_ui_section`, `_ui_value`, `_ui_muted`).
+- `uninstall`: paths and prompts colorized via `ui::ok`, `ui::info`, and `theme::accent`/`theme::muted`.
+
 ## [0.8.0] — 2026-05-01
 
 ### Changed

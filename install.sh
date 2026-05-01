@@ -9,6 +9,37 @@ DOTLIFY_CLONE_DIR="${HOME}/.local/share/dotlify"
 _OS_RELEASE="${_OS_RELEASE:-/etc/os-release}"
 
 # --------------------------------------------------------------------------- #
+# Inline color helpers (Catppuccin Mocha — no external deps)                  #
+# --------------------------------------------------------------------------- #
+
+_install_colors() {
+  if [[ -t 1 && -z "${NO_COLOR:-}" ]]; then
+    _C_ACCENT='\033[38;2;203;166;247m'
+    _C_INFO='\033[38;2;137;220;235m'
+    _C_OK='\033[38;2;166;227;161m'
+    _C_WARN='\033[38;2;249;226;175m'
+    _C_ERROR='\033[38;2;243;139;168m'
+    _C_TEXT='\033[38;2;205;214;244m'
+    _C_MUTED='\033[38;2;108;112;134m'
+    _C_RESET='\033[0m'
+  else
+    _C_ACCENT='' _C_INFO='' _C_OK='' _C_WARN='' _C_ERROR=''
+    _C_TEXT='' _C_MUTED='' _C_RESET=''
+  fi
+}
+
+_install_colors
+
+_ui_step() { printf "${_C_ACCENT}[>]${_C_RESET} ${_C_TEXT}%s${_C_RESET}\n" "$*"; }
+_ui_ok() { printf "${_C_OK}[+]${_C_RESET} ${_C_TEXT}%s${_C_RESET}\n" "$*"; }
+_ui_info() { printf "${_C_INFO}[i]${_C_RESET} ${_C_TEXT}%s${_C_RESET}\n" "$*"; }
+_ui_warn() { printf "${_C_WARN}[!]${_C_RESET} ${_C_TEXT}%s${_C_RESET}\n" "$*" >&2; }
+_ui_error() { printf "${_C_ERROR}[x]${_C_RESET} ${_C_TEXT}%s${_C_RESET}\n" "$*" >&2; }
+_ui_section() { printf "\n${_C_ACCENT}%s${_C_RESET}\n" "$*"; }
+_ui_value() { printf '%s%s%s' "${_C_INFO}" "$*" "${_C_RESET}"; }
+_ui_muted() { printf '%s%s%s' "${_C_MUTED}" "$*" "${_C_RESET}"; }
+
+# --------------------------------------------------------------------------- #
 # Detection                                                                    #
 # --------------------------------------------------------------------------- #
 
@@ -56,8 +87,7 @@ install::compose_cmd() {
 install::check_bash() {
   local bash_major="${_INSTALL_BASH_MAJOR:-${BASH_VERSINFO[0]}}"
   if ((bash_major < 4)); then
-    printf 'Error: dfy requires bash >= 4 (found: %s).\n' "$BASH_VERSION" >&2
-    printf 'On macOS: brew install bash\n' >&2
+    _ui_error "dfy requires bash >= 4 (found: $(_ui_value "$BASH_VERSION")). On macOS: brew install bash"
     exit 4
   fi
 }
@@ -85,11 +115,11 @@ install::check_stow() {
   local version
   version="$(stow --version 2>&1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1 || true)"
   if [[ -z "$version" ]]; then
-    printf 'Warning: could not determine stow version.\n' >&2
+    _ui_warn "Could not determine stow version."
     return
   fi
   if ! install::version_ge "$version" "2.3.1"; then
-    printf 'Error: dfy requires stow >= 2.3.1 (found: %s).\n' "$version" >&2
+    _ui_error "dfy requires stow >= 2.3.1 (found: $(_ui_value "$version"))"
     exit 4
   fi
 }
@@ -118,22 +148,22 @@ install::deps() {
   fi
 
   if [[ "$pkg_mgr" == "unknown" ]]; then
-    printf 'Error: unrecognized system. Missing: %s\n' "${missing[*]}" >&2
-    printf 'Install manually: stow >= 2.3.1 and figlet, then re-run.\n' >&2
+    _ui_error "Unrecognized system. Missing: $(_ui_value "${missing[*]}")"
+    _ui_info "Install manually: stow >= 2.3.1 and figlet, then re-run."
     exit 1
   fi
 
   local cmd
   cmd="$(install::compose_cmd "$pkg_mgr")"
-  printf 'Missing: %s\n' "${missing[*]}"
-  printf 'Will run: %s\n' "$cmd"
+  _ui_warn "Missing: $(_ui_value "${missing[*]}")"
+  _ui_info "Will run: $(_ui_value "$cmd")"
 
   if [[ "$yes" != "1" ]]; then
-    printf 'Proceed? [y/N] '
+    printf '%s' "$(_ui_muted "Proceed? [y/N] ")"
     local answer
     read -r answer
     if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
-      printf 'Aborted. Install stow and figlet manually, then re-run.\n' >&2
+      _ui_error "Aborted. Install stow and figlet manually, then re-run."
       exit 1
     fi
   fi
@@ -152,7 +182,7 @@ install::deps() {
 
 install::check_git() {
   if ! command -v git &>/dev/null; then
-    printf 'Error: git is required to install Dotlify. Install it and re-run.\n' >&2
+    _ui_error "git is required to install Dotlify. Install it and re-run."
     exit 4
   fi
 }
@@ -161,10 +191,10 @@ install::check_git() {
 install::clone_or_update() {
   local dest="$DOTLIFY_CLONE_DIR"
   if [[ -d "${dest}/.git" ]]; then
-    printf 'Updating existing clone at %s ...\n' "$dest" >&2
+    _ui_step "Updating existing clone at $(_ui_value "$dest") ..." >&2
     git -C "$dest" pull --ff-only >&2
   else
-    printf 'Cloning Dotlify to %s ...\n' "$dest" >&2
+    _ui_step "Cloning Dotlify to $(_ui_value "$dest") ..." >&2
     git clone "$DOTLIFY_REPO" "$dest" >&2
   fi
   printf '%s' "$dest"
@@ -182,7 +212,7 @@ install::link_binary() {
   local link="${bin_dir}/dfy"
   [[ -L "$link" ]] && rm "$link"
   ln -s "$target" "$link"
-  printf 'Linked %s -> %s\n' "$link" "$target"
+  _ui_ok "Linked $(_ui_value "$link") -> $(_ui_muted "$target")"
 }
 
 install::completions() {
@@ -191,28 +221,29 @@ install::completions() {
   local bash_dir="$HOME/.local/share/bash-completion/completions"
   mkdir -p "$bash_dir"
   cp "${clone_dir}/completions/dfy.bash" "${bash_dir}/dfy"
-  printf 'Installed bash completion: %s\n' "${bash_dir}/dfy"
+  _ui_ok "Bash completion: $(_ui_value "${bash_dir}/dfy")"
 
   local zsh_dir="$HOME/.local/share/zsh/site-functions"
   mkdir -p "$zsh_dir"
   cp "${clone_dir}/completions/_dfy" "${zsh_dir}/_dfy"
-  printf 'Installed zsh completion: %s\n' "${zsh_dir}/_dfy"
+  _ui_ok "Zsh completion:  $(_ui_value "${zsh_dir}/_dfy")"
 }
 
 install::post_install() {
   local bin_dir="$HOME/.local/bin"
-  printf '\nDotlify installed successfully!\n\n'
-  printf 'Next steps:\n'
-  printf '  1. Ensure %s is in your PATH:\n' "$bin_dir"
-  # shellcheck disable=SC2016
-  printf '       export PATH="%s:$PATH"\n\n' "$bin_dir"
-  printf '  2. Bash completion — add to ~/.bashrc:\n'
-  printf '       source ~/.local/share/bash-completion/completions/dfy\n\n'
-  printf '  3. Zsh completion — add to ~/.zshrc before compinit:\n'
-  # shellcheck disable=SC2016
-  printf '       fpath=(~/.local/share/zsh/site-functions $fpath)\n\n'
-  printf 'Update: dfy update\n'
-  printf 'Uninstall: dfy uninstall\n'
+  printf '\n%s\n' "$(_ui_ok "Dotlify installed successfully!" && true)"
+  _ui_section "Next steps:"
+  printf '  %s Ensure %s is in your PATH:\n' "$(_ui_muted "1.")" "$(_ui_value "$bin_dir")"
+  printf '       %s\n' "$(_ui_muted "export PATH=\"${bin_dir}:\$PATH\"")"
+  printf '\n'
+  printf '  %s Bash completion — add to ~/.bashrc:\n' "$(_ui_muted "2.")"
+  printf '       %s\n' "$(_ui_muted "source ~/.local/share/bash-completion/completions/dfy")"
+  printf '\n'
+  printf '  %s Zsh completion — add to ~/.zshrc before compinit:\n' "$(_ui_muted "3.")"
+  printf '       %s\n' "$(_ui_muted "fpath=(~/.local/share/zsh/site-functions \$fpath)")"
+  printf '\n'
+  printf '%s  %s\n' "$(_ui_muted "Update:")" "$(_ui_value "dfy update")"
+  printf '%s  %s\n' "$(_ui_muted "Uninstall:")" "$(_ui_value "dfy uninstall")"
 }
 
 # --------------------------------------------------------------------------- #
