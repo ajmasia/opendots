@@ -109,6 +109,7 @@ init::scaffold() {
 # alias update='sudo apt update && sudo apt upgrade'   # Debian / Ubuntu
 # alias update='sudo pacman -Syu'                      # Arch
 # alias update='sudo dnf upgrade'                      # Fedora
+# alias update='brew upgrade'                          # macOS
 EOF
   _create_readme_template "bash-aliases" \
     "Bash aliases for navigation, safety, and system updates." \
@@ -134,6 +135,7 @@ EOF
 # alias update='sudo apt update && sudo apt upgrade'   # Debian / Ubuntu
 # alias update='sudo pacman -Syu'                      # Arch
 # alias update='sudo dnf upgrade'                      # Fedora
+# alias update='brew upgrade'                          # macOS
 EOF
   _create_readme_template "zsh-aliases" \
     "Zsh aliases for navigation, safety, and system updates." \
