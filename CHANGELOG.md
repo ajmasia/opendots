@@ -6,6 +6,21 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.5] — 2026-05-01
+
+### Added
+- macOS support: `install.sh` detects Darwin via `uname` and uses Homebrew to install `stow` and `figlet`; shows a `brew install bash` hint when bash < 4 is detected on macOS.
+- `lib/os.sh`: new `os::is_macos`, `os::is_linux`, and `os::readlink_f` helpers. `os::readlink_f` is a portable drop-in for `readlink -f` that works on BSD/macOS without extra dependencies.
+
+### Changed
+- `bin/dfy`: path resolution for `DFY_LIB` now uses a portable inline symlink loop instead of `readlink -f`; `os.sh` is sourced before `i18n.sh`.
+- `lib/i18n.sh`, `lib/cmd_doctor.sh`, `lib/repo.sh`: replaced all `readlink -f` calls with portable equivalents.
+- `lib/cmd_init.sh`: scaffold template now includes a `brew upgrade` alias for macOS.
+- `README.md`, `docs/wiki/Home.md`, `docs/wiki/Installation.md`, `man/dfy.1`: updated to reflect Linux and macOS support.
+
+### Fixed
+- `tests/test_helper.bash`: removed stale `EXAMPLES_DIR` declaration that caused all tests sourcing the helper to fail after `examples/` was deleted.
+
 ## [0.11.4] — 2026-05-01
 
 ### Added
