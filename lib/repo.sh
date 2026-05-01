@@ -93,7 +93,7 @@ repo::pkg_description() {
 repo::package_status() {
   local dots_dir="$1" pkg="$2"
   local pkg_dir
-  pkg_dir="$(readlink -f "${dots_dir}/${pkg}")"
+  pkg_dir="$(os::readlink_f "${dots_dir}/${pkg}")"
   local linked=0 not_linked=0 conflict=0
   local file rel target real
 
@@ -101,7 +101,7 @@ repo::package_status() {
     rel="${file#"${pkg_dir}"/}"
     target="${HOME}/${rel}"
     if [[ -e "$target" ]]; then
-      real="$(readlink -f "$target")"
+      real="$(os::readlink_f "$target")"
       if [[ "$real" == "${pkg_dir}/"* ]]; then
         linked=$((linked + 1))
       else

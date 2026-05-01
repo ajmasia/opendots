@@ -37,11 +37,11 @@ cmd_doctor::run() {
   fi
 
   # Broken symlinks under $HOME pointing into $DFY_DIR.
-  # readlink -f resolves the canonical target even for broken links (all but
-  # the last path component must exist, which holds for stow-managed files).
+  # os::readlink_f resolves the canonical target even for broken links (all
+  # but the last path component must exist, which holds for stow-managed files).
   local link link_target
   while IFS= read -r -d '' link; do
-    link_target="$(readlink -f "$link" 2>/dev/null || true)"
+    link_target="$(os::readlink_f "$link" 2>/dev/null || true)"
     if [[ -n "$link_target" && "$link_target" == "${dots_dir}"* && ! -e "$link" ]]; then
       # shellcheck disable=SC2059
       ui::warn "$(printf "${MSG_DOCTOR_BROKEN_LINK:-Broken symlink: %s}" \

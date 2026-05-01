@@ -10,7 +10,7 @@ i18n::load() {
   if [[ -n "${DFY_LOCALES:-}" ]]; then
     locales_dir="$DFY_LOCALES"
   else
-    locales_dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/../locales"
+    locales_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)/../locales"
   fi
   local locale_file="${locales_dir}/${lang}.sh"
   if [[ -f "$locale_file" ]]; then
