@@ -14,10 +14,31 @@ cmd_list::run() {
     return 0
   fi
 
-  local pkg
+  local -a descs
+  local max_len=0 pkg desc
   for pkg in "${pkgs[@]}"; do
-    printf '  %s-%s %s%s%s\n' \
-      "$(theme::muted)" "$(theme::reset)" \
-      "$(theme::info)" "$pkg" "$(theme::reset)"
+    desc="$(repo::pkg_description "$dots_dir" "$pkg")"
+    descs+=("$desc")
+    if [[ -n "$desc" && ${#pkg} -gt $max_len ]]; then
+      max_len=${#pkg}
+    fi
+  done
+
+  local i pad
+  for ((i = 0; i < ${#pkgs[@]}; i++)); do
+    pkg="${pkgs[$i]}"
+    desc="${descs[$i]}"
+    if [[ -n "$desc" ]]; then
+      pad=$(( max_len - ${#pkg} ))
+      printf '  %s-%s %s%s%s%*s  %s%s%s\n' \
+        "$(theme::muted)" "$(theme::reset)" \
+        "$(theme::info)" "$pkg" "$(theme::reset)" \
+        "$pad" "" \
+        "$(theme::subtext)" "$desc" "$(theme::reset)"
+    else
+      printf '  %s-%s %s%s%s\n' \
+        "$(theme::muted)" "$(theme::reset)" \
+        "$(theme::info)" "$pkg" "$(theme::reset)"
+    fi
   done
 }

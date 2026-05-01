@@ -31,3 +31,35 @@ teardown() {
   [[ "$output" != *"[+]"* ]]
   [[ "$output" != *"[!]"* ]]
 }
+
+@test "list shows description when README has prose" {
+  make_package nvim .config/nvim/init.vim
+  printf '# nvim\n\nNeovim configuration\n' >"${DFY_DIR}/nvim/README.md"
+  run "$DOTS_BIN" list
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"nvim"* ]]
+  [[ "$output" == *"Neovim configuration"* ]]
+}
+
+@test "list shows no description column for package without README" {
+  make_package zsh .zshrc
+  run "$DOTS_BIN" list
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"- zsh"* ]]
+  [[ "$output" != *"(no description)"* ]]
+}
+
+@test "list aligns descriptions to a consistent column" {
+  make_package nvim .config/nvim/init.vim
+  make_package tmux .tmux.conf
+  printf '# nvim\n\nNeovim configuration\n' >"${DFY_DIR}/nvim/README.md"
+  printf '# tmux\n\nTerminal multiplexer\n' >"${DFY_DIR}/tmux/README.md"
+  run "$DOTS_BIN" list
+  [ "$status" -eq 0 ]
+  local nvim_line tmux_line nvim_col tmux_col
+  nvim_line="$(printf '%s\n' "$output" | grep 'nvim')"
+  tmux_line="$(printf '%s\n' "$output" | grep 'tmux')"
+  nvim_col="${nvim_line%%Neovim*}"
+  tmux_col="${tmux_line%%Terminal*}"
+  [[ "${#nvim_col}" -eq "${#tmux_col}" ]]
+}
