@@ -9,7 +9,20 @@ if ((BASH_VERSINFO[0] < 4)); then
 fi
 
 # Resolve DFY_LIB from this binary's real path so symlinks into PATH work.
-DFY_LIB="$(dirname "$(readlink -f "$0")")/../lib"
+# Uses plain readlink (portable; -f is GNU/Linux-only) with an iterative loop.
+_dfy_resolve() {
+  local f="$1"
+  [[ "$f" == /* ]] || f="$PWD/$f"
+  local i=0 link
+  while [[ -L "$f" && $((i++)) -lt 40 ]]; do
+    link="$(readlink "$f")"
+    [[ "$link" == /* ]] || link="$(dirname "$f")/$link"
+    f="$link"
+  done
+  printf '%s' "$(cd "$(dirname "$f")" && pwd -P)/$(basename "$f")"
+}
+DFY_LIB="$(dirname "$(_dfy_resolve "$0")")/../lib"
+unset -f _dfy_resolve
 export DFY_LIB
 
 # shellcheck source=/dev/null
@@ -19,11 +32,11 @@ source "${DFY_LIB}/ui.sh"
 # shellcheck source=/dev/null
 source "${DFY_LIB}/version.sh"
 # shellcheck source=/dev/null
+source "${DFY_LIB}/os.sh"
+# shellcheck source=/dev/null
 source "${DFY_LIB}/i18n.sh"
 # shellcheck source=/dev/null
 source "${DFY_LIB}/args.sh"
-# shellcheck source=/dev/null
-source "${DFY_LIB}/os.sh"
 # shellcheck source=/dev/null
 source "${DFY_LIB}/repo.sh"
 # shellcheck source=/dev/null
