@@ -1,4 +1,4 @@
-# OpenDots
+# Dotlify
 
 A Bash framework on top of [GNU Stow](https://www.gnu.org/software/stow/) for managing dotfiles on Linux and macOS.
 
@@ -13,14 +13,14 @@ A Bash framework on top of [GNU Stow](https://www.gnu.org/software/stow/) for ma
 ## Usage
 
 ```
-opendots install <pkg...>         Link packages from your dotfiles repo
-opendots remove <pkg...>          Remove linked packages
-opendots adopt <pkg>              Absorb existing files into a package
-opendots list                     List available packages and link state
-opendots status                   Show current state and active profile
-opendots doctor                   Check for broken links and conflicts
-opendots update                   Pull latest changes and refresh completions
-opendots uninstall                Remove OpenDots from this system
+dfy install <pkg...>         Link packages from your dotfiles repo
+dfy remove <pkg...>          Remove linked packages
+dfy adopt <pkg>              Absorb existing files into a package
+dfy list                     List available packages
+dfy status                   Show current state and active profile
+dfy doctor                   Check for broken links and conflicts
+dfy update                   Pull latest changes and refresh completions
+dfy uninstall                Remove Dotlify from this system
 ```
 
 Global flags: `--profile <name>`, `--dir <path>`, `--dry-run`, `--no-color`, `--yes`, `--version`, `--help`.
@@ -30,19 +30,39 @@ Global flags: `--profile <name>`, `--dir <path>`, `--dry-run`, `--no-color`, `--
 ### Quick install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/ajmasia/opendots/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ajmasia/dotlify/main/install.sh | bash
 ```
 
-The script clones OpenDots to `~/.local/share/opendots`, symlinks `opendots` into `~/.local/bin`, and installs shell completions.
+The script clones Dotlify to `~/.local/share/dotlify`, symlinks `dfy` into `~/.local/bin`, and installs shell completions.
 
 ### Manual install
 
 ```bash
-git clone https://github.com/ajmasia/opendots ~/.local/share/opendots
-bash ~/.local/share/opendots/install.sh
+git clone https://github.com/ajmasia/dotlify ~/.local/share/dotlify
+bash ~/.local/share/dotlify/install.sh
 ```
 
-> The clone path must remain stable — `~/.local/bin/opendots` is a symlink into it.
+> The clone path must remain stable — `~/.local/bin/dfy` is a symlink into it.
+
+## Configuration
+
+Dotlify reads `~/.config/dotlify/config` (INI-style). Supported keys:
+
+| Key | Description | Default |
+|-----|-------------|---------|
+| `dir` | Path to your dotfiles repo | `~/.dotfiles` |
+| `lang` | UI language (`en` or `es`) | system locale |
+
+Environment variables override the config file and take precedence:
+
+| Variable | Description |
+|----------|-------------|
+| `DFY_DIR` | Path to your dotfiles repo |
+| `DFY_PROFILE` | Active profile name |
+| `DFY_LANG` | UI language (`en` or `es`) |
+| `DFY_DRY_RUN` | Set to `1` to preview changes |
+| `DFY_YES` | Set to `1` to skip confirmation prompts |
+| `DFY_NO_COLOR` | Set to `1` to disable colored output |
 
 ## Development
 
@@ -77,8 +97,8 @@ examples/dotfiles/
 ```
 
 ```bash
-opendots --dir examples/dotfiles list
-opendots --dir examples/dotfiles --profile home install
+dfy --dir examples/dotfiles list
+dfy --dir examples/dotfiles --profile home install
 ```
 
 ## License
