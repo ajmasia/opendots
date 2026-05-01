@@ -193,7 +193,7 @@ cmd_init::run() {
   while [[ -e "$target" ]]; do
     # shellcheck disable=SC2059
     ui::warn "$(printf "${MSG_INIT_DIR_EXISTS:-Path already exists: %s. Enter an alternative path: }" "$target")"
-    IFS= read -r target
+    IFS= read -r target || break
     target="${target/#\~/$HOME}"
   done
 
@@ -219,8 +219,8 @@ cmd_init::run() {
   if [[ -n "$existing_dir" && "$existing_dir" != "$target" ]]; then
     # shellcheck disable=SC2059
     ui::warn "$(printf "${MSG_INIT_CONFIG_OVERWRITE:-Config already has dir=%s. Overwrite? [y/N] }" "$existing_dir")"
-    local answer
-    IFS= read -r answer
+    local answer=""
+    IFS= read -r answer || true
     if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
       # shellcheck disable=SC2059
       ui::info "$(printf "${MSG_INIT_DONE:-Dotfiles repo ready at %s}" "$target")"

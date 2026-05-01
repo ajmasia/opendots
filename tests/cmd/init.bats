@@ -5,6 +5,7 @@ setup() {
   # shellcheck source=tests/test_helper.bash
   source "${BATS_TEST_DIRNAME}/../../tests/test_helper.bash"
   setup_home
+  unset XDG_CONFIG_HOME
   DOTS_BIN="${BATS_TEST_DIRNAME}/../../bin/dfy"
   export THEME_COLORS_ENABLED=0
   INIT_DIR="${HOME}/testdots"
