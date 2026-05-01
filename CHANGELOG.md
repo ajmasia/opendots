@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.6] — 2026-05-01
+
+### Changed
+- CI matrix extended to run `make check` on `macos-latest` in addition to `ubuntu-latest`.
+
 ## [0.11.5] — 2026-05-01
 
 ### Added
