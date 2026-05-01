@@ -54,8 +54,11 @@ MSG_APPLY_CONFLICT="Conflicto: el archivo destino ya existe (no es un enlace):"
 MSG_APPLY_ADOPT_HINT="Ejecuta 'dfy adopt <paquete>' para adoptar los archivos existentes."
 MSG_APPLY_OK="Aplicado: %s"
 
-# cmd_remove.sh
-MSG_REMOVE_OK="Eliminado: %s"
+# cmd_unlink.sh
+MSG_UNLINK_OK="Desenlazado: %s"
+MSG_UNLINK_REPO_HINT="Los archivos del paquete permanecen en tu repositorio de dotfiles."
+MSG_SUBCMD_UNLINK="Elimina los enlaces de los paquetes"
+MSG_HELP_UNLINK="Uso: dfy unlink <paquete...>"
 
 # cmd_adopt.sh
 MSG_ADOPT_PREVIEW="Los siguientes archivos se moverán al paquete:"
@@ -78,7 +81,7 @@ MSG_CREATE_EXISTS="El paquete ya existe y tiene README: %s"
 MSG_CREATE_ASK_DESC="Descripción (opcional, Enter para omitir): "
 MSG_CREATE_DONE="Paquete creado: %s"
 MSG_CREATE_README_DONE="README creado para %s"
-MSG_CREATE_HINT="Añade tus archivos de configuración en %s"
+MSG_CREATE_HINT="Añade tus archivos de configuración en %s y ejecuta: dfy apply %s"
 MSG_SUBCMD_CREATE="Crea un nuevo paquete"
 MSG_HELP_CREATE="Uso: dfy create <paquete>"
 

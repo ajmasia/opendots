@@ -51,5 +51,5 @@ cmd_create::run() {
   # shellcheck disable=SC2059
   ui::ok "$(printf "${MSG_CREATE_DONE:-Package scaffolded: %s}" "$pkg")"
   # shellcheck disable=SC2059
-  ui::info "$(printf "${MSG_CREATE_HINT:-Add your config files under %s}" "$pkg_dir")"
+  ui::info "$(printf "${MSG_CREATE_HINT:-Add your config files under %s, then run: dfy apply %s}" "$pkg_dir" "$pkg")"
 }

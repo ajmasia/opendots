@@ -31,7 +31,7 @@ cmd_help::run() {
   printf '\n'
   _help_section "${MSG_HELP_SUBCMDS_HEADER}"
   _help_cmd_row "apply" "${MSG_SUBCMD_APPLY}"
-  _help_cmd_row "remove" "${MSG_SUBCMD_REMOVE}"
+  _help_cmd_row "unlink" "${MSG_SUBCMD_UNLINK}"
   _help_cmd_row "adopt" "${MSG_SUBCMD_ADOPT}"
   _help_cmd_row "list" "${MSG_SUBCMD_LIST}"
   _help_cmd_row "info" "${MSG_SUBCMD_INFO}"
@@ -67,7 +67,7 @@ cmd_help::run_subcmd() {
   local usage
   case "$subcmd" in
     apply) usage="${MSG_HELP_APPLY}" ;;
-    remove) usage="${MSG_HELP_REMOVE}" ;;
+    unlink) usage="${MSG_HELP_UNLINK}" ;;
     adopt) usage="${MSG_HELP_ADOPT}" ;;
     list) usage="${MSG_HELP_LIST}" ;;
     info) usage="${MSG_HELP_INFO}" ;;

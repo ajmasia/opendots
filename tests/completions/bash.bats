@@ -29,7 +29,7 @@ teardown() {
 @test "completes all subcommands at position 1" {
   _complete dfy ""
   [[ " ${COMPREPLY[*]} " == *" apply "* ]]
-  [[ " ${COMPREPLY[*]} " == *" remove "* ]]
+  [[ " ${COMPREPLY[*]} " == *" unlink "* ]]
   [[ " ${COMPREPLY[*]} " == *" adopt "* ]]
   [[ " ${COMPREPLY[*]} " == *" list "* ]]
   [[ " ${COMPREPLY[*]} " == *" status "* ]]
@@ -63,9 +63,9 @@ teardown() {
   [[ " ${COMPREPLY[*]} " == *" tmux "* ]]
 }
 
-@test "completes packages after remove" {
+@test "completes packages after unlink" {
   make_package zsh .zshrc
-  _complete dfy remove ""
+  _complete dfy unlink ""
   [[ " ${COMPREPLY[*]} " == *" zsh "* ]]
 }
 

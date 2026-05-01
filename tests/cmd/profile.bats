@@ -57,12 +57,12 @@ make_profile() {
   [[ ! -e "${HOME}/.gitconfig" ]]
 }
 
-@test "remove --profile removes exactly the package set" {
+@test "unlink --profile unlinks exactly the package set" {
   make_package vim .vimrc "set nocompatible"
   make_profile base vim
   "$DOTS_BIN" --profile base apply
   assert_symlink "${HOME}/.vimrc" "${DFY_DIR}/vim/.vimrc"
-  run "$DOTS_BIN" --profile base remove
+  run "$DOTS_BIN" --profile base unlink
   [ "$status" -eq 0 ]
   [[ ! -L "${HOME}/.vimrc" ]]
 }

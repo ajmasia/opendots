@@ -14,7 +14,7 @@ A Bash framework on top of [GNU Stow](https://www.gnu.org/software/stow/) for ma
 
 ```
 dfy apply <pkg...>           Apply packages from your dotfiles repo
-dfy remove <pkg...>          Remove linked packages
+dfy unlink <pkg...>          Remove symlinks for packages
 dfy adopt <pkg>              Absorb existing files into a package
 dfy list                     List available packages
 dfy info <pkg>               Show a package's README

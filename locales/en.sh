@@ -54,8 +54,11 @@ MSG_APPLY_CONFLICT="Conflict: target file already exists (not a symlink):"
 MSG_APPLY_ADOPT_HINT="Run 'dfy adopt <package>' to adopt existing files."
 MSG_APPLY_OK="Applied: %s"
 
-# cmd_remove.sh
-MSG_REMOVE_OK="Removed: %s"
+# cmd_unlink.sh
+MSG_UNLINK_OK="Unlinked: %s"
+MSG_UNLINK_REPO_HINT="Package files remain in your dotfiles repository."
+MSG_SUBCMD_UNLINK="Remove symlinks for packages"
+MSG_HELP_UNLINK="Usage: dfy unlink <package...>"
 
 # cmd_adopt.sh
 MSG_ADOPT_PREVIEW="The following files will be moved into the package:"
@@ -78,7 +81,7 @@ MSG_CREATE_EXISTS="Package already exists and has a README: %s"
 MSG_CREATE_ASK_DESC="Description (optional, Enter to skip): "
 MSG_CREATE_DONE="Package scaffolded: %s"
 MSG_CREATE_README_DONE="README created for %s"
-MSG_CREATE_HINT="Add your config files under %s"
+MSG_CREATE_HINT="Add your config files under %s, then run: dfy apply %s"
 MSG_SUBCMD_CREATE="Scaffold a new package"
 MSG_HELP_CREATE="Usage: dfy create <package>"
 

@@ -33,7 +33,7 @@ source "${DFY_LIB}/cmd_help.sh"
 # shellcheck source=/dev/null
 source "${DFY_LIB}/cmd_apply.sh"
 # shellcheck source=/dev/null
-source "${DFY_LIB}/cmd_remove.sh"
+source "${DFY_LIB}/cmd_unlink.sh"
 # shellcheck source=/dev/null
 source "${DFY_LIB}/cmd_adopt.sh"
 # shellcheck source=/dev/null

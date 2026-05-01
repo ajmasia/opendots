@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # shellcheck shell=bash
 
-_remove_is_linked() {
+_unlink_is_linked() {
   local pkg_dir="$1"
   local file rel target
   while IFS= read -r -d '' file; do
@@ -14,7 +14,7 @@ _remove_is_linked() {
   return 1
 }
 
-cmd_remove::run() {
+cmd_unlink::run() {
   local -a pkgs=("$@")
 
   if [[ ${#pkgs[@]} -eq 0 ]]; then
@@ -23,7 +23,7 @@ cmd_remove::run() {
       _profile_pkgs="$(profile::load "${DFY_PROFILE}")"
       mapfile -t pkgs <<<"$_profile_pkgs"
     else
-      ui::error "${MSG_HELP_REMOVE}"
+      ui::error "${MSG_HELP_UNLINK}"
       ui::info "${MSG_USAGE_HINT}"
       exit 2
     fi
@@ -36,7 +36,7 @@ cmd_remove::run() {
   for pkg in "${pkgs[@]}"; do
     local pkg_dir="${dots_dir}/${pkg}"
     # Silent no-op when nothing from this package is currently linked.
-    if ! _remove_is_linked "$pkg_dir"; then
+    if ! _unlink_is_linked "$pkg_dir"; then
       continue
     fi
     local -a stow_args=(-d "$dots_dir" -t "$HOME" -D)
@@ -46,6 +46,8 @@ cmd_remove::run() {
     stow_args+=("$pkg")
     stow "${stow_args[@]}" 2>/dev/null || true
     # shellcheck disable=SC2059
-    ui::ok "$(printf "${MSG_REMOVE_OK:-Removed: %s}" "$pkg")"
+    ui::ok "$(printf "${MSG_UNLINK_OK:-Unlinked: %s}" "$pkg")"
   done
+
+  ui::info "${MSG_UNLINK_REPO_HINT:-Package files remain in your dotfiles repository.}"
 }
