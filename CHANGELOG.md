@@ -6,6 +6,18 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.1] — 2026-05-01
+
+### Added
+- `dfy config`: new subcommand with four verbs — `get <key>`, `set <key> <value>`, `list` (all keys with defaults), `edit` (opens config file in `$EDITOR`). Supported keys: `dir`, `lang`, `notifications`, `check_interval`, `remind_interval`.
+- README: badge for test suite (bats), full config key table, `dfy config` entries in the usage section and documentation links.
+
+### Changed
+- Default value for `lang` config key changed from "system locale" to `en`.
+
+### Fixed
+- `config::set` no longer fails under `set -e` when updating the only key in the config file (`grep -v` returned exit 1 on empty output).
+
 ## [0.11.0] — 2026-05-01
 
 ### Added
