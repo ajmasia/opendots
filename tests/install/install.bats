@@ -21,6 +21,7 @@ setup() {
   _make_mock apt
   _make_mock pacman
   _make_mock dnf
+  _make_mock brew
   export PATH="${FAKE_BIN}:${PATH}"
 }
 
@@ -58,6 +59,12 @@ _with_missing() {
   run install::compose_cmd dnf
   [ "$status" -eq 0 ]
   [ "$output" = "sudo dnf install -y stow figlet" ]
+}
+
+@test "compose_cmd brew returns correct command" {
+  run install::compose_cmd brew
+  [ "$status" -eq 0 ]
+  [ "$output" = "brew install stow figlet" ]
 }
 
 # ---------- --yes skips prompt ------------------------------------------------

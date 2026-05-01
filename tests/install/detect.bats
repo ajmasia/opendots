@@ -6,10 +6,10 @@ setup() {
   source "${BATS_TEST_DIRNAME}/../../install.sh"
   FIXTURE_DIR="${BATS_TEST_TMPDIR}/fixtures"
   mkdir -p "$FIXTURE_DIR"
-  if [[ "$(uname -s)" == "Darwin" ]]; then
-    skip "Linux distro-detection tests — skipped on macOS"
-  fi
 }
+
+# Wrapper so bats `run` can call install::pkg_manager with a custom uname.
+_pkg_manager_darwin() { _INSTALL_UNAME="Darwin" install::pkg_manager; }
 
 # Write an os-release fixture and return its path.
 _fixture() {
@@ -22,6 +22,12 @@ _fixture() {
 
 # Wrapper so bats `run` can call install::pkg_manager with a custom os-release.
 _pkg_manager_for() { _OS_RELEASE="${1}" install::pkg_manager; }
+
+@test "macOS (Darwin) -> brew" {
+  run _pkg_manager_darwin
+  [ "$status" -eq 0 ]
+  [ "$output" = "brew" ]
+}
 
 @test "ubuntu -> apt" {
   run _pkg_manager_for "$(_fixture ubuntu)"
