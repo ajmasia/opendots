@@ -6,6 +6,17 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.10.4] — 2026-05-01
+
+### Added
+- `dfy info` opens the package README in `$EDITOR` when set; falls back to `cat` when unset or empty.
+- `dfy create` and `dfy init` auto-create a `.stow-local-ignore` in each package directory so `README.md` is never linked into `$HOME` by stow.
+- `dfy create` inserts a linked entry for the new package into the repository README Packages table (idempotent; skips when no README or table is present).
+- `dfy init` scaffold README now uses `[package](package/README.md)` linked format in the Packages table.
+
+### Fixed
+- `dfy status` no longer counts `README.md` or `.stow-local-ignore` as managed dotfiles when computing a package's link status.
+
 ## [0.10.3] — 2026-05-01
 
 ### Added
