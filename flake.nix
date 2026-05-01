@@ -19,7 +19,7 @@
         dotlify = pkgs.stdenv.mkDerivation {
           pname = "dotlify";
           # Keep in sync with lib/version.sh
-          version = "0.11.12";
+          version = "0.11.13";
           src = ./.;
 
           # Shell script package — nothing to compile or check in the sandbox.

@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.13] — 2026-05-01
+
+### Fixed
+- `flake.nix`: set `dontGzipMan = true` so the man page is installed as `dfy.1`, not `dfy.1.gz` (Nix `fixupPhase` compresses man pages by default).
+
 ## [0.11.12] — 2026-05-01
 
 ### Fixed
