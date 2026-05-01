@@ -4,7 +4,7 @@
 _create_readme_template() {
   local pkg="$1" desc="$2"
   local desc_line="${desc:-TODO: add a description}"
-  printf '# %s\n\n%s\n\n## Files\n\n<!-- List the dotfiles managed by this package -->\n' \
+  printf '# %s config\n\n%s\n\n## Files\n\n<!-- List the dotfiles managed by this package -->\n' \
     "$pkg" "$desc_line"
 }
 

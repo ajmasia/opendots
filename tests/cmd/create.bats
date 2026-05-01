@@ -19,7 +19,7 @@ teardown() {
   [ "$status" -eq 0 ]
   [[ -d "${DFY_DIR}/mypkg" ]]
   [[ -f "${DFY_DIR}/mypkg/README.md" ]]
-  [[ "$(cat "${DFY_DIR}/mypkg/README.md")" == *"# mypkg"* ]]
+  [[ "$(cat "${DFY_DIR}/mypkg/README.md")" == *"# mypkg config"* ]]
 }
 
 @test "create README contains TODO placeholder when no description given" {
@@ -41,7 +41,7 @@ teardown() {
   run "$DOTS_BIN" --yes create mypkg
   [ "$status" -eq 0 ]
   [[ -f "${DFY_DIR}/mypkg/README.md" ]]
-  [[ "$(cat "${DFY_DIR}/mypkg/README.md")" == *"# mypkg"* ]]
+  [[ "$(cat "${DFY_DIR}/mypkg/README.md")" == *"# mypkg config"* ]]
 }
 
 @test "create adds README does not create extra directories" {
