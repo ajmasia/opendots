@@ -55,17 +55,46 @@ cmd_adopt::run() {
     fi
   done < <(find "$pkg_dir" -mindepth 1 -type f -print0 2>/dev/null)
 
-  # Scan B: real files under HOME dirs that mirror package directories
-  local dir home_dir
+  # Scan B: real files under HOME dirs that mirror package directories.
+  #
+  # For each directory in the package tree we locate the matching HOME dir.
+  # - Leaf directories (no child dirs in the package): scan the HOME dir
+  #   recursively so HOME subdirectories not yet in the package are also
+  #   captured.
+  # - Non-leaf directories (have child dirs in the package): scan only direct
+  #   files (children handle their own subtrees, preventing an intermediate dir
+  #   like .config/ from pulling in the entire $HOME/.config/).
+
+  # Scan B: for each LEAF directory in the package (one with no child dirs),
+  # collect all real files found recursively under the matching HOME dir.
+  # Non-leaf directories (e.g. .config/ when .config/hypr/ also exists) are
+  # skipped entirely — their direct files are already covered by Scan A and
+  # scanning them would pull in unrelated HOME files (mimeapps.list, etc.).
+
+  local -a _pkg_dirs=()
+  local dir
   while IFS= read -r -d '' dir; do
+    _pkg_dirs+=("$dir")
+  done < <(find "$pkg_dir" -mindepth 1 -type d -print0 2>/dev/null)
+
+  local home_dir _d
+  for dir in "${_pkg_dirs[@]+"${_pkg_dirs[@]}"}"; do
+    # Skip if another package dir is nested inside this one (non-leaf)
+    local _leaf=1
+    for _d in "${_pkg_dirs[@]+"${_pkg_dirs[@]}"}"; do
+      [[ "$_d" != "$dir" && "$_d" == "$dir"/* ]] && _leaf=0 && break
+    done
+    [[ "$_leaf" == "0" ]] && continue
+
     rel="${dir#"${pkg_dir}"/}"
     home_dir="${HOME}/${rel}"
     [[ -d "$home_dir" && ! -L "$home_dir" ]] || continue
+
     while IFS= read -r -d '' file; do
       [[ -L "$file" ]] && continue
       _adopt_add "$file"
     done < <(find "$home_dir" -mindepth 1 -type f -print0 2>/dev/null)
-  done < <(find "$pkg_dir" -mindepth 1 -type d -print0 2>/dev/null)
+  done
 
   unset -f _adopt_add
 
@@ -99,6 +128,26 @@ cmd_adopt::run() {
     local pkg_dest="${pkg_dir}/${rel_from_home}"
     mkdir -p "$(dirname "$pkg_dest")"
     mv "$f" "$pkg_dest"
+  done
+
+  # Remove HOME directories that are now empty so stow can replace them
+  # with a directory-level symlink instead of tree-folding.  We work from
+  # deepest to shallowest (sort -rz) and use rmdir, which is a no-op when
+  # the directory is not empty (e.g. it still holds unrelated files).
+  local _d _rel_d _home_d
+  for _d in "${_pkg_dirs[@]+"${_pkg_dirs[@]}"}"; do
+    local _is_leaf=1
+    local _other
+    for _other in "${_pkg_dirs[@]+"${_pkg_dirs[@]}"}"; do
+      [[ "$_other" != "$_d" && "$_other" == "$_d"/* ]] && _is_leaf=0 && break
+    done
+    [[ "$_is_leaf" == "0" ]] && continue
+    _rel_d="${_d#"${pkg_dir}"/}"
+    _home_d="${HOME}/${_rel_d}"
+    [[ -d "$_home_d" && ! -L "$_home_d" ]] || continue
+    while IFS= read -r -d '' _empty; do
+      rmdir "$_empty" 2>/dev/null || true
+    done < <(find "$_home_d" -mindepth 0 -type d -print0 2>/dev/null | sort -rz)
   done
 
   stow -d "$dots_dir" -t "$HOME" "$pkg" \

@@ -51,8 +51,11 @@ teardown() {
   [ "$status" -eq 0 ]
   # File moved into package
   [[ -f "${DFY_DIR}/hyprland/.config/hypr/hyprland.conf" ]]
-  # HOME path now a symlink into the package
-  assert_symlink "${HOME}/.config/hypr/hyprland.conf" "${DFY_DIR}/hyprland/.config/hypr/hyprland.conf"
+  # After adopt empties and removes ~/.config/hypr/, stow creates a
+  # directory-level symlink: ~/.config/hypr -> <pkg>/.config/hypr
+  assert_symlink "${HOME}/.config/hypr" "${DFY_DIR}/hyprland/.config/hypr"
+  # File is accessible through the directory symlink
+  [[ -f "${HOME}/.config/hypr/hyprland.conf" ]]
 }
 
 @test "adopt recurses into subdirectories of the HOME mirror dir" {
@@ -64,6 +67,23 @@ teardown() {
   [ "$status" -eq 0 ]
   [[ -f "${DFY_DIR}/hyprland/.config/hypr/hyprland.conf" ]]
   [[ -f "${DFY_DIR}/hyprland/.config/hypr/rules/windows.conf" ]]
-  assert_symlink "${HOME}/.config/hypr/hyprland.conf" "${DFY_DIR}/hyprland/.config/hypr/hyprland.conf"
-  assert_symlink "${HOME}/.config/hypr/rules/windows.conf" "${DFY_DIR}/hyprland/.config/hypr/rules/windows.conf"
+  # Directory-level symlink created
+  assert_symlink "${HOME}/.config/hypr" "${DFY_DIR}/hyprland/.config/hypr"
+  [[ -f "${HOME}/.config/hypr/hyprland.conf" ]]
+  [[ -f "${HOME}/.config/hypr/rules/windows.conf" ]]
+}
+
+@test "adopt does not pull files from sibling dirs not in the package" {
+  # Package targets .config/hypr only; .config/nvim must not be touched
+  mkdir -p "${DFY_DIR}/hyprland/.config/hypr"
+  mkdir -p "${HOME}/.config/hypr"
+  mkdir -p "${HOME}/.config/nvim"
+  printf 'monitor=,preferred,auto,1\n' >"${HOME}/.config/hypr/hyprland.conf"
+  printf 'vim.opt.number = true\n' >"${HOME}/.config/nvim/init.lua"
+  run "$DOTS_BIN" --yes adopt hyprland
+  [ "$status" -eq 0 ]
+  [[ -f "${DFY_DIR}/hyprland/.config/hypr/hyprland.conf" ]]
+  # nvim file must remain untouched in HOME
+  [[ -f "${HOME}/.config/nvim/init.lua" ]]
+  [[ ! -f "${DFY_DIR}/hyprland/.config/nvim/init.lua" ]]
 }
