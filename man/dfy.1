@@ -1,5 +1,5 @@
 .\" SPDX-License-Identifier: GPL-3.0-or-later
-.TH DFY 1 "2026-05-02" "Dotlify 0.12.5" "Dotlify Manual"
+.TH DFY 1 "2026-05-02" "Dotlify 0.12.6" "Dotlify Manual"
 .
 .SH NAME
 dfy \- dotfiles manager built on GNU Stow
@@ -67,6 +67,9 @@ repository.
 .
 .SS dfy link \fIPKG\fR...
 Link one or more packages into \fI$HOME\fR using \fBstow\fR.
+Exits with code 1 when the package contains no linkable files (only
+stow-ignored metadata such as \fIREADME.md\fR); in that case run
+\fBdfy adopt\fR first to import existing config files.
 Aborts with exit code 3 when one or more target paths already exist as
 real files.
 On conflict, two actionable remedies are printed: a \fBrm\fR command
@@ -74,7 +77,11 @@ that deletes the conflicting files so the link can be retried, and a
 \fBdfy adopt\fR command that moves them into the package instead.
 .
 .SS dfy unlink \fIPKG\fR...
-Remove the symlinks created by \fBdfy link\fR for the given packages.
+Remove the symlinks created by \fBdfy link\fR or \fBdfy adopt\fR for
+the given packages.
+Handles both file-level symlinks and directory-level symlinks (created
+when \fBdfy adopt\fR empties a \fI$HOME\fR directory and stow replaces
+it with a single symlink to the package directory).
 The package files in the repository are not affected.
 .
 .SS dfy adopt \fIPKG\fR
