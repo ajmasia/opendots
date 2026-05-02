@@ -52,7 +52,8 @@ MSG_REPO_HINT="Create it, set DFY_DIR, or pass --dir <path>."
 # cmd_apply.sh
 MSG_PKG_NOT_FOUND="Package not found: %s"
 MSG_APPLY_CONFLICT="Conflict: target file already exists (not a symlink):"
-MSG_APPLY_ADOPT_HINT="Run 'dfy adopt <package>' to adopt existing files."
+MSG_LINK_CONFLICT_OPT_DELETE="To replace with the package version, delete and re-run:"
+MSG_LINK_CONFLICT_OPT_ADOPT="To keep the existing files and move them into the package:"
 MSG_LINK_OK="Linked: %s"
 
 # cmd_unlink.sh

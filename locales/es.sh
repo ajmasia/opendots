@@ -52,7 +52,8 @@ MSG_REPO_HINT="Créalo, define DFY_DIR, o usa --dir <ruta>."
 # cmd_apply.sh
 MSG_PKG_NOT_FOUND="Paquete no encontrado: %s"
 MSG_APPLY_CONFLICT="Conflicto: el archivo destino ya existe (no es un enlace):"
-MSG_APPLY_ADOPT_HINT="Ejecuta 'dfy adopt <paquete>' para adoptar los archivos existentes."
+MSG_LINK_CONFLICT_OPT_DELETE="Para reemplazar con la versión del paquete, elimina y vuelve a enlazar:"
+MSG_LINK_CONFLICT_OPT_ADOPT="Para conservar los archivos existentes y moverlos al paquete:"
 MSG_LINK_OK="Enlazado: %s"
 
 # cmd_unlink.sh

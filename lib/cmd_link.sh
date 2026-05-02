@@ -37,7 +37,14 @@ cmd_link::run() {
       for f in "${conflicts[@]}"; do
         printf '  %s%s%s\n' "$(theme::warning)" "$f" "$(theme::reset)"
       done
-      ui::warn "${MSG_APPLY_ADOPT_HINT}"
+      printf '\n'
+      ui::step "${MSG_LINK_CONFLICT_OPT_DELETE}"
+      printf '  rm'
+      for f in "${conflicts[@]}"; do printf ' %q' "$f"; done
+      printf ' && dfy link %s\n' "$pkg"
+      printf '\n'
+      ui::step "${MSG_LINK_CONFLICT_OPT_ADOPT}"
+      printf '  dfy adopt %s\n' "$pkg"
       exit 3
     fi
 
@@ -47,6 +54,19 @@ cmd_link::run() {
   done
 }
 
+_link_stow_owns_parent() {
+  local path="$1" pkg_dir="$2" dir real
+  dir="$(dirname "$path")"
+  while [[ "$dir" != "$HOME" && "$dir" != "/" ]]; do
+    if [[ -L "$dir" ]]; then
+      real="$(readlink -f "$dir")"
+      [[ "$real" == "$pkg_dir"/* || "$real" == "$pkg_dir" ]] && return 0
+    fi
+    dir="$(dirname "$dir")"
+  done
+  return 1
+}
+
 _link_check_conflicts() {
   local pkg_dir="$1"
   local -n _conflicts="$2"
@@ -54,7 +74,7 @@ _link_check_conflicts() {
   while IFS= read -r -d '' file; do
     rel="${file#"${pkg_dir}"/}"
     target="${HOME}/${rel}"
-    if [[ -e "$target" && ! -L "$target" ]]; then
+    if [[ -e "$target" && ! -L "$target" ]] && ! _link_stow_owns_parent "$target" "$pkg_dir"; then
       _conflicts+=("$target")
     fi
   done < <(find "$pkg_dir" -mindepth 1 -type f -print0 2>/dev/null)
