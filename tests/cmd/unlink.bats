@@ -37,3 +37,24 @@ teardown() {
   [[ "$output" == *"remain"* ]]
   [[ -f "${DFY_DIR}/vim/.vimrc" ]]
 }
+
+@test "unlink removes a directory-level symlink created by adopt" {
+  # Simulate the state after dfy adopt: package has the files, HOME has
+  # a directory-level symlink to the package dir.
+  mkdir -p "${DFY_DIR}/hyprland/.config/hypr"
+  printf 'monitor=,preferred,auto,1\n' >"${DFY_DIR}/hyprland/.config/hypr/hyprland.conf"
+  mkdir -p "${HOME}/.config"
+  ln -s "${DFY_DIR}/hyprland/.config/hypr" "${HOME}/.config/hypr"
+  assert_symlink "${HOME}/.config/hypr" "${DFY_DIR}/hyprland/.config/hypr"
+  run "$DOTS_BIN" unlink hyprland
+  [ "$status" -eq 0 ]
+  [[ ! -L "${HOME}/.config/hypr" ]]
+  [[ "$output" == *"remain"* ]]
+}
+
+@test "unlink shows no hint when package was not linked" {
+  make_package vim .vimrc
+  run "$DOTS_BIN" unlink vim
+  [ "$status" -eq 0 ]
+  [[ "$output" != *"remain"* ]]
+}
