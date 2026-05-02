@@ -40,3 +40,30 @@ teardown() {
   [ "$status" -eq 0 ]
   assert_symlink "${HOME}/.vimrc" "${DFY_DIR}/vim/.vimrc"
 }
+
+@test "adopt moves files from HOME dir that mirrors an empty package directory" {
+  # Package has only an empty directory scaffold (no files yet)
+  mkdir -p "${DFY_DIR}/hyprland/.config/hypr"
+  # Real config exists in HOME
+  mkdir -p "${HOME}/.config/hypr"
+  printf 'monitor=,preferred,auto,1\n' >"${HOME}/.config/hypr/hyprland.conf"
+  run "$DOTS_BIN" --yes adopt hyprland
+  [ "$status" -eq 0 ]
+  # File moved into package
+  [[ -f "${DFY_DIR}/hyprland/.config/hypr/hyprland.conf" ]]
+  # HOME path now a symlink into the package
+  assert_symlink "${HOME}/.config/hypr/hyprland.conf" "${DFY_DIR}/hyprland/.config/hypr/hyprland.conf"
+}
+
+@test "adopt recurses into subdirectories of the HOME mirror dir" {
+  mkdir -p "${DFY_DIR}/hyprland/.config/hypr"
+  mkdir -p "${HOME}/.config/hypr/rules"
+  printf 'monitor=,preferred,auto,1\n' >"${HOME}/.config/hypr/hyprland.conf"
+  printf 'windowrule=float,pavucontrol\n' >"${HOME}/.config/hypr/rules/windows.conf"
+  run "$DOTS_BIN" --yes adopt hyprland
+  [ "$status" -eq 0 ]
+  [[ -f "${DFY_DIR}/hyprland/.config/hypr/hyprland.conf" ]]
+  [[ -f "${DFY_DIR}/hyprland/.config/hypr/rules/windows.conf" ]]
+  assert_symlink "${HOME}/.config/hypr/hyprland.conf" "${DFY_DIR}/hyprland/.config/hypr/hyprland.conf"
+  assert_symlink "${HOME}/.config/hypr/rules/windows.conf" "${DFY_DIR}/hyprland/.config/hypr/rules/windows.conf"
+}
