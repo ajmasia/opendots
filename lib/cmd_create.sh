@@ -82,10 +82,12 @@ cmd_create::run() {
   # shellcheck disable=SC2059
   ui::ok "$(printf "${MSG_CREATE_DONE:-Package scaffolded: %s}" "$pkg")"
   printf '\n'
+  local display_dir="${pkg_dir}"
+  [[ -n "$subdir" ]] && display_dir="${pkg_dir}/${subdir}"
   ui::step "${MSG_CREATE_NEXT_STEPS:-Next steps:}"
   # shellcheck disable=SC2059
   printf '  %s\n' "$(printf "${MSG_CREATE_NEXT_ADD:-Add dotfiles to %s then run: dfy link %s}" \
-    "$(printf '%s%s%s' "$(theme::accent)" "$pkg_dir" "$(theme::reset)")" \
+    "$(printf '%s%s%s' "$(theme::accent)" "$display_dir" "$(theme::reset)")" \
     "$(printf '%s%s%s' "$(theme::info)" "$pkg" "$(theme::reset)")")"
   # shellcheck disable=SC2059
   printf '  %s\n' "$(printf "${MSG_CREATE_NEXT_ADOPT:-Or adopt existing files: dfy adopt %s}" \
