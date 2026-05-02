@@ -98,7 +98,15 @@ if [[ "${DFY_SHOW_VERSION:-0}" == "1" ]]; then
   exit 0
 fi
 
-if [[ "${DFY_SHOW_HELP:-0}" == "1" || -z "${DFY_SUBCMD:-}" ]]; then
+if [[ "${DFY_SHOW_HELP:-0}" == "1" ]]; then
+  if [[ -n "${DFY_SUBCMD:-}" ]]; then
+    cmd_help::run_subcmd "$DFY_SUBCMD"
+  else
+    cmd_help::run
+  fi
+  exit 0
+fi
+if [[ -z "${DFY_SUBCMD:-}" ]]; then
   cmd_help::run
   exit 0
 fi

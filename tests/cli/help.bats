@@ -26,3 +26,38 @@ setup() {
   [ "$status" -eq 0 ]
   [[ "$output" == *"Dotlify"* ]]
 }
+
+@test "dfy create --help shows create-specific usage with -s flag" {
+  run "$DOTS_BIN" create --help
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"create"* ]]
+  [[ "$output" == *"subdir"* ]]
+}
+
+@test "dfy link --help shows link-specific usage with --profile" {
+  run "$DOTS_BIN" link --help
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"link"* ]]
+  [[ "$output" == *"profile"* ]]
+}
+
+@test "dfy init --help shows init-specific usage with --bare" {
+  run "$DOTS_BIN" init --help
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"init"* ]]
+  [[ "$output" == *"bare"* ]]
+}
+
+@test "dfy --help with subcommand shows subcommand help, not global help" {
+  run "$DOTS_BIN" create --help
+  [ "$status" -eq 0 ]
+  [[ "$output" != *"Subcommands:"* ]]
+  [[ "$output" != *"Subcomandos:"* ]]
+}
+
+@test "dfy help create shows create-specific help" {
+  run "$DOTS_BIN" help create
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"create"* ]]
+  [[ "$output" == *"subdir"* ]]
+}

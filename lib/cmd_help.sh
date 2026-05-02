@@ -65,23 +65,102 @@ cmd_help::show_version() {
 }
 
 # Per-subcommand usage (no banner).
+
+_help_usage_line() {
+  printf '%s%s%s %s%s%s\n' \
+    "$(theme::accent)" "${MSG_HELP_USAGE_LABEL:-Usage:}" "$(theme::reset)" \
+    "$(theme::text)" "$1" "$(theme::reset)"
+}
+
+_help_desc_line() {
+  printf '%s%s%s\n' "$(theme::subtext)" "$1" "$(theme::reset)"
+}
+
 cmd_help::run_subcmd() {
   local subcmd="$1"
-  local usage
+  local _opts_header="${MSG_HELP_SUBCMD_OPTS_HEADER:-Options:}"
   case "$subcmd" in
-    link) usage="${MSG_HELP_LINK}" ;;
-    unlink) usage="${MSG_HELP_UNLINK}" ;;
-    adopt) usage="${MSG_HELP_ADOPT}" ;;
-    list) usage="${MSG_HELP_LIST}" ;;
-    info) usage="${MSG_HELP_INFO}" ;;
-    create) usage="${MSG_HELP_CREATE}" ;;
-    delete) usage="${MSG_HELP_DELETE}" ;;
-    init) usage="${MSG_HELP_INIT}" ;;
-    config) usage="${MSG_HELP_CONFIG}" ;;
-    status) usage="${MSG_HELP_STATUS}" ;;
-    doctor) usage="${MSG_HELP_DOCTOR}" ;;
-    update) usage="${MSG_HELP_UPDATE}" ;;
-    uninstall) usage="${MSG_HELP_UNINSTALL}" ;;
+    link)
+      _help_usage_line "dfy link <package...> [--profile <name>]"
+      _help_desc_line "${MSG_SUBCMD_LINK}"
+      printf '\n'
+      _help_section "$_opts_header"
+      _help_opt_row "--profile, -p <name>" "${MSG_OPT_PROFILE}"
+      _help_opt_row "--dry-run" "${MSG_OPT_DRY_RUN}"
+      _help_opt_row "--yes, -y" "${MSG_OPT_YES}"
+      ;;
+    unlink)
+      _help_usage_line "dfy unlink <package...> [--profile <name>]"
+      _help_desc_line "${MSG_SUBCMD_UNLINK}"
+      printf '\n'
+      _help_section "$_opts_header"
+      _help_opt_row "--profile, -p <name>" "${MSG_OPT_PROFILE}"
+      ;;
+    adopt)
+      _help_usage_line "dfy adopt <package>"
+      _help_desc_line "${MSG_SUBCMD_ADOPT}"
+      printf '\n'
+      _help_section "$_opts_header"
+      _help_opt_row "--yes, -y" "${MSG_OPT_YES}"
+      ;;
+    list)
+      _help_usage_line "dfy list"
+      _help_desc_line "${MSG_SUBCMD_LIST}"
+      ;;
+    info)
+      _help_usage_line "dfy info <package>"
+      _help_desc_line "${MSG_SUBCMD_INFO}"
+      ;;
+    create)
+      _help_usage_line "dfy create <package> [-s <subdir>]"
+      _help_desc_line "${MSG_SUBCMD_CREATE}"
+      printf '\n'
+      _help_section "$_opts_header"
+      _help_opt_row "-s, --subdir <path>" "${MSG_HELP_OPT_SUBDIR}"
+      _help_opt_row "--yes, -y" "${MSG_OPT_YES}"
+      ;;
+    delete)
+      _help_usage_line "dfy delete <package> | profile <name>"
+      _help_desc_line "${MSG_SUBCMD_DELETE}"
+      printf '\n'
+      _help_section "$_opts_header"
+      _help_opt_row "--yes, -y" "${MSG_OPT_YES}"
+      ;;
+    init)
+      _help_usage_line "dfy init [--dir <path>] [--bare]"
+      _help_desc_line "${MSG_SUBCMD_INIT}"
+      printf '\n'
+      _help_section "$_opts_header"
+      _help_opt_row "--dir, -d <path>" "${MSG_OPT_DIR}"
+      _help_opt_row "--bare" "${MSG_HELP_OPT_BARE}"
+      _help_opt_row "--yes, -y" "${MSG_OPT_YES}"
+      ;;
+    config)
+      _help_usage_line "dfy config get <key> | set <key> <value> | list | edit"
+      _help_desc_line "${MSG_SUBCMD_CONFIG}"
+      ;;
+    status)
+      _help_usage_line "dfy status [--profile <name>]"
+      _help_desc_line "${MSG_SUBCMD_STATUS}"
+      printf '\n'
+      _help_section "$_opts_header"
+      _help_opt_row "--profile, -p <name>" "${MSG_OPT_PROFILE}"
+      ;;
+    doctor)
+      _help_usage_line "dfy doctor"
+      _help_desc_line "${MSG_SUBCMD_DOCTOR}"
+      ;;
+    update)
+      _help_usage_line "dfy update"
+      _help_desc_line "${MSG_SUBCMD_UPDATE}"
+      ;;
+    uninstall)
+      _help_usage_line "dfy uninstall"
+      _help_desc_line "${MSG_SUBCMD_UNINSTALL}"
+      printf '\n'
+      _help_section "$_opts_header"
+      _help_opt_row "--yes, -y" "${MSG_OPT_YES}"
+      ;;
     help)
       cmd_help::run
       return 0
@@ -93,7 +172,4 @@ cmd_help::run_subcmd() {
       exit 2
       ;;
   esac
-  printf '%s%s%s %s%s%s\n' \
-    "$(theme::accent)" "Usage:" "$(theme::reset)" \
-    "$(theme::text)" "${usage#Usage: }" "$(theme::reset)"
 }
